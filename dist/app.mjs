@@ -1,10 +1,10 @@
-import * as C from './core.mjs';
-import {defaultLayout} from './project.mjs';
-import {createStudio} from './studio.mjs';
-import {createLayout} from './layout.mjs';
-import {createWorkflow} from './workflow.mjs';
-import * as Drafts from './drafts.mjs';
-import {createBorder} from './border.mjs';
+import * as C from './core.mjs?v=0.4.1';
+import {defaultLayout} from './project.mjs?v=0.4.1';
+import {createStudio} from './studio.mjs?v=0.4.1';
+import {createLayout} from './layout.mjs?v=0.4.1';
+import {createWorkflow} from './workflow.mjs?v=0.4.1';
+import * as Drafts from './drafts.mjs?v=0.4.1';
+import {createBorder} from './border.mjs?v=0.4.1';
 const $=id=>document.getElementById(id), $$=s=>[...document.querySelectorAll(s)], decoder=new TextDecoder();
 const S={movement:false,files:new Map(),base:new Map(),layouts:[],layout:null,cells:null,sets:[],palettes:[],tiles:new Map(),view:'map',tool:'pencil',selected:0,color:1,zoom:2,autoFit:true,history:[],redo:[],source:{type:'demo'},rom:null,romBase:null,romPixels:null,romPreview:false,sheet:null,stroke:null,busy:false,loadToken:0};
 let toastTimer,saveTimer,draftWrite=Promise.resolve();

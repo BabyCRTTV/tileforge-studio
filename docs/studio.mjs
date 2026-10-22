@@ -1,4 +1,4 @@
-import * as P from './project.mjs';
+import * as P from './project.mjs?v=0.4.1';
 export function createStudio(h){
  const {S,C,$,task,toast,status,getFile,recordBatch,queueDraft,render,paletteUI,selectLayout,loadLayoutAssets,activateLayout}=h;
  const F={tags:{},favorites:new Set(),recent:[],usage:new Map(),origins:[],tileView:'all',info:new Map(),mode:false,mapPath:null,map:null,pending:null,placing:null,editing:null,changing:false};

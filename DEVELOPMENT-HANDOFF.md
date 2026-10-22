@@ -95,3 +95,8 @@ Model: GPT-6 | Reasoning: focused entry-page update.
 - Android versionCode 4 / versionName 0.4.0; use the same private signing key. Native installation/runtime remains unverified.
 - Release APK: 112,521 bytes, SHA-256 `af5fdffb47fa4f249e9003cf667ba8b9fb2d99316eba5162d983d6796c8acab9`. APK v2/v3 verification passed; signer SHA-256 `191c46d7f2ca77b0e224cd3de0c4636f6ddd308c28daca24801121b82c25b1e1` matches prior releases. Bundled editor/modules/CSS and the dist/docs mirror match byte-for-byte; no temporary QA harness is included.
 - Final browser follow-up fixed Clear filters so its custom source dropdown label resets together with the native value and palette results.
+
+## Browser update follow-up: 0.4.1
+
+- GitHub Pages serves module files with browser caching. The 0.4.0 Clear filters label fix was present in the hosted bytes and APK, while an already-open browser still executed its earlier cached module. The 0.4.1 entry and module imports now use a matching version query; the service-worker precache includes those same module/CSS URLs. This refreshes existing browser installs and retains offline precaching. Android versionCode 5 uses the same signing key.
+- Final 0.4.1 APK: 112521 bytes; SHA-256 `1751e33a65bfad0b3605f4a240a43f5a9b8436c576b140e5068e27b1995abb5c`. Bundled editor/modules and docs mirror verified; v2/v3 signatures passed.
