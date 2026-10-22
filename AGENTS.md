@@ -16,3 +16,6 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - Drafts must retain original baselines, independent project identities, and binary undo/redo entries. Cancel a pending autosave before replacing its workspace. Border editing must write only the declared border file and preserve unrelated block bits.
 
 - The owner explicitly approved enabling GitHub Actions for this repository on 2026-10-22. Pages uses the prepared Actions workflow; routine future publications do not need that same permission requested again. Keep landing-page aesthetic changes scoped to the landing page unless the user also asks to restyle the editor.
+
+- New Legends/source imports prefer Littleroot when present; saved project/draft selections take priority. The optional offline practice island lives in Help. Never skip the project Load stage.
+- Category inference must use descriptive labels, behaviors or conservative map-event evidence. Strip tileset namespaces before classifying; keep uncertain tiles in Other. Preserve legacy pair-scoped category keys while writing new tags/pins by format, source symbol and local metatile ID. Show actual primary/secondary provenance and location usage without implying a borrowed set was copied from one unique map.

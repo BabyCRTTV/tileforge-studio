@@ -21,7 +21,7 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,fi
  }
  $('startLegends').onclick=()=>run(openLegends,'Loading the Legends source and map assets…');
  $('startFile').onclick=()=>$('fileInput').click();
- $('startPractice').onclick=()=>run(demo,'Preparing the practice island…');
+ $('startPractice').onclick=()=>{$('helpDialog').close();run(demo,'Preparing the optional offline practice map…');};
  $('returnStudio').onclick=enter;$('openBtn').onclick=load;
  $('resumeBtn').onclick=load;
  $('saveDraftBtn').onclick=()=>task(saveDraft);
