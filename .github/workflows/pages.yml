@@ -1,0 +1,42 @@
+name: Publish TileForge Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check binary and source round-trips
+        run: |
+          node --test tests/*.test.mjs
+          python3 -m unittest discover -s tests -p 'test_*.py'
+      # Based on GitHub's static Pages starter; publish only the prepared web app.
+      - name: Set up Pages
+        uses: actions/configure-pages@v5
+      - name: Upload web app and APK downloads
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - name: Deploy to Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
