@@ -8,6 +8,8 @@ ZIPALIGN_BIN="${ZIPALIGN_BIN:-zipalign}"
 APKSIGNER_JAR="${APKSIGNER_JAR:?Set APKSIGNER_JAR}"
 mkdir -p android/build/classes android/build/dex android/build/assets/www dist/downloads
 cp -R dist/. android/build/assets/www/
+# The native app opens the editor directly; the website root is the download landing page.
+cp dist/editor.html android/build/assets/www/index.html
 rm -rf android/build/assets/www/downloads
 if [ -n "${ECJ_JAR:-}" ]; then
   java -jar "$ECJ_JAR" -8 -bootclasspath "$ANDROID_JAR" -d android/build/classes android/src/com/eightbittrade/tileforge/MainActivity.java

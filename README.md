@@ -2,7 +2,7 @@
 
 A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.1.0 alpha**.
 
-**[Open the web app](https://babycrttv.github.io/tileforge-studio/)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.1.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.1.0.apk)**
 
 ## What works
 
@@ -44,7 +44,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-Publish `docs/` from the `main` branch with GitHub Pages. `dist/` is the app source; `node tools/build.mjs` refreshes the tracked Pages copy.
+Publish `docs/` from the `main` branch with GitHub Pages. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 

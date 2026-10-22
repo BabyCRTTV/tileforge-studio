@@ -34,3 +34,13 @@ Before any future APK release, reuse the existing private alpha signing key, pre
 - APK: docs/downloads/TileForge-Studio-0.1.0.apk, 70,882 bytes; SHA-256 2c6e76ba182fc5297e0af00d12c68e8abb3c9eb43dcdbe61ae465a993d7e781f. v2/v3 signature verification passed. Bundled app.mjs/core.mjs matched dist/ byte-for-byte.
 - Additional owner-private Sites deployment succeeded from source commit 69a0ec25969c0eead915d5ae221342dc812f40e4. GitHub Pages remains the requested public delivery.
 - Native device runtime remains unverified. Future work should start with Android installation, file picker/export, rotation/split-screen, and touch/stylus testing.
+
+## Website entry and APK download page
+
+Model: GPT-6 | Reasoning: focused entry-page update.
+
+- User requested the main Pages URL offer entering the web app or downloading the APK.
+- Root index.html is now a responsive landing page with Open Web App and Download APK actions. The editor moved to editor.html beside the same assets, preserving its origin, source draft storage, and relative file links.
+- PWA start_url points to editor.html; the service worker cache includes both pages with a new cache version. Future native builds copy editor.html over their bundled index.html so the installed app still opens straight into editing.
+- The existing signed APK is unchanged. This is a website-only navigation update.
+- Verified both landing links resolve, editor/APK match the prior release byte-for-byte, dist/docs mirrors match, and PWA start URL targets the editor. Browser QA confirmed the landing layout and Open Web App navigation to a working editor.
