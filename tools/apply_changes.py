@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Inspect or apply TileForge source edits with original SHA-256 checks and backups."""
-import argparse,hashlib,json,pathlib,zipfile,os,datetime
+import re,argparse,hashlib,json,pathlib,zipfile,os,datetime
 
 def apply(archive,root,write=False):
     root=pathlib.Path(root).resolve(); now=datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%S%fZ')
@@ -14,7 +14,7 @@ def apply(archive,root,write=False):
         for e in entries:
             name=e['path'];p=pathlib.PurePosixPath(name)
             if name in seen or p.is_absolute() or '..' in p.parts or '\\' in name or ':' in name or str(p)!=name:raise ValueError('Unsafe or duplicate path: '+name)
-            if not name.startswith(('data/layouts/','data/tilesets/')):raise ValueError('Unsupported write path: '+name)
+            if not (name.startswith(('data/layouts/','data/tilesets/')) or re.fullmatch(r'data/maps/[A-Za-z0-9_-]+/(map\.json|scripts\.inc)',name)):raise ValueError('Unsupported write path: '+name)
             seen.add(name);dest=(root/name).resolve()
             if not dest.is_relative_to(root):raise ValueError('Path leaves project root: '+name)
             info=z.getinfo(name);total+=info.file_size

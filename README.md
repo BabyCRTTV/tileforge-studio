@@ -1,8 +1,8 @@
 # TileForge Studio
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.1.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.2.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.1.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.2.0.apk)**
 
 ## What works
 
@@ -10,6 +10,10 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.1.0 alp
 - Open a pokeemerald-style source ZIP or a saved TileForge project.
 - Paint map metatiles; fill connected areas; sample a cell; pan and zoom; undo and redo.
 - View movement as an adjustable-opacity overlay, with white/red elevation labels like Porymap's walkable/blocked display. Choose any of the 32 standard elevation/collision presets, including transition (0), surf (1), and multi-level (F). Inspect coordinates, metatile ID, collision, and elevation. Edit collision values 0–3 and elevation 0–15 independently, or paint both. Movement fills preserve artwork and use the selected movement fields as their boundary.
+- Borrow primary/secondary tilesets from compatible locations through searchable dropdowns. Existing cell collision/elevation is preserved. Missing metatiles appear magenta and must be replaced before sharing a tileset change.
+- Browse metatiles under category headers, with a separate searchable category filter (cliffs, water, signs and more), tile search and custom category tags saved in editable projects. Automatic categories use source labels and behaviors; unknown tiles can be tagged manually.
+- Add and edit NPCs, signs, trigger events and warps in source mode. Tap a marker to open position, appearance, movement, visibility and interaction controls. Keep an existing script or create simple dialogue. Map metadata and generated dialogue undo together; original story/trainer fields and existing event order are preserved.
+- Search dropdowns throughout the app; tap the small help buttons for tablet-friendly tooltips.
 - Edit indexed tileset PNG pixels in Pixel studio, with the map's palette. Shared graphics changes immediately appear when returning to maps that use them.
 - Open any appropriately sized `.gba` file for hex edits or manual-offset uncompressed 4bpp graphics edits; save a new `.gba` copy. GBA LZ77 graphics preview is read-only.
 - Export **only changed source files** with original paths, original/changed SHA-256 hashes, source commit, and editor version. Save complete editable projects with baseline data. Local source drafts use IndexedDB.
@@ -19,7 +23,7 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.1.0 alp
 
 1. Open the app and choose **Open Emerald: Legends**. For unpushed local Porymap edits, import a ZIP made from that local checkout instead.
 2. Choose a layout in the explorer. Use **Tiles** for artwork or **Movement** for collision/elevation.
-3. Use **Pixel studio** for indexed tileset graphics. These assets may be shared by many maps.
+3. Open **Map tilesets** to borrow sets, or **NPCs & events** to add an event and tap its position. Close the event panel to resume tile painting. Use **Pixel studio** for indexed tileset graphics. These assets may be shared by many maps.
 4. Choose **Export → Share edits ZIP → Save file**. Upload that ZIP back to chat.
 5. Before integration, verify hashes against the current game checkout. `python3 tools/apply_changes.py edits.zip /path/to/legends` performs a dry run. Add `--apply` to apply verified files and back up the originals. It refuses to overwrite mismatched files.
 6. Build Legends with its existing build pipeline to make a new game ROM. TileForge does not modify the game repository, releases, saves, or builds itself.
@@ -28,18 +32,18 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.1.0 alp
 
 This is a working first alpha, not a Porymap or Hex Maniac Advance replacement. GBA engines use different data formats: loading an arbitrary ROM does **not** provide automatic map recognition. For Legends map editing, source mode is the supported route. A compiled ROM cannot automatically recover the original decompilation project, comments, source paths, and symbols.
 
-Source support targets the standard two-layer / 16-byte Gen III metatile format. Emerald uses 512 primary tiles/metatiles and six primary palettes; FRLG layouts use 640 and seven. Source headers resolve Legends' custom lighting paths and declarations in `src/graphics.c`. The preview composites static metatile layers and daytime palettes; it does not run the engine's animation, seasons, NPCs, runtime overlays, or scripts. Null secondary tilesets are handled. Unknown tiles appear magenta. No event/warp/script editor, map resizing, metatile composition editor, palette color editing, automated ROM map profiles, emulator, ROM rebuilding, automated decompiler, or compressed-ROM graphics writeback is included.
+Source support targets the standard two-layer / 16-byte Gen III metatile format. Emerald uses 512 primary tiles/metatiles and six primary palettes; FRLG layouts use 640 and seven. Source headers resolve Legends' custom lighting paths and declarations in `src/graphics.c`. The preview composites static metatile layers and daytime palettes; NPCs/events appear as labelled source markers. It does not run the engine's animation, seasons, NPC movement, runtime overlays or scripts. Null secondary tilesets are handled. Unknown tiles appear magenta. Specialized clone NPCs, hidden-item/weather events and general script code are not editable. Existing function-based Pokémon appearance expressions are preserved but cannot be authored here. Event deletion is omitted to preserve existing IDs. Simple dialogue accepts standard ASCII text and wraps at 32 characters; engine compilation and in-game behavior still require testing in the game project. No map resizing, metatile composition editor, palette color editing, automated ROM map profiles, emulator, ROM rebuilding, automated decompiler, or compressed-ROM graphics writeback is included.
 
 Exports preserve the original collision/elevation bits during art painting; source PNGs preserve palette indices and indexed bit depth. A modified PNG is re-encoded, so its compressed bytes will differ. No-op painting preserves the original PNG bytes. A saved project includes only currently loaded map binaries when opened from GitHub; the metadata retains the pinned revision so more maps can load online.
 
-The signed APK's build and signatures were verified. Installation and Android file-picker/export behavior require physical device testing. Keep exported projects when trying this alpha. Browser testing covered a live Legends map render and movement paint/readout/undo; see `DEVELOPMENT-HANDOFF.md` for the final verification record.
+The signed APK's build and signatures were verified. Installation and Android file-picker/export behavior require physical device testing. Keep exported projects when trying this alpha. Browser testing covered live Legends tileset swapping/category search and NPC placement, interaction editing and grouped undo; see `DEVELOPMENT-HANDOFF.md` for the final verification record.
 
 ## Development
 
 No npm dependencies are needed at runtime or to build the static app. fflate 0.8.2 is vendored under its MIT license.
 
 ```sh
-node --test tests/core.test.mjs
+node --test tests/*.test.mjs
 python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
