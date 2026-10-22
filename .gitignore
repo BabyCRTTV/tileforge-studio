@@ -1,5 +1,9 @@
 android/build/
 node_modules/
+__pycache__/
+*.pyc
+*.idsig
 *.jks
 *.keystore
-.openai/
+.openai/*
+!.openai/hosting.json

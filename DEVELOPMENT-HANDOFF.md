@@ -18,7 +18,7 @@ User goal: a tablet-first Android APK and GitHub Pages editor inspired by Poryma
 
 - 8 Node tests: all 65,536 block values round-trip, art/movement field isolation, movement fill boundaries and art preservation, PNG index/bit-depth round-trips, 4bpp nibble ordering and write bounds, malformed/valid LZ77, source ZIP filtering including src/graphics.c, custom-symbol resolution, and independent SHA-256 cross-checks (empty, abc, 1 MB, binary).
 - 2 Python tests: dry-run/apply/backups and current-file conflict refusal.
-- Live browser loaded Legends v0.0.70 and rendered Petalburg with actual project tiles. Demo movement edit readout reported C1/E4; undo restored zero changed files. Browser automatic blob downloads did not emit the cloud browser download event; switched to an explicit Save file link and retained scope for the final test.
+- Live browser loaded Legends v0.0.70 and rendered Petalburg with actual project tiles. Demo movement edit readout reported C1/E4; undo restored zero changed files. HTTP preview downloads could not be captured in the cloud browser. On the published HTTPS GitHub Pages app, explicit Save file downloads succeeded. Independently inspected downloaded edit ZIP and editable project: SHA-256 matched, the original baseline matched, exactly one cell changed at (12,10), tile ID 1 was retained, and C1/E4 persisted. The downloaded ZIP passed tools/apply_changes.py dry-run and application against that exact baseline. No game repository was altered.
 - APK compiled and v2/v3 signatures verified. Device installation, stylus input, Android file picker, SAF export, split-screen, and rotation need device validation.
 
 ## Boundaries and next work
@@ -26,3 +26,11 @@ User goal: a tablet-first Android APK and GitHub Pages editor inspired by Poryma
 No event/script/warp editing, resizing, metatile assembly, palette-color editing, engine animations/seasons, emulator, compile toolchain, automated decompilation, or compressed-ROM graphics writeback. Preview uses static daytime source palettes. Full project ZIPs loaded online include map data only for opened layouts; missing layouts can load from the same pinned commit while online.
 
 Before any future APK release, reuse the existing private alpha signing key, preserved privately as TileForge-Studio-Alpha-Signing-Key.jks. It must never enter the public GitHub tree. Only Internet permission is requested. Keep the APK source assets in sync with dist/ and docs/. Keep current .GBA downloads distinct from source edit exports; preserve all owner source paths and baseline hashes.
+
+## Published verification receipt
+
+- GitHub implementation commit: 79acaeb4e9eed2c74ec317da37d418a71d0503fb. Pages workflow run 39780853890: build, deploy, and status jobs succeeded.
+- Public app: https://babycrttv.github.io/tileforge-studio/ . Live index, app module, and APK returned HTTP 200 and matched local SHA-256 values. The live browser showed all 32 movement presets.
+- APK: docs/downloads/TileForge-Studio-0.1.0.apk, 70,882 bytes; SHA-256 2c6e76ba182fc5297e0af00d12c68e8abb3c9eb43dcdbe61ae465a993d7e781f. v2/v3 signature verification passed. Bundled app.mjs/core.mjs matched dist/ byte-for-byte.
+- Additional owner-private Sites deployment succeeded from source commit 69a0ec25969c0eead915d5ae221342dc812f40e4. GitHub Pages remains the requested public delivery.
+- Native device runtime remains unverified. Future work should start with Android installation, file picker/export, rotation/split-screen, and touch/stylus testing.
