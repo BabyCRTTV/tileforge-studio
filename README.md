@@ -53,7 +53,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-GitHub Pages uses `.github/workflows/pages.yml` to publish `docs/` on main-branch app changes or a manual Actions run. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
+GitHub Pages currently retains its main-branch `/docs` source. The optional `.github/workflows/pages.yml` is prepared for automatic or manual publishing after the owner explicitly approves enabling repository Actions and selecting Actions as the Pages source. The 0.3.0 source and signed APK are committed; Pages publication remains pending that approval. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 
