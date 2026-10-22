@@ -14,3 +14,5 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - Preserve the Load → Studio → Export entry flow: never open an editing map before the user chooses a project or draft. Keep the practice island an explicit choice.
 - Check compact layouts in both orientations and at handheld-PC scaling. Keep the map canvas within the usable viewport, tool panels reachable, thumbnails larger than source pixels, and Undo labelled.
 - Drafts must retain original baselines, independent project identities, and binary undo/redo entries. Cancel a pending autosave before replacing its workspace. Border editing must write only the declared border file and preserve unrelated block bits.
+
+- The owner explicitly approved enabling GitHub Actions for this repository on 2026-10-22. Pages uses the prepared Actions workflow; routine future publications do not need that same permission requested again. Keep landing-page aesthetic changes scoped to the landing page unless the user also asks to restyle the editor.
