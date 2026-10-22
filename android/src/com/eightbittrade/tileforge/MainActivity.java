@@ -28,6 +28,9 @@ public class MainActivity extends Activity {
         WebSettings settings = web.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setDomStorageEnabled(true);
+        // Respect device-width on fold/unfold instead of a desktop overview scale.
+        settings.setUseWideViewPort(true);
+        settings.setLoadWithOverviewMode(false);
         settings.setAllowFileAccess(false);
         settings.setAllowContentAccess(true);
         settings.setAllowFileAccessFromFileURLs(false);
@@ -48,7 +51,7 @@ public class MainActivity extends Activity {
             }
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith(ORIGIN+"/assets/www/") && !url.endsWith(".apk")) return false;
-                if(url.startsWith(ORIGIN) && url.endsWith(".apk")) url="https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.2.0.apk";
+                if(url.startsWith(ORIGIN) && url.endsWith(".apk")) url="https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.3.0.apk";
                 if(url.startsWith("https://")) {try {startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));} catch(Exception e){message("No browser available");}}
                 return true;
             }

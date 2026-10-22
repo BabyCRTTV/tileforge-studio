@@ -1,10 +1,15 @@
 # TileForge Studio
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.2.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.3.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.2.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.3.0.apk)**
 
 ## What works
+
+- Guided **Load → Studio → Export** flow. The editor starts at project selection; the practice island is an explicit choice. Open Legends, another source project, a `.gba` file or a saved draft.
+- Compact layouts for unfolded portrait/landscape screens and handheld PCs, including the Galaxy Fold and Legion Go. A searchable map strip replaces the left explorer below 1367 CSS pixels. Tool panels open over the canvas. The palette scrolls separately, with larger interface-only tile thumbnails. Below 541 CSS pixels it becomes a drawer so the canvas keeps the full width; small landscape screens also adapt automatically.
+- A labelled Undo button with an available-edit count; Ctrl+Z / Ctrl+Shift+Z still work. Device drafts save automatically after edits or immediately with Save draft. Multiple source/ROM drafts appear on the Load screen and retain undo/redo history and original baselines. Local drafts depend on this browser/app's storage; editable project exports provide portable backups.
+- Source map border painting and repeating-border preview. Borders load from their original `border_filepath`, use declared dimensions or the Emerald 2 × 2 default, preserve movement bits, support undo and export the exact changed border file. Border resizing and connected-map rendering are outside this release.
 
 - Open Pokémon Emerald: Legends directly from its public source, pinned to a specific commit. Browse 872 layout entries in the source inspected for this release; only the assets for selected maps are downloaded.
 - Open a pokeemerald-style source ZIP or a saved TileForge project.
@@ -16,15 +21,15 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.2.0 alp
 - Search dropdowns throughout the app; tap the small help buttons for tablet-friendly tooltips.
 - Edit indexed tileset PNG pixels in Pixel studio, with the map's palette. Shared graphics changes immediately appear when returning to maps that use them.
 - Open any appropriately sized `.gba` file for hex edits or manual-offset uncompressed 4bpp graphics edits; save a new `.gba` copy. GBA LZ77 graphics preview is read-only.
-- Export **only changed source files** with original paths, original/changed SHA-256 hashes, source commit, and editor version. Save complete editable projects with baseline data. Local source drafts use IndexedDB.
+- Export **only changed source files** with original paths, original/changed SHA-256 hashes, source commit, and editor version. Save complete editable projects with baseline data. Local source and ROM drafts use IndexedDB.
 - Android APK bundles the app for offline use; uses Android's system file picker and Save As picker. Internet is the only requested permission. No login, advertising, telemetry, or broad storage permission.
 
 ## Legends workflow
 
-1. Open the app and choose **Open Emerald: Legends**. For unpushed local Porymap edits, import a ZIP made from that local checkout instead.
-2. Choose a layout in the explorer. Use **Tiles** for artwork or **Movement** for collision/elevation.
+1. At **Load**, choose **Emerald: Legends**, **Open your files**, or a saved draft. For unpushed local Porymap edits, import a ZIP made from that local checkout instead.
+2. In **Studio**, choose a layout in the explorer or searchable map strip. Use **Tiles** for artwork or **Movement** for collision/elevation.
 3. Open **Map tilesets** to borrow sets, or **NPCs & events** to add an event and tap its position. Close the event panel to resume tile painting. Use **Pixel studio** for indexed tileset graphics. These assets may be shared by many maps.
-4. Choose **Export → Share edits ZIP → Save file**. Upload that ZIP back to chat.
+4. Use **Save draft** to pause on this device. In **Export**, review the changed paths, then choose **Share edits ZIP → Save file**. Upload that ZIP back to chat.
 5. Before integration, verify hashes against the current game checkout. `python3 tools/apply_changes.py edits.zip /path/to/legends` performs a dry run. Add `--apply` to apply verified files and back up the originals. It refuses to overwrite mismatched files.
 6. Build Legends with its existing build pipeline to make a new game ROM. TileForge does not modify the game repository, releases, saves, or builds itself.
 
@@ -36,7 +41,7 @@ Source support targets the standard two-layer / 16-byte Gen III metatile format.
 
 Exports preserve the original collision/elevation bits during art painting; source PNGs preserve palette indices and indexed bit depth. A modified PNG is re-encoded, so its compressed bytes will differ. No-op painting preserves the original PNG bytes. A saved project includes only currently loaded map binaries when opened from GitHub; the metadata retains the pinned revision so more maps can load online.
 
-The signed APK's build and signatures were verified. Installation and Android file-picker/export behavior require physical device testing. Keep exported projects when trying this alpha. Browser testing covered live Legends tileset swapping/category search and NPC placement, interaction editing and grouped undo; see `DEVELOPMENT-HANDOFF.md` for the final verification record.
+The signed APK's build and signatures were verified. Installation and Android file-picker/export behavior require physical device testing. Keep exported projects when trying this alpha. Browser testing covered source and ROM draft recovery with working undo history, border painting/preview, map coordinates with borders shown, the guided flow and viewport checks for folded-device portrait/landscape and handheld layouts; see `DEVELOPMENT-HANDOFF.md` for the final verification record.
 
 ## Development
 

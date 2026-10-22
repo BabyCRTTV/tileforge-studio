@@ -10,3 +10,7 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - Keep the APK keystore private and reuse it for future updates. Never commit it to this public repository. It is excluded from Git.
 - Run focused binary/round-trip and conflict checks after parser/export changes. Use the connected GitHub tools for repository writes. Publish the generated docs/ mirror for Pages, and verify the live app and APK before reporting them complete.
 - Update the handoff at each milestone with verification and outstanding limitations. No game ROMs or proprietary tool code may be committed.
+
+- Preserve the Load → Studio → Export entry flow: never open an editing map before the user chooses a project or draft. Keep the practice island an explicit choice.
+- Check compact layouts in both orientations and at handheld-PC scaling. Keep the map canvas within the usable viewport, tool panels reachable, thumbnails larger than source pixels, and Undo labelled.
+- Drafts must retain original baselines, independent project identities, and binary undo/redo entries. Cancel a pending autosave before replacing its workspace. Border editing must write only the declared border file and preserve unrelated block bits.
