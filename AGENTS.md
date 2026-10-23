@@ -22,3 +22,5 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - Keep the release query on editor module/CSS URLs, relative module imports, and service-worker precache URLs consistent when releasing, so existing browser caches cannot silently retain old code. Android asset URLs use their path; query versions must remain compatible with bundled assets.
 
 - Reviewed artwork categories must require the exact inspected primary/secondary PNG and metatile hashes and fill only Other. Keep uncertain/blank entries unclassified; primary inherited labels must not leak to unrelated pairs. Guide changes should preserve the distinction between local drafts, portable projects, changed-source exports and the separate game build.
+
+- Keep Paint, Fill, Pick and Move text visible at all viewport widths. New source/ROM workspaces open in Move; new source projects prefer explicitly labelled plain grass, then short-grass behavior, with a valid first-tile fallback. Preserve the active tool across ordinary map changes and the saved brush when restoring drafts.

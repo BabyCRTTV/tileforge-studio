@@ -1,5 +1,5 @@
-import * as P from './project.mjs?v=0.4.2';
-import {reviewedCategories} from './reviewed-categories.mjs?v=0.4.2';
+import * as P from './project.mjs?v=0.4.3';
+import {reviewedCategories} from './reviewed-categories.mjs?v=0.4.3';
 export function createStudio(h){
  const {S,C,$,task,toast,status,getFile,recordBatch,queueDraft,render,paletteUI,selectLayout,loadLayoutAssets,activateLayout}=h;
  const F={tags:{},favorites:new Set(),recent:[],usage:new Map(),origins:[],tileView:'all',info:new Map(),mode:false,mapPath:null,map:null,pending:null,placing:null,editing:null,changing:false};
@@ -67,5 +67,5 @@ export function createStudio(h){
  function reset(meta={}){F.tags=meta?.tags&&typeof meta.tags==='object'?meta.tags:{};F.favorites=new Set(Array.isArray(meta?.favorites)?meta.favorites.filter(k=>typeof k==='string'):[]);F.recent=Array.isArray(meta?.recent)?meta.recent.filter(k=>typeof k==='string').slice(0,16):[];F.tileView='all';F.origins=[];$('categoryFilter').value='';$('sourceFilter').value='';F.info.clear();F.map=null;F.mapPath=null;F.pending=null;F.placing=null;$('tileSearch').value='';$('cancelEventPlacement').hidden=true;}
  for(const s of document.querySelectorAll('select'))upgrade(s);
  options('categoryFilter',[{value:'',label:'All categories'}],'');options('tileCategoryTag',[{value:'',label:'Automatic group'},...P.CATEGORIES.map(c=>({value:c,label:c}))],'');
- return {mapChanged,viewChanged,visibleTiles,tileInfo,chooseTile,syncCategories,updateTilesetNote,pointerDown,drawEvents,beforeExport,reset,serialize:()=>({tags:F.tags,favorites:[...F.favorites],recent:F.recent})};
+ return {defaultBrush:()=>P.defaultBrush(F.info,S.tiles),mapChanged,viewChanged,visibleTiles,tileInfo,chooseTile,syncCategories,updateTilesetNote,pointerDown,drawEvents,beforeExport,reset,serialize:()=>({tags:F.tags,favorites:[...F.favorites],recent:F.recent})};
 }

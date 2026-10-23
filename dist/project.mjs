@@ -1,8 +1,13 @@
-import {strFromU8,strToU8} from './core.mjs?v=0.4.2';
+import {strFromU8,strToU8} from './core.mjs?v=0.4.3';
 export const CATEGORIES=['Cliffs','Water','Signs','Buildings & doors','Stairs & bridges','Trees & plants','Ground & paths','Rocks & caves','Furniture & interiors','Fences & edges','Puzzles & switches','Warps & transitions','Other'];
 export const layoutFormat=l=>['frlg','firered'].includes(l?.layout_version)?'frlg':'emerald';
 export const friendly=s=>String(s).replace(/^gTileset_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|_Layout$/g,'').replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2');
 export function defaultLayout(layouts,selectedId){return layouts.find(l=>l.id===selectedId)||layouts.find(l=>/^LittlerootTown(?:_Layout)?$/i.test(l.name||''))||layouts[0];}
+// Prefer a labelled plain-grass patch over trees or encounter grass.
+export function defaultBrush(info,available){
+ const ids=[...available.keys()],matches=test=>ids.find(id=>test(info.get(id)||{}));
+ return matches(tile=>(tile.features||[]).some(feature=>/^(?:plain )?grass$/.test(words(feature))))??matches(tile=>tile.behavior==='MB_SHORT_GRASS')??ids[0]??0;
+}
 export function tileIdentity(format,info){return [format,info.sourceSymbol,info.localId].join(':');}
 export function tilesetChoices(layouts,active,field){
  const format=layoutFormat(active),seen=new Map();
@@ -61,7 +66,7 @@ export function metatileInfo(files,sets,format){
   const count=Math.min(si?1024-split:split,set.meta.length/16),stride=set.attr.length>=count*4&&count?4:2,v=new DataView(set.attr.buffer,set.attr.byteOffset,set.attr.byteLength);
   for(let i=0;i<count;i++){
    const id=i+(si?split:0),attr=i*stride+stride<=v.byteLength?(stride===4?v.getUint32(i*stride,true):v.getUint16(i*stride,true)):0,behavior=behaviors.get(attr&(stride===4?511:255))||'',allAliases=labelNames.get(id)||[],own=allAliases.filter(a=>!a.inherited),aliases=own.length?own:allAliases,named=aliases.find(a=>semanticCategory(a.feature)!=='Other')||aliases[0],name=aliases.map(a=>a.name).join(' / '),labelCategory=semanticCategory(named?.feature||''),category=tileCategory(named?.feature||'',behavior);
-   out.set(id,{name,behavior,category,reason:labelCategory!=='Other'?(named?.inherited?'Shared primary label':'Source label'):category!=='Other'?'Tile behavior':'No descriptive source label',sourceIndex:si,sourceSymbol:set.symbol,sourceName:friendly(set.symbol),localId:i});
+   out.set(id,{name,features:aliases.map(a=>a.feature),behavior,category,reason:labelCategory!=='Other'?(named?.inherited?'Shared primary label':'Source label'):category!=='Other'?'Tile behavior':'No descriptive source label',sourceIndex:si,sourceSymbol:set.symbol,sourceName:friendly(set.symbol),localId:i});
   }
  }
  return out;

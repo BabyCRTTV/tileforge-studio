@@ -28,5 +28,5 @@ java -cp "$R8_JAR" com.android.tools.r8.D8 --lib "$ANDROID_JAR" --min-api 26 --o
 # A local alpha build creates a private keystore once. CI should supply its persistent signing key.
 TILEFORGE_KEYSTORE="${TILEFORGE_KEYSTORE:-android/build/tileforge-alpha.jks}"
 if [ ! -f "$TILEFORGE_KEYSTORE" ]; then keytool -genkeypair -keystore "$TILEFORGE_KEYSTORE" -storepass android -keypass android -alias tileforge -dname 'CN=8BitTrade TileForge Alpha' -keyalg RSA -keysize 2048 -validity 10000 >/dev/null 2>&1; fi
-java -jar "$APKSIGNER_JAR" sign --ks "$TILEFORGE_KEYSTORE" --ks-key-alias tileforge --ks-pass pass:android --key-pass pass:android --out dist/downloads/TileForge-Studio-0.4.2.apk android/build/aligned.apk
-java -jar "$APKSIGNER_JAR" verify --verbose dist/downloads/TileForge-Studio-0.4.2.apk
+java -jar "$APKSIGNER_JAR" sign --ks "$TILEFORGE_KEYSTORE" --ks-key-alias tileforge --ks-pass pass:android --key-pass pass:android --out dist/downloads/TileForge-Studio-0.4.3.apk android/build/aligned.apk
+java -jar "$APKSIGNER_JAR" verify --verbose dist/downloads/TileForge-Studio-0.4.3.apk

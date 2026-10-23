@@ -51,3 +51,8 @@ test('reviewed artwork categories require exact assets and never replace semanti
  const result=await reviewedCategories(info,files,sets,'emerald',[profile]);assert.equal(result.get(0).category,'Signs');assert.equal(result.get(1).category,'Water');assert.equal(info.get(0).category,'Other');
  files.set('data/tilesets/tiles.png',Uint8Array.of(3,5));assert.equal((await reviewedCategories(info,files,sets,'emerald',[profile])).get(0).category,'Other');assert.equal((await reviewedCategories(info,files,sets,'frlg',[profile])).get(0).category,'Other');
 });
+test('new workspaces prefer plain grass, never tree or encounter grass, with valid fallbacks',()=>{
+ const info=new Map([[0,{features:[],behavior:'MB_NORMAL'}],[1,{features:['TallGrass'],behavior:'MB_TALL_GRASS'}],[2,{features:['Grass_TreeUp'],behavior:'MB_NORMAL'}],[3,{features:['Plain_Grass'],behavior:'MB_NORMAL'}],[4,{features:['Grass'],behavior:'MB_NORMAL'}]]),available=new Map([...info.keys()].map(id=>[id,true]));
+ assert.equal(P.defaultBrush(info,available),3);available.delete(3);assert.equal(P.defaultBrush(info,available),4);available.delete(4);assert.equal(P.defaultBrush(info,available),0);
+ info.set(2,{features:[],behavior:'MB_SHORT_GRASS'});assert.equal(P.defaultBrush(info,available),2);assert.equal(P.defaultBrush(info,new Map()),0);
+});

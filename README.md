@@ -1,12 +1,14 @@
 # TileForge Studio
 
+The 0.4.3 update keeps Paint, Fill, Pick and Move labels visible at every screen size. Newly opened workspaces start in Move; new source projects select a labelled plain-grass patch when available (Legends General #001). Map changes keep the active tool/valid brush, and drafts retain their saved brush.
+
 The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the full Littleroot palette. It fixes whole-word/numbered-label matching, inherited Secret Base labels and exact-file custom variant labels, adds puzzle/warp groups, and fills verified gaps with hash-gated artwork annotations. Uncertain tiles remain Other and user groups retain priority. The editor layout and retro landing design are retained.
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.2 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.3 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.4.2.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.4.3.apk)**
 
 ## What works
 
@@ -57,7 +59,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.4.2 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
+GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.4.3 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 
