@@ -177,3 +177,11 @@ Model: GPT-6 | Reasoning: focused entry-page update.
 - Final signed APK: 170663 bytes; SHA-256 `5c4083979f166047f72df09e6ac954f54eb2e2e73e36da03fa664430840dbe8d`. All 31 bundled assets match dist; ZIP CRC and v2/v3 signatures verified. Signer certificate matches previous releases (`191c46d7f2ca77b0e224cd3de0c4636f6ddd308c28daca24801121b82c25b1e1`).
 
 - Publication receipt: implementation commit `37d6c02a103f27fc6fc0cf9ac1543b799c4eed8f`; Pages Actions run `40001241390` completed successfully. Public editor, new editor module/CSS, APK and guide all returned HTTP 200 and matched local SHA-256 byte-for-byte. The live cloud browser showed `v0.7.0 alpha` and the new help entries, with Load still the opening stage. Hosted APK CRC passed.
+
+
+## Export handoff wording: 0.7.1 (23 October 2026)
+
+- User requested the source Export panel explicitly explain the handoff. A visible source-only section now says export saves a file on the device and does not automatically update the source folder or GitHub. Its three steps are save edits ZIP, upload to chat for current-source checks/integration, then rebuild/test the game. Save editable project is identified as a portable TileForge backup with separate game integration.
+- ROM mode hides the source handoff section and shows separate-copy/original-ROM guidance. Export payloads, draft behavior, source integration and game code are unchanged. Existing field guide 0.7.0 remains the detailed workflow reference; this is a focused UI wording update.
+- Browser checked source guidance and reachable export/Back controls at 320×640, 580×720, 768×540, 844×390 and 1280×800, with no horizontal dialog overflow. Synthetic ROM QA confirmed the source flow/portable-project action are hidden and the .GBA-copy wording is shown. No application page errors.
+- Android versionName 0.7.1/versionCode 12. APK 170663 bytes; SHA-256 `61dfc706e989bf1afaebd951c9bc898d200c2cfecac73521b0eab24d9b223236`. Existing signer reused, v2/v3 and ZIP CRC verified, all 31 bundled assets match dist. No new tests for this copy-only change; focused UI/packaging checks verify the changed behavior. Physical Android runtime remains unverified.

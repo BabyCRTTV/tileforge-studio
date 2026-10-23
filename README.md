@@ -10,9 +10,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.7.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.7.1 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.7.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.7.1.apk)**
 
 ## What works
 
@@ -92,3 +92,7 @@ Saved drafts have individual Delete controls with confirmation and autosave race
 ### 0.7.0 source tileset editors
 
 Map studio → Selected tile → **Edit selected metatile** previews and edits the eight 8×8 pieces, palette banks and flips. Pixel studio → **Edit palette colors** edits one declared JASC-PAL color using 5-bit RGB channels. Both show exact source paths and shared-layout references, stage changes until Apply, reject stale dependencies and create one Undo entry. Metatile attributes and engine layer types remain unchanged; static previews still need in-game validation.
+
+### 0.7.1 export guidance
+
+The source Export panel now explains: save the edits ZIP to your device, upload it back to chat for current-source checks and integration, then rebuild/test the game. Export does not automatically update the source folder or GitHub. Save editable project is identified as a portable TileForge backup. ROM export shows separate-copy guidance instead of source integration instructions.
