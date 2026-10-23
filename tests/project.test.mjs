@@ -29,3 +29,25 @@ test('sign-event hints require every use and preserve uncertain or explicitly cl
  const info=new Map([[0,{category:'Other'}],[1,{category:'Other'}],[2,{category:'Water'}]]),cells=Uint16Array.from([0,1,1,2]),map={bg_events:[{type:'sign',x:0,y:0},{type:'sign',x:1,y:0},{type:'hidden_item',x:2,y:0},{type:'sign',x:3,y:0},{type:'sign',x:-1,y:0}]},result=P.mapCategoryHints(info,cells,4,map,'Town');
  assert.equal(result.get(0).category,'Signs');assert.equal(result.get(1).category,'Other');assert.equal(result.get(2).category,'Water');assert.equal(info.get(0).category,'Other');
 });
+test('category regression: whole words, numbered artwork, singular stairs and generic warps',()=>{
+ const cases=[['Escalator1F_Tile0_Frame0','MB_NORMAL','Stairs & bridges'],['Painting0_Left','MB_NORMAL','Furniture & interiors'],['Laptop1_Flash','MB_NORMAL','Furniture & interiors'],['LegendsWardrobe_Top','MB_NORMAL','Furniture & interiors'],['RedPlant_TopWall','MB_SECRET_BASE_DECORATION','Trees & plants'],['GoldShield_TopWall','MB_NORMAL','Furniture & interiors'],['CounterBarrier','MB_NORMAL','Fences & edges'],['','MB_INDOOR_ENCOUNTER','Other'],['','MB_UP_RIGHT_STAIR_WARP','Stairs & bridges'],['','MB_SOUTH_ARROW_WARP','Warps & transitions'],['','MB_REFLECTION_UNDER_BRIDGE','Water'],['','MB_ROCK_CLIMB','Cliffs'],['','MB_HOT_SPRINGS','Water'],['','MB_KITCHEN','Furniture & interiors'],['','MB_UNUSED_BRIDGE','Other'],['Design','MB_NORMAL','Other'],['Flash','MB_NORMAL','Other']];
+ for(const [name,behavior,expected]of cases)assert.equal(P.tileCategory(name,behavior),expected,name+' '+behavior);
+});
+test('primary shared labels classify secondary IDs; own labels win and pair changes do not leak them',()=>{
+ const files=new Map([['include/constants/metatile_labels.h',C.strToU8('#define METATILE_SecretBase_Wardrobe 0x200\n#define METATILE_SecretBase_Fence 0x201\n#define METATILE_CustomRoom_PondWater 0x201\n// #define METATILE_CustomRoom_Sign 0x200\n#define METATILE_CustomRoom_Sign 0x200 + 3')]]);
+ const primary={symbol:'gTileset_SecretBase',meta:new Uint8Array(16),attr:new Uint8Array(2)},secondary={symbol:'gTileset_CustomRoom',meta:new Uint8Array(32),attr:new Uint8Array(4)};
+ const result=P.metatileInfo(files,[primary,secondary],'emerald');assert.equal(result.get(512).category,'Furniture & interiors');assert.equal(result.get(512).reason,'Shared primary label');assert.equal(result.get(513).category,'Water');assert.equal(result.get(513).reason,'Source label');
+ assert.equal(P.metatileInfo(files,[{...primary,symbol:'gTileset_Unrelated'},secondary],'emerald').get(512).category,'Other');
+});
+test('custom source variants inherit names only from the exact reused metatile file',()=>{
+ const source='const u16 gMetatiles_General_Frlg[] = INCBIN_U16("data/tilesets/lights/general.bin");\nconst u16 gMetatiles_Custom[] = INCBIN_U16("data/tilesets/lights/general.bin");\nconst u16 gMetatiles_Unrelated[] = INCBIN_U16("data/tilesets/other/metatiles.bin");\nconst u16 gAttr_Custom[] = INCBIN_U16("data/tilesets/lights/attr.bin");\nconst u32 gTiles_Custom[] = INCGFX_U32("data/tilesets/lights/tiles.png", ".4bpp");\nconst u16 gPal_Custom[][16] = {INCGFX_U16("data/tilesets/lights/day.pal", ".gbapal")};\nconst struct Tileset gTileset_Custom = {.tiles=gTiles_Custom,.palettes=gPal_Custom,.metatiles=gMetatiles_Custom,.metatileAttributes=gAttr_Custom};';
+ const files=new Map([['src/data/tilesets/custom.h',C.strToU8(source)],['include/constants/metatile_labels.h',C.strToU8('#define METATILE_GeneralFrlg_Plain_Mowed 0x000\n#define METATILE_Unrelated_Sign 0x001')]]),set={...C.resolveTileset(files,'gTileset_Custom'),meta:new Uint8Array(32),attr:new Uint8Array(4)},info=P.metatileInfo(files,[set],'frlg');
+ assert.equal(info.get(0).category,'Ground & paths');assert.equal(info.get(1).category,'Other');assert.equal(info.get(0).sourceSymbol,'gTileset_Custom');
+});
+
+test('reviewed artwork categories require exact assets and never replace semantic labels',async()=>{
+ const {reviewedCategories}=await import('../dist/reviewed-categories.mjs');
+ const files=new Map([['data/tilesets/meta.bin',Uint8Array.of(1,2)],['data/tilesets/tiles.png',Uint8Array.of(3,4)]]),sets=[{metatiles:'data/tilesets/meta.bin',image:'data/tilesets/tiles.png'}],profile={name:'Fixture',format:'emerald',files:Object.fromEntries(await Promise.all([...files].map(async([p,b])=>[p,await C.sha256(b)]))),groups:{Signs:[[0,1]]}},info=new Map([[0,{category:'Other'}],[1,{category:'Water'}]]);
+ const result=await reviewedCategories(info,files,sets,'emerald',[profile]);assert.equal(result.get(0).category,'Signs');assert.equal(result.get(1).category,'Water');assert.equal(info.get(0).category,'Other');
+ files.set('data/tilesets/tiles.png',Uint8Array.of(3,5));assert.equal((await reviewedCategories(info,files,sets,'emerald',[profile])).get(0).category,'Other');assert.equal((await reviewedCategories(info,files,sets,'frlg',[profile])).get(0).category,'Other');
+});

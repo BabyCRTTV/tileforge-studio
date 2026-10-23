@@ -1,10 +1,12 @@
 # TileForge Studio
 
-The 0.4.1 update starts Legends in Littleroot, labels primary and secondary sources throughout the palette, and adds source/location search, pinned brushes, recent brushes, a map-used filter, and one-tap filter reset. Category matching separates source namespaces from tile descriptions and adds rocks/caves, interiors/furniture, and fences/edges. Uncertain tiles remain in Other and can be manually grouped. Pins and tags travel with drafts and editable project files; the editor layout and retro website design are retained.
+The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the full Littleroot palette. It fixes whole-word/numbered-label matching, inherited Secret Base labels and exact-file custom variant labels, adds puzzle/warp groups, and fills verified gaps with hash-gated artwork annotations. Uncertain tiles remain Other and user groups retain priority. The editor layout and retro landing design are retained.
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.1 alpha**.
+**[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.4.1.apk)**
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.2 alpha**.
+
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.4.2.apk)**
 
 ## What works
 
@@ -18,7 +20,7 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.1 alp
 - Paint map metatiles; fill connected areas; sample a cell; pan and zoom; undo and redo.
 - View movement as an adjustable-opacity overlay, with white/red elevation labels like Porymap's walkable/blocked display. Choose any of the 32 standard elevation/collision presets, including transition (0), surf (1), and multi-level (F). Inspect coordinates, metatile ID, collision, and elevation. Edit collision values 0–3 and elevation 0–15 independently, or paint both. Movement fills preserve artwork and use the selected movement fields as their boundary.
 - Borrow primary/secondary tilesets from compatible locations through searchable dropdowns. Existing cell collision/elevation is preserved. Missing metatiles appear magenta and must be replaced before sharing a tileset change.
-- Browse metatiles under category headers, with a separate searchable category filter (cliffs, water, signs and more), tile search and custom category tags saved in editable projects. Automatic categories use source labels and behaviors; unknown tiles can be tagged manually.
+- Browse metatiles under category headers, with a separate searchable category filter (cliffs, water, signs and more), tile search and custom category tags saved in editable projects. Automatic categories use source labels and behaviors plus a limited exact-asset artwork review; unknown tiles can be tagged manually.
 - Add and edit NPCs, signs, trigger events and warps in source mode. Tap a marker to open position, appearance, movement, visibility and interaction controls. Keep an existing script or create simple dialogue. Map metadata and generated dialogue undo together; original story/trainer fields and existing event order are preserved.
 - Search dropdowns throughout the app; tap the small help buttons for tablet-friendly tooltips.
 - Edit indexed tileset PNG pixels in Pixel studio, with the map's palette. Shared graphics changes immediately appear when returning to maps that use them.
@@ -55,7 +57,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.4.1 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
+GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.4.2 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 
@@ -69,3 +71,5 @@ Android uses a minimal Java WebView shell with bundled assets, HTTPS asset inter
 - [fflate](https://github.com/101arrowz/fflate), MIT license, for ZIP and zlib support.
 
 TileForge is an independent implementation. No Porymap/HMA implementation code or game ROMs are bundled. The practice island uses original programmatically drawn sample assets. Nintendo, Pokémon, Porymap and Hex Maniac Advance are not affiliated with this project. Imported source assets retain their original rights.
+
+To rebuild the reference guide, install Python packages `reportlab` and `beautifulsoup4` plus `pandoc`, then run `python3 tools/build_guide.py`. This creates `dist/guide.html` and its downloadable PDF. The normal static build needs no Python guide dependencies.

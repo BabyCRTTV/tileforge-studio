@@ -1,5 +1,5 @@
-import {strFromU8,strToU8} from './core.mjs?v=0.4.1';
-export const CATEGORIES=['Cliffs','Water','Signs','Buildings & doors','Stairs & bridges','Trees & plants','Ground & paths','Rocks & caves','Furniture & interiors','Fences & edges','Other'];
+import {strFromU8,strToU8} from './core.mjs?v=0.4.2';
+export const CATEGORIES=['Cliffs','Water','Signs','Buildings & doors','Stairs & bridges','Trees & plants','Ground & paths','Rocks & caves','Furniture & interiors','Fences & edges','Puzzles & switches','Warps & transitions','Other'];
 export const layoutFormat=l=>['frlg','firered'].includes(l?.layout_version)?'frlg':'emerald';
 export const friendly=s=>String(s).replace(/^gTileset_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|_Layout$/g,'').replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2');
 export function defaultLayout(layouts,selectedId){return layouts.find(l=>l.id===selectedId)||layouts.find(l=>/^LittlerootTown(?:_Layout)?$/i.test(l.name||''))||layouts[0];}
@@ -22,32 +22,46 @@ export function behaviorNames(text){
  for(let pass=0;pass<pending.length;pass++){let changed=false;for(const [name,expression]of pending){if(values.has(name))continue;const n=valueOf(expression);if(n!=null){add(name,n);changed=true;}}if(!changed)break;}
  return out;
 }
+function words(text){return String(text).replace(/([A-Z]+)([A-Z][a-z])/g,'$1 $2').replace(/([a-z\d])([A-Z])/g,'$1 $2').replace(/([A-Za-z])(\d)/g,'$1 $2').replace(/(\d)([A-Za-z])/g,'$1 $2').replace(/_/g,' ').toLowerCase();}
 function semanticCategory(text){
- const s=text.replace(/([A-Z]+)([A-Z][a-z])/g,'$1 $2').replace(/([a-z\d])([A-Z])/g,'$1 $2').replace(/_/g,' ').toLowerCase();
- if(/sign|notice|poster|placard|braille/.test(s))return 'Signs';
- if(/stairs|staircase|ladder|bridge|escalator|elevator|slope/.test(s))return 'Stairs & bridges';
- if(/cliff|ledge|mountain|rock wall|rockwall|jump (?:north|south|east|west)/.test(s))return 'Cliffs';
- if(/water|ocean|pond|surf|puddle|shore|seaweed|current|whirlpool|lava/.test(s))return 'Water';
- if(/fence|railing|barrier|hedge|gate/.test(s))return 'Fences & edges';
- if(/door|roof|window|entrance|exit|wall|house/.test(s))return 'Buildings & doors';
- if(/tree|grass|flower|bush|plant|mushroom|vine|shrub|roots?/.test(s))return 'Trees & plants';
- if(/book|shelf|shelves|table|chair|desk|counter|bed|sofa|couch|rug|carpet|curtain|cushion|painting|picture|clock|\bpc\b|\btv\b|computer|television|machine|terminal|box|cabinet|fridge|sink|trash|decoration|ornament|doll/.test(s))return 'Furniture & interiors';
- if(/ground|floor|path|sand|dirt|road|snow|ash|ice|mowed|mud/.test(s))return 'Ground & paths';
- if(/cave|rock|boulder|stone|stalagmite|crystal/.test(s))return 'Rocks & caves';
+ const s=words(text),has=pattern=>pattern.test(s);
+ if(has(/\b(?:signs?|signpost|notice|poster|placard|braille)\b/))return 'Signs';
+ // These are water cells under a bridge, rather than the bridge deck.
+ if(has(/\b(?:reflection under bridge|water under bridge)\b/))return 'Water';
+ if(has(/\b(?:stairs?|staircase|ladder|bridge|escalator|elevator|slope|rails?)\b|\bpacifidlog (?:vertical|horizontal) log\b/))return 'Stairs & bridges';
+ if(has(/\b(?:cliffs?|ledge|mountain|rock wall|rockwall|rock climb|jump (?:north|south|east|west|northeast|northwest|southeast|southwest))\b/))return 'Cliffs';
+ if(has(/\b(?:fences?|railing|barrier|hedge|gate)\b/))return 'Fences & edges';
+ if(has(/\b(?:doors?|roof|window|porthole|entrance|exit|houses?|tent)\b/))return 'Buildings & doors';
+ if(has(/\b(?:books?|bookshelf|bookcase|shelf|shelves|table|chair|desk|counter|bed|sofa|couch|rug|carpet|curtain|cushion|painting|picture|clock|pc|tv|laptop|computer|television|machine|terminal|box|generator|cabinet|wardrobe|dresser|kitchen|fridge|sink|trash|decoration|ornament|doll|vase|cup|food|snacks|telephone|monitor|tools|blueprints?|region map|roulette|feeder|balloon|mat|scenery|video game|shield|ball)\b/))return 'Furniture & interiors';
+ if(has(/\b(?:water|waterfall|ocean|pond|surf|surfacing|puddle|shore|seaweed|current|whirlpool|lava|hot springs)\b/))return 'Water';
+ if(has(/\b(?:trees?|grass|ashgrass|flower|bush|plant|mushroom|vine|shrub|roots?)\b/))return 'Trees & plants';
+ if(has(/\b(?:walls?)\b/))return 'Buildings & doors';
+ if(has(/\b(?:ground|floor|path|sand|dirt|road|snow|ash|ice|mowed|mud|soil|footprints)\b/))return 'Ground & paths';
+ if(has(/\b(?:cave|rocks?|boulder|stone|stalagmite|crystal)\b/))return 'Rocks & caves';
+ if(has(/\b(?:switch|button|pressure plate|arrow|spin|spinning|walk|slide|beam)\b/))return 'Puzzles & switches';
+ if(has(/\bwarp\b/))return 'Warps & transitions';
  return 'Other';
 }
-export function tileCategory(name,behavior){const named=semanticCategory(name);return named==='Other'?semanticCategory(behavior):named;}
+export function tileCategory(name,behavior){
+ const named=semanticCategory(name);if(named!=='Other')return named;
+ if(/^MB_(?:UNUSED|INVALID)(?:_|$)/.test(behavior))return 'Other';
+ // Generic warp behavior describes a transition, not necessarily a doorway.
+ const category=semanticCategory(behavior);return ['Other','Puzzles & switches'].includes(category)&&/\bwarp\b/.test(words(behavior))?'Warps & transitions':category;
+}
 export function metatileInfo(files,sets,format){
- const labels=strFromU8(files.get('include/constants/metatile_labels.h')||new Uint8Array()),behaviors=behaviorNames(strFromU8(files.get('include/constants/metatile_behaviors.h')||new Uint8Array())),split=format==='frlg'?640:512,out=new Map();
+ const labels=strFromU8(files.get('include/constants/metatile_labels.h')||new Uint8Array()).replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,''),behaviors=behaviorNames(strFromU8(files.get('include/constants/metatile_behaviors.h')||new Uint8Array())),split=format==='frlg'?640:512,out=new Map();
+ const entries=[...labels.matchAll(/#define\s+METATILE_(\w+)\s+\(?\s*(0x[\da-f]+|\d+)\s*\)?\s*(?=\r?$)/gim)].map(m=>({name:m[1],id:Number(m[2])}));
+ const namespaces=sets.map(set=>[...new Set([set.symbol.replace(/^gTileset_/,''),set.labelNamespace,...(set.labelNamespaces||[])].filter(Boolean))].sort((a,b)=>b.replace(/_/g,'').length-a.replace(/_/g,'').length));
+ const matching=(entry,prefixes)=>{for(const prefix of prefixes){const pattern=prefix.replace(/_/g,'').split('').join('_?'),match=entry.name.match(new RegExp('^'+pattern+'_(.+)$','i'));if(match)return {name:entry.name,feature:match[1]};}return null;};
  for(let si=0;si<sets.length;si++){
-  const set=sets[si],symbol=set.symbol.replace(/^gTileset_/,''),labelNames=new Map(),prefixes=[symbol,...(set.labelNamespace?[set.labelNamespace]:[])].sort((a,b)=>b.length-a.length);
-  for(const m of labels.matchAll(/#define\s+METATILE_(\w+)\s+\(?\s*(0x[\da-f]+|\d+)/gi)){
-   const prefix=prefixes.find(p=>m[1].startsWith(p+'_'));if(!prefix)continue;const id=Number(m[2]),aliases=labelNames.get(id)||[];aliases.push({name:m[1],feature:m[1].slice(prefix.length+1)});labelNames.set(id,aliases);
-  }
+  const set=sets[si],labelNames=new Map();
+  // Primary namespaces may intentionally label secondary IDs (e.g. SecretBase).
+  // The active source's own label wins over the inherited namespace.
+  for(const entry of entries){const own=matching(entry,namespaces[si]),inherited=!own&&si?matching(entry,namespaces[0]):null,match=own||inherited;if(!match)continue;const aliases=labelNames.get(entry.id)||[];aliases.push({...match,inherited:!own});labelNames.set(entry.id,aliases);}
   const count=Math.min(si?1024-split:split,set.meta.length/16),stride=set.attr.length>=count*4&&count?4:2,v=new DataView(set.attr.buffer,set.attr.byteOffset,set.attr.byteLength);
   for(let i=0;i<count;i++){
-   const id=i+(si?split:0),attr=i*stride+stride<=v.byteLength?(stride===4?v.getUint32(i*stride,true):v.getUint16(i*stride,true)):0,behavior=behaviors.get(attr&(stride===4?511:255))||'',aliases=labelNames.get(id)||[],named=aliases.find(a=>semanticCategory(a.feature)!=='Other')||aliases[0],name=aliases.map(a=>a.name).join(' / '),labelCategory=semanticCategory(named?.feature||''),category=tileCategory(named?.feature||'',behavior);
-   out.set(id,{name,behavior,category,reason:labelCategory!=='Other'?'Source label':category!=='Other'?'Tile behavior':'No descriptive source label',sourceIndex:si,sourceSymbol:set.symbol,sourceName:friendly(set.symbol),localId:i});
+   const id=i+(si?split:0),attr=i*stride+stride<=v.byteLength?(stride===4?v.getUint32(i*stride,true):v.getUint16(i*stride,true)):0,behavior=behaviors.get(attr&(stride===4?511:255))||'',allAliases=labelNames.get(id)||[],own=allAliases.filter(a=>!a.inherited),aliases=own.length?own:allAliases,named=aliases.find(a=>semanticCategory(a.feature)!=='Other')||aliases[0],name=aliases.map(a=>a.name).join(' / '),labelCategory=semanticCategory(named?.feature||''),category=tileCategory(named?.feature||'',behavior);
+   out.set(id,{name,behavior,category,reason:labelCategory!=='Other'?(named?.inherited?'Shared primary label':'Source label'):category!=='Other'?'Tile behavior':'No descriptive source label',sourceIndex:si,sourceSymbol:set.symbol,sourceName:friendly(set.symbol),localId:i});
   }
  }
  return out;
