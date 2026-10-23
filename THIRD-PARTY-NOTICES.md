@@ -21,3 +21,8 @@ The model is a small general text model, not a certified bug finder or interpret
 ## ZIP compression
 
 fflate, MIT. License retained in dist/vendor/fflate-LICENSE.
+
+
+## Reference audit, 0.6.0
+
+Porymap source/manual snapshot `26b919d7ff4b54152de010abd5bf344af2ebe116` (LGPL-3.0) and Hex Maniac Advance snapshot `c8de1e8acf753522af7feed810d6324ce52474a3` (MIT) informed the independent area-brush and binary-navigation workflows. No implementation code, default game prefabs or tool artwork was copied or bundled. See REFERENCE-FEATURE-AUDIT.md for the evidence, feature comparison and remaining gaps.

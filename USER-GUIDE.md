@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.5.1 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.6.0 alpha · 23 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -14,7 +14,7 @@ For Emerald: Legends maps, use **source mode**. TileForge edits the project's ma
 | The published Legends project, with no unpublished local edits | On the Load screen, choose **Emerald: Legends**. This reads the current public source and pins this session to that commit. |
 | A Legends checkout with your own Porymap changes | Make a source pack from that checkout, then choose **Open your files**. This is the way to keep your local changes as the starting point. |
 | Another compatible pokeemerald-style project | Open its source ZIP or a source pack. Standard Emerald and FRLG layout splits are supported. |
-| A previously exported TileForge project ZIP | Open that ZIP to continue its files, original baselines, pins and custom groups. |
+| A previously exported TileForge project ZIP | Open that ZIP to continue its files, original baselines, pins, custom groups and saved stamps. |
 | A draft on this device | Tap its entry under saved drafts on the Load screen. |
 | Only a `.gba` file | Use the ROM workspace for known-offset uncompressed 4bpp or hex edits. Ask for the source project to edit maps. |
 
@@ -75,7 +75,23 @@ Automatic groups use descriptive source labels, then behaviors, plus a limited a
 
 Select a metatile, choose **Paint**, then tap or drag across the map. One completed stroke becomes one Undo entry. **Fill** replaces a connected region matching the selected field: in art mode this is the same metatile ID, even where movement values differ. Art painting/fill preserves existing collision and elevation. **Pick** samples a cell, including its movement readout; select Paint again to place the brush.
 
-A larger object such as a house is made of several metatiles. Place the matching pieces individually. Multi-tile stamping, smart paths and automatic edge joining are suggested future features, not current controls.
+### Copy an area and reuse it as a stamp
+
+1. Open **Areas & stamps** in Map studio. Choose **Select area** and drag from one corner to the other. Alternatively, enter **X**, **Y**, **Width** and **Height**, then choose **Select coordinates**. Coordinates start at zero. The maximum copied area is 64 by 64 cells.
+2. Open the panel again and choose **Copy selected area**. This captures the current map cells without changing the map. Events are not copied.
+3. Choose what the stamp copies: **Art only** keeps the destination's movement; **Art + collision + elevation** copies complete block values; **Movement only** keeps destination art. The two movement fields are copied together in movement mode.
+4. Choose **Stamp**, then tap the destination's top-left cell. One tap makes one Undo entry. Cells beyond a map edge are skipped rather than wrapping to another row. A drag does not place a stamp.
+5. For reuse, enter a **Stamp name** and choose **Save stamp**. Search the saved list by name, then tap a preview to use it. Up to 64 stamps save in this project's drafts and portable editable ZIP. They do not appear in the changed-source ZIP because they are editor metadata.
+6. The saved list only shows stamps for the active tileset pair and format. A copied art stamp cannot be applied after switching to an incompatible pair; return to the original pair or copy movement only. This protects the meaning of its metatile IDs. Shared graphics may still change when those assets are edited.
+7. Choose **Move**, Paint or another regular tool to leave the area tool. **Clear guides** removes selection/ruler outlines. Choosing a normal palette tile leaves Stamp and returns to Paint.
+
+Stamps place a full rectangular snapshot, not a moving selection. They do not remove the original area or create new game tiles. Sparse masks, smart paths and automatic edge joining remain future work.
+
+### Measure and export a clean map preview
+
+Choose **Areas & stamps → Ruler**, then drag between two cells. Reopen the panel to read signed X/Y displacement, Manhattan tile steps and the inclusive rectangle size. Tile steps measure geometry; they do not account for collision or calculate a walkable route. **Clear guides** removes the ruler.
+
+Choose **Map PNG** to export static map artwork at 16 pixels per metatile. Editor selection/grid/movement overlays, event markers and the repeating border are omitted. This is useful for sharing a visual plan; the image does not contain editable source data. Use the changed-source ZIP for integration. Large images above 16,777,216 pixels are refused.
 
 ### Use tiles from another location
 
@@ -162,18 +178,30 @@ The review covers numeric event bounds, duplicate NPC local IDs, changed overlap
 
 After loading, tap **Ask local AI** on a finding for an explanation and suggested manual test. This small general model is experimental; it is not trained on your complete game and can be wrong. Deterministic source checks supply the evidence and offered field corrections. Model text cannot execute code or apply edits. Neither path simulates arbitrary scripts or story progression. Build and playtest NPC interaction, flags, warps and return trips before keeping the result.
 
-## 7. Save drafts, undo mistakes and make backups
+## 7. Navigate a ROM without changing it
+
+Open a `.gba` through **Load → Open your files**, then use **ROM workspace → Hex, search & navigation**. This is manual binary work; use source mode for Legends maps.
+
+- Enter a hexadecimal **Offset** and choose **Read bytes**. Previous/next page moves 256 bytes. **View here as 4bpp** uses that offset and the existing graphics tile count; only uncompressed data can be painted.
+- Expand **Find bytes or ASCII**. In hex mode enter pairs such as `DE AD ?? EF`; `??` matches one arbitrary byte. At least one fixed byte is required. ASCII mode searches literal printable characters, case-sensitively, and does not decode Pokémon dialogue. Choose **Find**, then tap a result or use **Previous match / Next match**. At most the first 200 matches appear. Search yields between chunks so the interface stays responsive.
+- If the selected four bytes form an in-range little-endian `08`/`09` ROM address, **Follow pointer** jumps to it. **Back / Forward** revisit navigation jumps. A raw candidate may be coincidental; the tool does not understand Thumb pointers, table types or story logic.
+- **Find pointers to this offset** searches raw references. Default candidates start on four-byte boundaries. **Include unaligned candidates** broadens the scan. Results are evidence to inspect, not proof every reference belongs to a particular asset. Nothing is repointed automatically.
+- Enter **Name this offset → Add bookmark** to keep a named location. Filter bookmarks by name or hexadecimal offset, tap to jump, or Delete to remove one. Up to 100 bookmarks and the selected offset are retained with **Save draft**. They are not embedded in an exported `.gba`; Back/Forward and search results are temporary.
+
+Search, ruler, selection, image export and navigation do not write game data or create game-file Undo entries. ROM **Write byte** and uncompressed pixel painting do write the local working copy and support Undo. The original ROM is retained for draft recovery; export a new `.gba` copy when ready. There is no automatic ROM map detection, ROM table expansion, compressed graphics writeback or decompilation.
+
+## 8. Save drafts, undo mistakes and make backups
 
 | Save option | Use it for | What to remember |
 | --- | --- | --- |
 | **Save draft** / automatic draft | Pausing and resuming on the same browser/app | Keeps original files and undo/redo history. Wait for Draft saved. Drafts are local to this app/origin, not cloud sync. |
-| **Export → Save editable project** | Portable source backup or moving between web and APK | Keeps loaded source files, original baselines, chosen map, pins and category tags. Reopening starts a new undo history. Live-source exports contain only maps/assets already loaded; more can load online from the pinned revision. |
+| **Export → Save editable project** | Portable source backup or moving between web and APK | Keeps loaded source files, original baselines, chosen map, pins, category tags and saved stamps. Reopening starts a new undo history. Live-source exports contain only maps/assets already loaded; more can load online from the pinned revision. |
 | **Export → Share edits ZIP** | Sending source changes for review/integration | Contains changed files and a hash manifest. It is not a complete workspace or a ROM. |
 | **Export edited GBA** in ROM mode | Keeping your manual ROM changes | Creates a new ROM copy. Source projects cannot use this route to compile a ROM. |
 
 Automatic drafts run after changes. Use the explicit button and inspect its success label before closing the app. Clearing browser storage, uninstalling the app or changing origins can remove access to drafts. Export a portable project at meaningful milestones.
 
-The labelled **Undo** button shows the number of available edits; **Redo** restores an undone edit. Undo spans map, collision, border, tileset pixel and event changes. Pins and category tags are editor preferences and do not add game-file Undo entries.
+The labelled **Undo** button shows the number of available edits; **Redo** restores an undone edit. Undo spans map, collision, border, tileset pixel and event changes. Pins, category tags and saved stamps are editor preferences and do not add game-file Undo entries.
 
 Keyboard shortcuts, when focus is outside an input or dialog: **B** Paint, **F** Fill, **I** Pick, **H** Move, **Ctrl/Cmd+Z** Undo, **Ctrl/Cmd+Shift+Z** Redo, **Ctrl/Cmd+S** export an editable source project (or a ROM copy in ROM mode). Ctrl+S is a portable export, not Save draft.
 
@@ -183,7 +211,7 @@ After a set of edits has been integrated, open a fresh source pack or a fresh li
 
 Choose **Load**, find the saved draft and tap **Delete**. The confirmation identifies the project and timestamp. Deleted drafts stay on this device and can be restored; deleting is not a portable backup or a way to clear their storage. Export a portable project first if you need a backup. Confirming moves that device copy to **Deleted drafts**, where **Restore** recovers it with its original baseline and undo history; it does not delete exported files or the open workspace. If the deleted draft was open, pending autosave is cancelled and the app does not immediately recreate it. Your next edit or explicit **Save draft** creates a new draft. Other drafts keep their own identity and baselines.
 
-## 8. Export and send the required files back to chat
+## 9. Export and send the required files back to chat
 
 1. Press **3 · Export**.
 2. Open **Review changed files**. For a map edit you normally see its `map.bin`; a border edit adds `border.bin`; a tileset swap changes `data/layouts/layouts.json`; pixels change a `.png`; events change the map's `map.json`, and new dialogue also changes `scripts.inc`. Actual paths follow your source project.
@@ -208,7 +236,7 @@ only matching files, then build and test the changed area.
 
 A screenshot can help explain intent, but the ZIP supplies the exact files and original hashes. You do not need to upload a ROM for source integration. The app does not push to GitHub, update the game repository or publish a game release when you press Export.
 
-## 9. Integrate, build and check the result
+## 10. Integrate, build and check the result
 
 If you hand the ZIP back to chat, the integration work can be done there. If doing it yourself, keep a backup/branch of your current game checkout and use the helper from the **TileForge** repository:
 
@@ -234,7 +262,7 @@ The Legends README documents `make release` for the normal player build and `mak
 
 Test the built result: inspect the whole edited area, walk from each approach, try changed doors/warps, read signs, talk to NPCs and verify shared graphics in another affected map. For bridges/stairs/water, test the relevant elevations and shore crossings. Keep your original game/save backup and test a copy. A successful compilation alone does not prove the movement or event logic is correct.
 
-## 10. Troubleshooting and next improvements
+## 11. Troubleshooting and next improvements
 
 | What you see | What to do |
 | --- | --- |
@@ -253,10 +281,10 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals, not features included in 0.4.2:
+These are proposals beyond 0.6.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
-2. **Multi-tile stamps and smart edges.** Copy a tree, house or cliff segment as one brush, then add optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
+2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
 3. **Batch category review and portable category packs.** Select several unknown tiles, assign a group once, and share a small versioned metadata file without sending the whole project. Keep provenance and exact asset checks.
 4. **Draft names and checkpoints.** Let you name milestones, compare them and return to a checkpoint, while keeping the current Undo behavior.
 5. **A focused gameplay check after integration.** Complement Review events with a local test build that checks movement, flags and return warps in the actual game. This needs game/build tooling beyond the source checker.
@@ -265,7 +293,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.5.1 source and its actual UI labels. Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.6.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

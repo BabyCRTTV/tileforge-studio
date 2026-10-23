@@ -1,6 +1,8 @@
 # TileForge Studio
 
-The 0.5.1 update adds a read-only summary on the first tap of an event marker or a choice in Select event. It shows the event's stored identity, position, movement, flags/conditions, dialogue or script and warp destination where applicable. Choose Edit event to make changes. Move-mode taps inspect events while drags keep panning; overlapping events can be selected within the summary. Specialized events are inspectable even when their editing is unsupported.
+The 0.6.0 update integrates missing workflows identified in a [Porymap / Hex Maniac Advance feature audit](REFERENCE-FEATURE-AUDIT.md): rectangular map selection, saved searchable stamps with explicit art/movement policy, a ruler, clean map PNG export, raw ROM byte/ASCII search, pointer navigation/reference candidates, Back/Forward and draft bookmarks. The comparison records partial support and larger remaining gaps; this is not full desktop-tool parity.
+
+Open **Areas & stamps** in Map studio. Select a rectangle by drag or coordinates, copy it, choose the fields, and tap **Stamp** at the top-left destination. Saved stamps are tied to compatible source pairs and travel with drafts and portable projects. In ROM workspace, open **Hex, search & navigation** to find bytes, follow raw pointers or save a named offset. Navigation never changes ROM bytes.
 
 Paint, Fill, Pick and Move labels remain visible at every screen size. Newly opened workspaces start in Move; new source projects select a labelled plain-grass patch when available (Legends General #001). Map changes keep the active tool/valid brush, and drafts retain their saved brush.
 
@@ -8,9 +10,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.5.1 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.6.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.5.1.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.6.0.apk)**
 
 ## What works
 
@@ -21,13 +23,14 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.5.1 alp
 
 - Open Pokémon Emerald: Legends directly from its public source, pinned to a specific commit. Browse 872 layout entries in the source inspected for this release; only the assets for selected maps are downloaded.
 - Open a pokeemerald-style source ZIP or a saved TileForge project.
-- Paint map metatiles; fill connected areas; sample a cell; pan and zoom; undo and redo.
+- Paint map metatiles; fill connected areas; sample a cell; pan and zoom; undo and redo. Copy rectangular areas, save/search reusable stamps, copy art/movement/both, measure tile distances and export clean map PNGs.
 - View movement as an adjustable-opacity overlay, with white/red elevation labels like Porymap's walkable/blocked display. Choose any of the 32 standard elevation/collision presets, including transition (0), surf (1), and multi-level (F). Inspect coordinates, metatile ID, collision, and elevation. Edit collision values 0–3 and elevation 0–15 independently, or paint both. Movement fills preserve artwork and use the selected movement fields as their boundary.
 - Borrow primary/secondary tilesets from compatible locations through searchable dropdowns. Existing cell collision/elevation is preserved. Missing metatiles appear magenta and must be replaced before sharing a tileset change.
 - Browse metatiles under category headers, with a separate searchable category filter (cliffs, water, signs and more), tile search and custom category tags saved in editable projects. Automatic categories use source labels and behaviors plus a limited exact-asset artwork review; unknown tiles can be tagged manually.
 - Add and edit NPCs, signs, trigger events and warps in source mode. Tap a marker for a read-only summary, including its position, appearance, movement, conditions, script/dialogue and warp destination where applicable. Choose Edit event to open its editing controls. Move-mode taps inspect events while drags still pan. Keep an existing script or create simple dialogue. Map metadata and generated dialogue undo together; original story/trainer fields and existing event order are preserved.
 - Search dropdowns throughout the app; tap the small help buttons for tablet-friendly tooltips.
 - Edit indexed tileset PNG pixels in Pixel studio, with the map's palette. Shared graphics changes immediately appear when returning to maps that use them.
+- Search ROM hex bytes (`??` wildcard) or literal ASCII, follow in-range raw 08/09 pointers, search aligned/unaligned pointer candidates, navigate pages and Back/Forward, and save named offsets with ROM drafts. These are raw binary tools, not automatic structured data detection.
 - Open any appropriately sized `.gba` file for hex edits or manual-offset uncompressed 4bpp graphics edits; save a new `.gba` copy. GBA LZ77 graphics preview is read-only.
 - Export **only changed source files** with original paths, original/changed SHA-256 hashes, source commit, and editor version. Save complete editable projects with baseline data. Local source and ROM drafts use IndexedDB.
 - Android APK bundles the app for offline use; uses Android's system file picker and Save As picker. Internet is the only requested permission. No login, advertising, telemetry, or broad storage permission.
@@ -61,7 +64,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.5.1 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
+GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.6.0 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 
@@ -78,7 +81,7 @@ TileForge is an independent implementation. No Porymap/HMA implementation code o
 
 To rebuild the reference guide, install Python packages `reportlab` and `beautifulsoup4` plus `pandoc`, then run `python3 tools/build_guide.py`. This creates `dist/guide.html` and its downloadable PDF. The normal static build needs no Python guide dependencies.
 
-## 0.5.1 updates
+## 0.6.0 updates
 
 Location switches reset palette filters and scrolling to that layout's actual saved primary/secondary pair. The searchable location/pair selector starts on the current location; borrowed tilesets and saved pair edits remain editable.
 

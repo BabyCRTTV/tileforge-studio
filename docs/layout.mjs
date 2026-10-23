@@ -5,7 +5,11 @@ export function createLayout({S,$,fit}) {
  let frame;
  function reflow(){
   cancelAnimationFrame(frame);
-  frame=requestAnimationFrame(()=>{if(S.autoFit&&!S.stroke)fit();});
+  frame=requestAnimationFrame(()=>{
+   // Long area/event controls must scroll within the space below their header.
+   for(const panel of panels){const popover=panel.querySelector('.studio-popover');if(compact.matches&&panel.open&&!panel.classList.contains('controls-tucked'))popover.style.maxHeight=Math.max(80,Math.min(380,innerHeight-popover.getBoundingClientRect().top-12))+'px';else popover.style.removeProperty('max-height');}
+   if(S.autoFit&&!S.stroke)fit();
+  });
  }
  function sync(){
   // Desktop display controls are inline; compact controls open over the map.

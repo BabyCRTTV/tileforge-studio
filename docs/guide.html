@@ -1,6 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.5.1</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.6.0</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
 <p><strong>From your first map edit to a new game build</strong><br/>
-TileForge 0.5.1 alpha · 23 October 2026 · By 8BitTrade</p>
+TileForge 0.6.0 alpha · 23 October 2026 · By 8BitTrade</p>
 <p><a href="https://babycrttv.github.io/tileforge-studio/">Open
 TileForge</a> · <a href="https://babycrttv.github.io/tileforge-studio/editor.html">Open the
 editor</a> · <a href="https://babycrttv.github.io/tileforge-studio/guide.html">Read this
@@ -11,10 +11,11 @@ orient yourself and make a tiny first edit</a></li><li><a href="#3-find-the-righ
 and paint the map</a></li><li><a href="#4-view-and-edit-collision-and-elevation">4. View and edit
 collision and elevation</a></li><li><a href="#5-change-the-map-border-or-tileset-pixels">5. Change the map
 border or tileset pixels</a></li><li><a href="#6-add-or-edit-npcs-signs-triggers-and-warps">6. Add or edit
-NPCs, signs, triggers and warps</a></li><li><a href="#7-save-drafts-undo-mistakes-and-make-backups">7. Save drafts,
-undo mistakes and make backups</a></li><li><a href="#8-export-and-send-the-required-files-back-to-chat">8. Export and
-send the required files back to chat</a></li><li><a href="#9-integrate-build-and-check-the-result">9. Integrate, build and
-check the result</a></li><li><a href="#10-troubleshooting-and-next-improvements">10. Troubleshooting
+NPCs, signs, triggers and warps</a></li><li><a href="#7-navigate-a-rom-without-changing-it">7. Navigate a ROM without
+changing it</a></li><li><a href="#8-save-drafts-undo-mistakes-and-make-backups">8. Save drafts,
+undo mistakes and make backups</a></li><li><a href="#9-export-and-send-the-required-files-back-to-chat">9. Export and
+send the required files back to chat</a></li><li><a href="#10-integrate-build-and-check-the-result">10. Integrate, build
+and check the result</a></li><li><a href="#11-troubleshooting-and-next-improvements">11. Troubleshooting
 and next improvements</a></li></ol></nav><h2 id="1-choose-the-right-starting-point">1. Choose the right starting
 point</h2>
 <p>For Emerald: Legends maps, use <strong>source mode</strong>.
@@ -49,8 +50,8 @@ layout splits are supported.</td>
 </tr>
 <tr class="even">
 <td>A previously exported TileForge project ZIP</td>
-<td>Open that ZIP to continue its files, original baselines, pins and
-custom groups.</td>
+<td>Open that ZIP to continue its files, original baselines, pins,
+custom groups and saved stamps.</td>
 </tr>
 <tr class="odd">
 <td>A draft on this device</td>
@@ -214,10 +215,57 @@ field: in art mode this is the same metatile ID, even where movement
 values differ. Art painting/fill preserves existing collision and
 elevation. <strong>Pick</strong> samples a cell, including its movement
 readout; select Paint again to place the brush.</p>
-<p>A larger object such as a house is made of several metatiles. Place
-the matching pieces individually. Multi-tile stamping, smart paths and
-automatic edge joining are suggested future features, not current
-controls.</p>
+<h3 id="copy-an-area-and-reuse-it-as-a-stamp">Copy an area and reuse it
+as a stamp</h3>
+<ol type="1">
+<li>Open <strong>Areas &amp; stamps</strong> in Map studio. Choose
+<strong>Select area</strong> and drag from one corner to the other.
+Alternatively, enter <strong>X</strong>, <strong>Y</strong>,
+<strong>Width</strong> and <strong>Height</strong>, then choose
+<strong>Select coordinates</strong>. Coordinates start at zero. The
+maximum copied area is 64 by 64 cells.</li>
+<li>Open the panel again and choose <strong>Copy selected area</strong>.
+This captures the current map cells without changing the map. Events are
+not copied.</li>
+<li>Choose what the stamp copies: <strong>Art only</strong> keeps the
+destination's movement; <strong>Art + collision + elevation</strong>
+copies complete block values; <strong>Movement only</strong> keeps
+destination art. The two movement fields are copied together in movement
+mode.</li>
+<li>Choose <strong>Stamp</strong>, then tap the destination's top-left
+cell. One tap makes one Undo entry. Cells beyond a map edge are skipped
+rather than wrapping to another row. A drag does not place a stamp.</li>
+<li>For reuse, enter a <strong>Stamp name</strong> and choose
+<strong>Save stamp</strong>. Search the saved list by name, then tap a
+preview to use it. Up to 64 stamps save in this project's drafts and
+portable editable ZIP. They do not appear in the changed-source ZIP
+because they are editor metadata.</li>
+<li>The saved list only shows stamps for the active tileset pair and
+format. A copied art stamp cannot be applied after switching to an
+incompatible pair; return to the original pair or copy movement only.
+This protects the meaning of its metatile IDs. Shared graphics may still
+change when those assets are edited.</li>
+<li>Choose <strong>Move</strong>, Paint or another regular tool to leave
+the area tool. <strong>Clear guides</strong> removes selection/ruler
+outlines. Choosing a normal palette tile leaves Stamp and returns to
+Paint.</li>
+</ol>
+<p>Stamps place a full rectangular snapshot, not a moving selection.
+They do not remove the original area or create new game tiles. Sparse
+masks, smart paths and automatic edge joining remain future work.</p>
+<h3 id="measure-and-export-a-clean-map-preview">Measure and export a
+clean map preview</h3>
+<p>Choose <strong>Areas &amp; stamps → Ruler</strong>, then drag between
+two cells. Reopen the panel to read signed X/Y displacement, Manhattan
+tile steps and the inclusive rectangle size. Tile steps measure
+geometry; they do not account for collision or calculate a walkable
+route. <strong>Clear guides</strong> removes the ruler.</p>
+<p>Choose <strong>Map PNG</strong> to export static map artwork at 16
+pixels per metatile. Editor selection/grid/movement overlays, event
+markers and the repeating border are omitted. This is useful for sharing
+a visual plan; the image does not contain editable source data. Use the
+changed-source ZIP for integration. Large images above 16,777,216 pixels
+are refused.</p>
 <h3 id="use-tiles-from-another-location">Use tiles from another
 location</h3>
 <p>Each location opens its own saved primary and secondary tilesets.
@@ -453,7 +501,50 @@ corrections. Model text cannot execute code or apply edits. Neither path
 simulates arbitrary scripts or story progression. Build and playtest NPC
 interaction, flags, warps and return trips before keeping the
 result.</p>
-<h2 id="7-save-drafts-undo-mistakes-and-make-backups">7. Save drafts,
+<h2 id="7-navigate-a-rom-without-changing-it">7. Navigate a ROM without
+changing it</h2>
+<p>Open a <code>.gba</code> through <strong>Load → Open your
+files</strong>, then use <strong>ROM workspace → Hex, search &amp;
+navigation</strong>. This is manual binary work; use source mode for
+Legends maps.</p>
+<ul>
+<li>Enter a hexadecimal <strong>Offset</strong> and choose <strong>Read
+bytes</strong>. Previous/next page moves 256 bytes. <strong>View here as
+4bpp</strong> uses that offset and the existing graphics tile count;
+only uncompressed data can be painted.</li>
+<li>Expand <strong>Find bytes or ASCII</strong>. In hex mode enter pairs
+such as <code>DE AD ?? EF</code>; <code>??</code> matches one arbitrary
+byte. At least one fixed byte is required. ASCII mode searches literal
+printable characters, case-sensitively, and does not decode Pokémon
+dialogue. Choose <strong>Find</strong>, then tap a result or use
+<strong>Previous match / Next match</strong>. At most the first 200
+matches appear. Search yields between chunks so the interface stays
+responsive.</li>
+<li>If the selected four bytes form an in-range little-endian
+<code>08</code>/<code>09</code> ROM address, <strong>Follow
+pointer</strong> jumps to it. <strong>Back / Forward</strong> revisit
+navigation jumps. A raw candidate may be coincidental; the tool does not
+understand Thumb pointers, table types or story logic.</li>
+<li><strong>Find pointers to this offset</strong> searches raw
+references. Default candidates start on four-byte boundaries.
+<strong>Include unaligned candidates</strong> broadens the scan. Results
+are evidence to inspect, not proof every reference belongs to a
+particular asset. Nothing is repointed automatically.</li>
+<li>Enter <strong>Name this offset → Add bookmark</strong> to keep a
+named location. Filter bookmarks by name or hexadecimal offset, tap to
+jump, or Delete to remove one. Up to 100 bookmarks and the selected
+offset are retained with <strong>Save draft</strong>. They are not
+embedded in an exported <code>.gba</code>; Back/Forward and search
+results are temporary.</li>
+</ul>
+<p>Search, ruler, selection, image export and navigation do not write
+game data or create game-file Undo entries. ROM <strong>Write
+byte</strong> and uncompressed pixel painting do write the local working
+copy and support Undo. The original ROM is retained for draft recovery;
+export a new <code>.gba</code> copy when ready. There is no automatic
+ROM map detection, ROM table expansion, compressed graphics writeback or
+decompilation.</p>
+<h2 id="8-save-drafts-undo-mistakes-and-make-backups">8. Save drafts,
 undo mistakes and make backups</h2>
 <div class="table-scroll"><table>
 <thead>
@@ -473,10 +564,10 @@ Drafts are local to this app/origin, not cloud sync.</td>
 <tr class="even">
 <td><strong>Export → Save editable project</strong></td>
 <td>Portable source backup or moving between web and APK</td>
-<td>Keeps loaded source files, original baselines, chosen map, pins and
-category tags. Reopening starts a new undo history. Live-source exports
-contain only maps/assets already loaded; more can load online from the
-pinned revision.</td>
+<td>Keeps loaded source files, original baselines, chosen map, pins,
+category tags and saved stamps. Reopening starts a new undo history.
+Live-source exports contain only maps/assets already loaded; more can
+load online from the pinned revision.</td>
 </tr>
 <tr class="odd">
 <td><strong>Export → Share edits ZIP</strong></td>
@@ -498,9 +589,9 @@ storage, uninstalling the app or changing origins can remove access to
 drafts. Export a portable project at meaningful milestones.</p>
 <p>The labelled <strong>Undo</strong> button shows the number of
 available edits; <strong>Redo</strong> restores an undone edit. Undo
-spans map, collision, border, tileset pixel and event changes. Pins and
-category tags are editor preferences and do not add game-file Undo
-entries.</p>
+spans map, collision, border, tileset pixel and event changes. Pins,
+category tags and saved stamps are editor preferences and do not add
+game-file Undo entries.</p>
 <p>Keyboard shortcuts, when focus is outside an input or dialog:
 <strong>B</strong> Paint, <strong>F</strong> Fill, <strong>I</strong>
 Pick, <strong>H</strong> Move, <strong>Ctrl/Cmd+Z</strong> Undo,
@@ -525,7 +616,7 @@ deleted draft was open, pending autosave is cancelled and the app does
 not immediately recreate it. Your next edit or explicit <strong>Save
 draft</strong> creates a new draft. Other drafts keep their own identity
 and baselines.</p>
-<h2 id="8-export-and-send-the-required-files-back-to-chat">8. Export and
+<h2 id="9-export-and-send-the-required-files-back-to-chat">9. Export and
 send the required files back to chat</h2>
 <ol type="1">
 <li>Press <strong>3 · Export</strong>.</li>
@@ -562,8 +653,8 @@ only matching files, then build and test the changed area.</code></pre>
 files and original hashes. You do not need to upload a ROM for source
 integration. The app does not push to GitHub, update the game repository
 or publish a game release when you press Export.</p>
-<h2 id="9-integrate-build-and-check-the-result">9. Integrate, build and
-check the result</h2>
+<h2 id="10-integrate-build-and-check-the-result">10. Integrate, build
+and check the result</h2>
 <p>If you hand the ZIP back to chat, the integration work can be done
 there. If doing it yourself, keep a backup/branch of your current game
 checkout and use the helper from the <strong>TileForge</strong>
@@ -597,7 +688,7 @@ shared graphics in another affected map. For bridges/stairs/water, test
 the relevant elevations and shore crossings. Keep your original
 game/save backup and test a copy. A successful compilation alone does
 not prove the movement or event logic is correct.</p>
-<h2 id="10-troubleshooting-and-next-improvements">10. Troubleshooting
+<h2 id="11-troubleshooting-and-next-improvements">11. Troubleshooting
 and next improvements</h2>
 <div class="table-scroll"><table>
 <thead>
@@ -671,14 +762,15 @@ undone. Save an editable project to keep preferences.</td>
 </tbody>
 </table></div>
 <h3 id="ideas-worth-prioritizing">Ideas worth prioritizing</h3>
-<p>These are proposals, not features included in 0.4.2:</p>
+<p>These are proposals beyond 0.6.0; the current tools are described
+above:</p>
 <ol type="1">
 <li><strong>Before/after export preview and affected-map list.</strong>
 Show changed cells and which maps share an edited graphics/border/layout
 file before integration. This would make shared asset edits easier to
 review.</li>
-<li><strong>Multi-tile stamps and smart edges.</strong> Copy a tree,
-house or cliff segment as one brush, then add optional path/shore edge
+<li><strong>Sparse stamps and smart edges.</strong> Extend the shipped
+rectangular stamps with transparent cells and optional path/shore edge
 joining. Porymap's prefabs and smart paths are useful references.</li>
 <li><strong>Batch category review and portable category packs.</strong>
 Select several unknown tiles, assign a group once, and share a small
@@ -696,8 +788,9 @@ beyond the source checker.</li>
 helps you verify exactly what you will send and catches unintended
 shared changes early.</p>
 <h3 id="sources-and-scope">Sources and scope</h3>
-<p>This guide follows the TileForge 0.5.1 source and its actual UI
-labels. Category audit: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md">CATEGORY-AUDIT.md</a>.
+<p>This guide follows the TileForge 0.6.0 source and its actual UI
+labels. Feature comparison: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md">REFERENCE-FEATURE-AUDIT.md</a>.
+Category audit: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md">CATEGORY-AUDIT.md</a>.
 The editor is an independent alpha inspired by <a href="https://huderlem.github.io/porymap/">Porymap</a> and <a href="https://github.com/haven1433/HexManiacAdvance">Hex Maniac
 Advance</a>.</p>
 <p>Reference reading: Porymap's <a href="https://huderlem.github.io/porymap/manual/editing-map-tiles.html">map
