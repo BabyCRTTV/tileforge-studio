@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.7.0 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.8.0 alpha · 23 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -27,6 +27,18 @@ For Emerald: Legends maps, use **source mode**. TileForge edits the project's ma
 The [TileForge home page](https://babycrttv.github.io/tileforge-studio/) offers **Open Web App** and **Download APK**. In a browser, open the web app. On Android, download the APK, open it through your file manager and follow Android's installer prompts. If Android requests it, allow that particular browser/file manager to install this app. Future updates should install over the same app rather than requiring you to clear its data.
 
 The web app and installed APK have separate draft storage. Moving between them requires an exported editable project. For a first try, Help contains an optional **Offline practice island**. Your real source files are only changed after exported edits are integrated into the game project.
+
+### Check for app updates
+
+Open **Settings** with the gear button in the header, then **Check for updates**. This is available on the Load screen and while editing. Settings shows your current version, the latest checked version, the check time and release notes.
+
+On Android, **Download and install update** downloads the APK inside TileForge and shows progress. The app checks the expected download size and SHA-256, the package name/version and the installed signing certificate. Android then asks you to confirm the update. If prompted, allow updates from TileForge in Android settings and return to the app; it resumes installation. If you cancel, Settings lets you reopen the installer. Installation remains your choice.
+
+Your current workspace is saved as a draft before starting the update. Updating over the existing signed installation keeps app storage, including drafts; do not uninstall first. Keep an exported editable project as a separate backup. If draft saving fails, the update pauses so you can export your work.
+
+In a browser, **Apply web update** saves a draft and refreshes the editor. Resume your saved draft from Load afterward. It verifies that the newer editor entry is available before refreshing. Offline or incomplete releases show a retry message instead of reporting that you are current. Update checks start only when you press Check; there are no background model or update downloads.
+
+Versions before 0.8.0 need one manual APK installation to gain the Settings updater. Future versions can be installed through this menu. Android may require installation permission for TileForge; this is not broad access to your files. Physical-device installation and system permission behavior still require device validation.
 
 ### Make a source pack on a computer
 
@@ -301,7 +313,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.7.0; the current tools are described above:
+These are proposals beyond 0.8.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -313,7 +325,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.7.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.8.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

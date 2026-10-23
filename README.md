@@ -10,9 +10,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.7.1 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.8.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.7.1.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.8.0.apk)**
 
 ## What works
 
@@ -33,7 +33,7 @@ A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.7.1 alp
 - Search ROM hex bytes (`??` wildcard) or literal ASCII, follow in-range raw 08/09 pointers, search aligned/unaligned pointer candidates, navigate pages and Back/Forward, and save named offsets with ROM drafts. These are raw binary tools, not automatic structured data detection.
 - Open any appropriately sized `.gba` file for hex edits or manual-offset uncompressed 4bpp graphics edits; save a new `.gba` copy. GBA LZ77 graphics preview is read-only.
 - Export **only changed source files** with original paths, original/changed SHA-256 hashes, source commit, and editor version. Save complete editable projects with baseline data. Local source and ROM drafts use IndexedDB.
-- Android APK bundles the app for offline use; uses Android's system file picker and Save As picker. Internet is the only requested permission. No login, advertising, telemetry, or broad storage permission.
+- Android APK bundles the app for offline use; uses Android's system file picker and Save As picker. Internet and Android package-install permission are requested for in-app updates. No login, advertising, telemetry, or broad storage permission.
 
 ## Legends workflow
 
@@ -96,3 +96,9 @@ Map studio → Selected tile → **Edit selected metatile** previews and edits t
 ### 0.7.1 export guidance
 
 The source Export panel now explains: save the edits ZIP to your device, upload it back to chat for current-source checks and integration, then rebuild/test the game. Export does not automatically update the source folder or GitHub. Save editable project is identified as a portable TileForge backup. ROM export shows separate-copy guidance instead of source integration instructions.
+
+### 0.8.0 Settings and updates
+
+Use the header gear → Settings → Check for updates. Android downloads the APK in private storage, verifies size/hash/package/version/signer, and opens Android confirmation. Only Internet and REQUEST_INSTALL_PACKAGES permissions are declared; installation permission remains under Android control. The browser can save a draft and refresh after verifying the new editor is published. Both paths save an open workspace as a draft first; failed saves pause the update. Older APKs need this version installed manually once.
+
+Release process: update package/core/Android versions and package release notes, build and sign the APK with the existing key, then run `node tools/build.mjs`. The build prepares `dist/update.json` from the actual signed APK bytes and mirrors everything into docs. Never edit its size/hash manually or bundle the update manifest into the APK; publish metadata and APK in the same Pages deployment.

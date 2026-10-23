@@ -13,6 +13,7 @@ import java.io.*;
 public class MainActivity extends Activity {
     private static final String ORIGIN = "https://appassets.androidplatform.net";
     private WebView web;
+    private AppUpdater updater;
     private ValueCallback<Uri[]> chooser;
     private File pendingFile;
     private FileOutputStream output;
@@ -37,6 +38,8 @@ public class MainActivity extends Activity {
         settings.setAllowUniversalAccessFromFileURLs(false);
         settings.setMixedContentMode(WebSettings.MIXED_CONTENT_NEVER_ALLOW);
         web.addJavascriptInterface(new SaveBridge(), "AndroidFiles");
+        updater = new AppUpdater(this, web);
+        web.addJavascriptInterface(new UpdateBridge(), "TileForgeUpdates");
         web.setWebViewClient(new WebViewClient() {
             @Override public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest req) {
                 Uri u = req.getUrl();
@@ -51,7 +54,7 @@ public class MainActivity extends Activity {
             }
             @Override public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.startsWith(ORIGIN+"/assets/www/") && !url.endsWith(".apk")) return false;
-                if(url.startsWith(ORIGIN) && url.endsWith(".apk")) url="https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.6.0.apk";
+                if(url.startsWith(ORIGIN) && url.endsWith(".apk")) url="https://babycrttv.github.io/tileforge-studio/";
                 if(url.startsWith("https://")) {try {startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse(url)));} catch(Exception e){message("No browser available");}}
                 return true;
             }
@@ -68,6 +71,13 @@ public class MainActivity extends Activity {
         web.loadUrl(ORIGIN+"/assets/www/index.html");
     }
     private void message(final String s){runOnUiThread(new Runnable(){public void run(){Toast.makeText(MainActivity.this,s,Toast.LENGTH_LONG).show();}});}
+    private class UpdateBridge {
+        @JavascriptInterface public String getState(){return updater.snapshot();}
+        @JavascriptInterface public void check(){runOnUiThread(new Runnable(){public void run(){if(updater.trusted())updater.check();}});}
+        @JavascriptInterface public void download(){runOnUiThread(new Runnable(){public void run(){if(updater.trusted())updater.download();}});}
+        @JavascriptInterface public void install(){runOnUiThread(new Runnable(){public void run(){if(updater.trusted())updater.install();}});}
+    }
+    @Override protected void onResume(){super.onResume();if(updater!=null)updater.onResume();}
     private synchronized void clearPending() {try {if(output!=null)output.close();}catch(IOException ignored){}output=null;if(pendingFile!=null)pendingFile.delete();pendingFile=null;saving=false;}
     private class SaveBridge {
         @JavascriptInterface public synchronized void beginSave(String name,String mime) {
@@ -93,5 +103,5 @@ public class MainActivity extends Activity {
         if(request==101){if(result==RESULT_OK&&data!=null&&pendingFile!=null){final Uri destination=data.getData();final File file=pendingFile;new Thread(new Runnable(){public void run(){try(InputStream in=new FileInputStream(file);OutputStream out=getContentResolver().openOutputStream(destination)){byte[] b=new byte[65536];int n;while((n=in.read(b))!=-1)out.write(b,0,n);message("Export saved");}catch(Exception e){message("Export failed. Please try again.");}finally{clearPending();}}}).start();}else clearPending();}
     }
     @Override public void onBackPressed(){web.evaluateJavascript("document.querySelector('dialog[open]') ? (document.querySelector('dialog[open]').close(), true) : false",new ValueCallback<String>(){public void onReceiveValue(String result){if(!"true".equals(result))new android.app.AlertDialog.Builder(MainActivity.this).setTitle("Close TileForge?").setMessage("Export or save your project before closing. Source edits also have a local draft.").setNegativeButton("Keep editing",null).setPositiveButton("Close",new android.content.DialogInterface.OnClickListener(){public void onClick(android.content.DialogInterface d,int w){finish();}}).show();}});}
-    @Override protected void onDestroy(){if(chooser!=null)chooser.onReceiveValue(null);clearPending();web.destroy();super.onDestroy();}
+    @Override protected void onDestroy(){if(updater!=null)updater.destroy();if(chooser!=null)chooser.onReceiveValue(null);clearPending();web.removeJavascriptInterface("TileForgeUpdates");web.removeJavascriptInterface("AndroidFiles");web.destroy();super.onDestroy();}
 }

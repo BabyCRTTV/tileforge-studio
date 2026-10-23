@@ -1,0 +1,16 @@
+{
+  "format": "tileforge-update",
+  "version": "0.8.0",
+  "versionCode": 13,
+  "notes": [
+    "Settings now includes version details and Check for updates.",
+    "Android downloads and verifies updates inside the app, then opens Android installation.",
+    "The web app can save your workspace as a draft and refresh to the latest version."
+  ],
+  "android": {
+    "packageId": "com.eightbittrade.tileforge",
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.8.0.apk",
+    "size": 187115,
+    "sha256": "4795c27ba1b33cf5f02f446b0652560ece61c82955d78a43f24f61e4d6163968"
+  }
+}

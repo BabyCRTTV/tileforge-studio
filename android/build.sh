@@ -11,10 +11,11 @@ cp -R dist/. android/build/assets/www/
 # The native app opens the editor directly; the website root is the download landing page.
 cp dist/editor.html android/build/assets/www/index.html
 rm -rf android/build/assets/www/downloads
+rm -f android/build/assets/www/update.json
 if [ -n "${ECJ_JAR:-}" ]; then
-  java -jar "$ECJ_JAR" -8 -bootclasspath "$ANDROID_JAR" -d android/build/classes android/src/com/eightbittrade/tileforge/MainActivity.java
+  java -jar "$ECJ_JAR" -8 -bootclasspath "$ANDROID_JAR" -d android/build/classes android/src/com/eightbittrade/tileforge/*.java
 else
-  javac -source 8 -target 8 -bootclasspath "$ANDROID_JAR" -d android/build/classes android/src/com/eightbittrade/tileforge/MainActivity.java
+  javac -source 8 -target 8 -bootclasspath "$ANDROID_JAR" -d android/build/classes android/src/com/eightbittrade/tileforge/*.java
 fi
 python3 - <<'PYZIP'
 import zipfile,pathlib
@@ -28,5 +29,5 @@ java -cp "$R8_JAR" com.android.tools.r8.D8 --lib "$ANDROID_JAR" --min-api 26 --o
 # A local alpha build creates a private keystore once. CI should supply its persistent signing key.
 TILEFORGE_KEYSTORE="${TILEFORGE_KEYSTORE:-android/build/tileforge-alpha.jks}"
 if [ ! -f "$TILEFORGE_KEYSTORE" ]; then keytool -genkeypair -keystore "$TILEFORGE_KEYSTORE" -storepass android -keypass android -alias tileforge -dname 'CN=8BitTrade TileForge Alpha' -keyalg RSA -keysize 2048 -validity 10000 >/dev/null 2>&1; fi
-java -jar "$APKSIGNER_JAR" sign --ks "$TILEFORGE_KEYSTORE" --ks-key-alias tileforge --ks-pass pass:android --key-pass pass:android --out dist/downloads/TileForge-Studio-0.7.1.apk android/build/aligned.apk
-java -jar "$APKSIGNER_JAR" verify --verbose dist/downloads/TileForge-Studio-0.7.1.apk
+java -jar "$APKSIGNER_JAR" sign --ks "$TILEFORGE_KEYSTORE" --ks-key-alias tileforge --ks-pass pass:android --key-pass pass:android --out dist/downloads/TileForge-Studio-0.8.0.apk android/build/aligned.apk
+java -jar "$APKSIGNER_JAR" verify --verbose dist/downloads/TileForge-Studio-0.8.0.apk

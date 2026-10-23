@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
+import {VERSION} from '../dist/core.mjs';
+import {validateRelease,UPDATE_ROOT} from '../dist/updates.mjs';
+const pkg=JSON.parse(fs.readFileSync('package.json','utf8')),manifest=fs.readFileSync('android/AndroidManifest.xml','utf8');
+const name=manifest.match(/android:versionName="([^"]+)"/)?.[1],code=Number(manifest.match(/android:versionCode="(\d+)"/)?.[1]);
+if(pkg.version!==VERSION||name!==VERSION)throw Error('Package, web and Android versions must match before publishing updates.');
+const path='dist/downloads/TileForge-Studio-'+VERSION+'.apk',bytes=fs.readFileSync(path);
+const data={format:'tileforge-update',version:VERSION,versionCode:code,notes:pkg.tileforgeReleaseNotes||[],android:{packageId:'com.eightbittrade.tileforge',url:UPDATE_ROOT+'downloads/TileForge-Studio-'+VERSION+'.apk',size:bytes.length,sha256:crypto.createHash('sha256').update(bytes).digest('hex')}};
+validateRelease(data);fs.writeFileSync('dist/update.json',JSON.stringify(data,null,2)+'\n');console.log('Update metadata prepared for '+VERSION+'.');
