@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.5.0 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.5.1 alpha · 23 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -133,7 +133,9 @@ Pixel studio edits an existing graphics sheet, not metatile composition. It does
 ## 6. Add or edit NPCs, signs, triggers and warps
 
 1. Open **NPCs & events**. Confirm **Event map** is the intended source map. Several maps can share a layout, while their events remain separate.
-2. To edit an existing event, tap its marker or choose it in **Select event**. Markers are **N** (NPC), **S** (sign), **T** (trigger) and **W** (warp); these are source markers rather than animated character sprites.
+2. Tap a marker or choose it in **Select event** to open its summary. It shows the stored event type, position, appearance, movement, conditions, interaction script or dialogue, and warp destination as applicable. Tap **Edit event** to make changes; **Back to map** leaves everything untouched. A tap works in Move, while dragging still pans. If several events share a position, select the one you want at the top of the summary. Specialized source events can be inspected but remain read-only.
+
+   To edit an existing event, choose **Edit event** from its summary. Markers are **N** (NPC), **S** (sign), **T** (trigger) and **W** (warp); these are source markers rather than animated character sprites.
 3. To add an event, tap **+ NPC**, **+ Sign**, **+ Trigger** or **+ Warp**, then tap the desired map cell. On compact screens the controls tuck away so you can place it.
 4. Set X/Y and elevation. For an NPC, choose appearance and movement; set movement ranges only if needed. A visibility flag of 0 means no hide flag. Existing story flags should stay unchanged unless you intentionally want different story behavior.
 5. For NPCs/signs/triggers, keep **Existing script** when preserving the original interaction. For a simple new conversation, choose **Dialogue text**, enter standard ASCII text and press **Save event**. Existing script blocks remain intact; TileForge creates its own separate block. Changing an existing NPC's interaction to dialogue can replace its story/trainer interaction even though its other metadata is preserved.
@@ -263,7 +265,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.5.0 source and its actual UI labels. Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.5.1 source and its actual UI labels. Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
