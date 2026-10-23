@@ -1,6 +1,6 @@
 # Porymap and Hex Maniac Advance feature audit
 
-Reviewed 23 October 2026 for TileForge 0.6.0. This is a feature and architecture audit of the primary manuals, UI entry points and relevant implementation/tests. It is not a claim that every source line was reviewed or that either desktop application was run on Android. TileForge remains an independent implementation.
+Reviewed 23 October 2026 for TileForge 0.6.0; source editors extended in 0.7.0. This is a feature and architecture audit of the primary manuals, UI entry points and relevant implementation/tests. It is not a claim that every source line was reviewed or that either desktop application was run on Android. TileForge remains an independent implementation.
 
 ## Reproducible reference snapshots
 
@@ -28,9 +28,9 @@ Porymap's reference covers navigation, map tiles, collisions, events, headers, c
 | Repeating map border | Existing / partial | Paint and preview original border with Undo. No resizing or connected-map rendering. |
 | Tileset switching | Existing | Search by compatible location, primary or secondary; original source symbols and paths retained. |
 | Metatile discovery | Existing | Categories, provenance, search, pins, recent and current-map usage. No whole-project unused-tile deletion tool. |
-| Metatile composition/properties | Deferred | Preview standard two-layer entries; no quadrant, palette-bank, flip-bit, behavior, terrain or layer-type writer. Requires format-specific shared-asset impact review. |
-| Indexed graphics | Existing / partial | Source PNG pixel-index editing, preserving palette order/bit depth. No external-image import or palette RGB editor. |
-| Palette editing and animation | Deferred | Preview source daytime palettes; no color writes or engine animation playback. Shared palette dependencies need explicit review. |
+| Metatile composition/properties | Added / partial (0.7.0) | Edit eight 8×8 piece IDs, flips and palette banks with before/after preview, declared shared-asset impact, stale guards and one Undo. Exact 16-byte entry patching; no behavior, terrain or layer-type writer. |
+| Indexed graphics | Existing / partial | Source PNG pixel-index editing, preserving palette order/bit depth. No external-image import. Source palette RGB editor added in 0.7.0. |
+| Palette editing and animation | Added / partial (0.7.0) | Explicit source JASC-PAL color editing with 5-bit RGB, preserved other rows/newlines, shared declaration references and Undo. No engine animation/seasonal playback or exhaustive code dependency tracking. |
 | Events | Existing / partial | Standard NPC/sign/trigger/warp add/edit, first-tap factual summaries and owned dialogue blocks. Specialized events are inspectable; no delete/renumber, bulk move, heal-location or arbitrary script editor. |
 | Event integrity guidance | Existing | Advisory deterministic checks and previewed safe fixes; optional local AI explains evidence. Neither interprets complete game logic. |
 | Map header/properties | Deferred | Preserve metadata; no weather/music/running/location header form. Engine expressions and shared location names require validation. |
@@ -56,7 +56,7 @@ In ROM workspace, expand **Hex, search & navigation**. Enter a hex offset and **
 
 ## Prioritized follow-up work
 
-1. **Metatile composition and source palette editing**, with exact source provenance, shared-use warnings, preserved unused attribute bits and a full export/Undo round trip. This improves the actual tileset-editing workflow most directly.
+1. **Metatile attribute and engine layer-type editing** remains after 0.7.0 composition/palette editors. New writers must verify engine-specific masks and preserve every unrelated attribute bit.
 2. **Connections with adjacent-map preview**, reciprocal updates in one undoable transaction, offset/seam checks and lazy loading of destination assets.
 3. **Map properties and encounter adapters** for the inspected Legends revision, with explicit unsupported-expression handling and preservation of unknown fields.
 4. **Smart paths and sparse stamps**, after configurable 3-by-3 brush mappings and transparent cells are represented safely. Current stamps place a complete rectangle.

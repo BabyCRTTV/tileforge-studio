@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.6.0 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.7.0 alpha · 23 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -139,12 +139,32 @@ This edits the repeating border pattern. It does not draw connected neighboring 
 ### Pixel studio: change the artwork itself
 
 1. Save an editable project before a shared graphics change.
-2. Open **Pixel studio**. Choose the primary/secondary **Sheet** and the appropriate display **Palette**. This palette selector changes the preview, not palette colors in the game.
+2. Open **Pixel studio**. Choose the primary/secondary **Sheet** and the appropriate display **Palette**. The Palette dropdown chooses the display bank. **Edit palette colors** changes its declared source palette file.
 3. Zoom in, choose a color index from 0 to 15, then paint a pixel. Pick samples a pixel's existing index. Color 0 is transparent in upper metatile layers.
 4. Return to Map studio to inspect the change. Open another layout using the same graphics to check how the shared edit looks there.
 5. Undo if necessary. The exported change is the indexed PNG at its original source path; the palette indices and indexed bit depth are retained.
 
-Pixel studio edits an existing graphics sheet, not metatile composition. It does not import new tiles, rearrange metatile layers or edit palette colors. The preview uses static daytime palettes; seasonal transformations, animations, lighting overlays and NPC movement run in the game. The narrowly reviewed artwork categories only apply while their exact inspected graphics/metatile pair still matches; changed artwork can fall back to source-based groups or Other. You can tag it yourself.
+Pixel painting edits the existing indexed graphics sheet. The separate composition and color editors below change metatile words or source palettes. New-image import is not included. The preview uses static daytime palettes; seasonal transformations, animations, lighting overlays and NPC movement run in the game. The narrowly reviewed artwork categories only apply while their exact inspected graphics/metatile pair still matches; changed artwork can fall back to source-based groups or Other. You can tag it yourself.
+
+### Compose a metatile from 8×8 pieces
+
+1. In **Map studio**, select the metatile you want to change. Open **Selected tile** in the brush palette and choose **Edit selected metatile**.
+2. Read the exact source path and expand the shared-layout count. Alias tilesets that declare the same source file are counted too. The list is based on layout/tileset declarations; other engine and seasonal dependencies are not exhaustively counted. Changes apply to all uses, including maps not opened in this session.
+3. Tap one of the eight piece buttons: four lower pieces, followed by four upper pieces. Their numbers run top left, top right, bottom left, bottom right.
+4. Choose a primary/secondary 8×8 tile thumbnail or enter its global tile ID. Choose an available palette bank and optional horizontal/vertical flips. Emerald uses a primary split at tile 512; FRLG uses 640. Undeclared palettes and new out-of-sheet references are refused.
+5. Compare **Current source** with **Proposed tile**. These are static two-layer previews. Upper-layer index 0 is transparent; behavior and engine layer-type attributes are preserved and can change how the game renders the result.
+6. Choose **Apply to shared source** to save one Undo entry. Cancel or closing the dialog discards the preview. The app checks that source dependencies are unchanged before writing.
+
+Only the selected 16-byte metatile entry can change. Attribute files, map cells, collision and elevation are retained. The editor does not create new metatile IDs or edit behaviors, terrain or engine layer-type attributes. Unknown layout splits and nonstandard metatile formats are refused. Edited metatiles invalidate exact-hash artwork-category reviews as intended.
+
+### Edit source palette colors
+
+1. In **Pixel studio**, choose the display **Palette**, then **Edit palette colors**. Read the actual palette source path and shared-layout notice.
+2. Select a color index. The current and proposed swatches initially match; opening or selecting colors does not change source bytes.
+3. Adjust Red/Green/Blue from 0 to 31, or use the color picker. The proposed color is rounded to the game's 5-bit channels. Only that selected color row is staged. Choosing another index discards the un-applied color preview.
+4. Choose **Apply to shared source**. The map and pixel preview refresh. Undo restores the original file bytes; Redo reapplies the color. The active Pixel studio sheet and display bank are retained.
+
+The declared JASC-PAL file is edited directly; other rows, newline style and extra palette entries are preserved. The indexed PNG, its embedded palette order, pixel indices and bit depth are not changed by color editing. Global background color 0 is forced black by the engine; upper-layer color 0 is transparent. Alternate nighttime palettes, seasonal tint, lighting, animation and other code references need an in-game check. The runtime's reserved palette banks are not offered as new source bank assignments.
 
 ## 6. Add or edit NPCs, signs, triggers and warps
 
@@ -281,7 +301,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.6.0; the current tools are described above:
+These are proposals beyond 0.7.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -293,11 +313,11 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.6.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.7.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
-Browser viewport checks and automated source/binary tests support this release. Physical Android installation, file-picker/export behavior, Fold/Legion Go hardware and in-game behavior need testing on those devices/builds. Source previews are static daytime views. No map resizing, metatile assembly editor, animation playback, arbitrary script editor, compressed ROM graphics reinsertion, general ROM map detection or automated decompilation is included.
+Browser viewport checks and automated source/binary tests support this release. Physical Android installation, file-picker/export behavior, Fold/Legion Go hardware and in-game behavior need testing on those devices/builds. Source previews are static daytime views. No map resizing, metatile attribute editor, animation playback, arbitrary script editor, compressed ROM graphics reinsertion, general ROM map detection or automated decompilation is included.
 
 ### Asset and local AI sources
 

@@ -1,6 +1,6 @@
-import {unzipSync,zipSync,strToU8,strFromU8,unzlibSync,zlibSync} from './vendor/fflate.mjs?v=0.6.0';
+import {unzipSync,zipSync,strToU8,strFromU8,unzlibSync,zlibSync} from './vendor/fflate.mjs?v=0.7.0';
 export {zipSync,strToU8,strFromU8};
-export const VERSION='0.6.0';
+export const VERSION='0.7.0';
 export const equal=(a,b)=>a?.length===b?.length&&a.every((x,i)=>x===b[i]);
 export const sha256=async a=>globalThis.crypto?.subtle?[...new Uint8Array(await crypto.subtle.digest('SHA-256',a))].map(x=>x.toString(16).padStart(2,'0')).join(''):sha256Fallback(a);
 export function safePath(p){if(!p||p.includes('\\')||p.startsWith('/')||p.split('/').some(x=>x==='..'||x==='.'||!x)||p.includes(':'))throw Error('Unsafe project path');return p;}
