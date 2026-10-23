@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.4.2 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.5.0 alpha · 23 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -19,6 +19,8 @@ For Emerald: Legends maps, use **source mode**. TileForge edits the project's ma
 | Only a `.gba` file | Use the ROM workspace for known-offset uncompressed 4bpp or hex edits. Ask for the source project to edit maps. |
 
 **Important for your Legends work:** the live Legends button reads GitHub. It cannot see edits sitting only in your local Porymap folder. If you have those edits, import a pack made from that folder.
+
+**Quick help is always nearby:** tap **? Guide** in the header (including on narrow screens), or press **F1**. The quick guide opens over your work. Closing it restores the same workspace. Event, export and review dialogs also offer a small guide link. The full field guide opens separately.
 
 ### Install or open
 
@@ -76,6 +78,8 @@ Select a metatile, choose **Paint**, then tap or drag across the map. One comple
 A larger object such as a house is made of several metatiles. Place the matching pieces individually. Multi-tile stamping, smart paths and automatic edge joining are suggested future features, not current controls.
 
 ### Use tiles from another location
+
+Each location opens its own saved primary and secondary tilesets. Changing maps clears palette search, category/source and quick filters and resets palette scrolling. The location picker shows the active map. This does not revert an edited tileset assignment: saved source references remain authoritative. You can still search other locations, switch either set, scroll the entire active pair, or apply any category/source filter.
 
 1. Save a draft or editable project before experimenting.
 2. Open **Map tilesets**.
@@ -141,6 +145,21 @@ Dialogue is wrapped for the game's text box, with a 1,500-character limit. Use s
 
 **Return to tile painting:** close event mode. On compact screens, **Done** keeps event mode active while hiding its controls; tap the highlighted NPCs & events header to reopen the controls, then close the panel. Use Move at any time to pan.
 
+### Review events before sharing
+
+Open **NPCs & events → Review events**, or choose **Review events before sharing** in Export. It checks the active source map and changed loaded maps. For live Legends, it also tries to load their local scripts and named warp destinations. Source packs are checked using their available files.
+
+The review covers numeric event bounds, duplicate NPC local IDs, changed overlapping placements, changed NPC collision/elevation and movement ranges, loaded script labels, incomplete TileForge dialogue blocks, and warp indices in loaded destinations. A finding can describe an intentional story setup. It never blocks export or alters files merely by running.
+
+- **Open event** takes you to the normal event editor.
+- **Preview correction** shows the exact field and before/after values when a bounded correction is available. **Apply this correction** changes only that event field and adds an Undo entry. Review again after other edits; stale corrections are refused.
+- Overlaps, script identities, story flags and warp destinations require your judgment. The app will not automatically renumber NPCs, pick a different destination or rewrite arbitrary story scripts.
+- Expand **Files and references not verified** for missing or external dependencies. “No issues found” only describes these available checks. It is not proof the game is bug-free.
+
+**Optional local AI:** expand **Local AI assistant** and tap **Download / load local AI**. The first load downloads approximately 390 MB of pinned SmolLM2 360M and Transformers.js/ONNX runtime assets from Hugging Face and jsDelivr. Use Wi-Fi and allow several minutes and enough device memory. The model runs on your device in a worker, using CPU/WebAssembly; no API key, AI server or project upload is used. Cached downloads can work offline while browser storage retains them. **Stop / unload** cancels loading/generation and frees the worker; **Remove AI downloads** clears its downloaded cache.
+
+After loading, tap **Ask local AI** on a finding for an explanation and suggested manual test. This small general model is experimental; it is not trained on your complete game and can be wrong. Deterministic source checks supply the evidence and offered field corrections. Model text cannot execute code or apply edits. Neither path simulates arbitrary scripts or story progression. Build and playtest NPC interaction, flags, warps and return trips before keeping the result.
+
 ## 7. Save drafts, undo mistakes and make backups
 
 | Save option | Use it for | What to remember |
@@ -157,6 +176,10 @@ The labelled **Undo** button shows the number of available edits; **Redo** resto
 Keyboard shortcuts, when focus is outside an input or dialog: **B** Paint, **F** Fill, **I** Pick, **H** Move, **Ctrl/Cmd+Z** Undo, **Ctrl/Cmd+Shift+Z** Redo, **Ctrl/Cmd+S** export an editable source project (or a ROM copy in ROM mode). Ctrl+S is a portable export, not Save draft.
 
 After a set of edits has been integrated, open a fresh source pack or a fresh live session based on that integrated revision before starting the next batch. An old draft intentionally keeps its old baseline; re-exporting cumulative changes from it can conflict with files already integrated.
+
+### Delete old drafts
+
+Choose **Load**, find the saved draft and tap **Delete**. The confirmation identifies the project and timestamp. Deleted drafts stay on this device and can be restored; deleting is not a portable backup or a way to clear their storage. Export a portable project first if you need a backup. Confirming moves that device copy to **Deleted drafts**, where **Restore** recovers it with its original baseline and undo history; it does not delete exported files or the open workspace. If the deleted draft was open, pending autosave is cancelled and the app does not immediately recreate it. Your next edit or explicit **Save draft** creates a new draft. Other drafts keep their own identity and baselines.
 
 ## 8. Export and send the required files back to chat
 
@@ -234,14 +257,18 @@ These are proposals, not features included in 0.4.2:
 2. **Multi-tile stamps and smart edges.** Copy a tree, house or cliff segment as one brush, then add optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
 3. **Batch category review and portable category packs.** Select several unknown tiles, assign a group once, and share a small versioned metadata file without sending the whole project. Keep provenance and exact asset checks.
 4. **Draft names and checkpoints.** Let you name milestones, compare them and return to a checkpoint, while keeping the current Undo behavior.
-5. **A focused gameplay check after integration.** Launch a local test build at the edited map and verify key movement/event interactions. This needs game/build tooling beyond a static editor.
+5. **A focused gameplay check after integration.** Complement Review events with a local test build that checks movement, flags and return warps in the actual game. This needs game/build tooling beyond the source checker.
 
 The highest-value next feature is the before/after export preview: it helps you verify exactly what you will send and catches unintended shared changes early.
 
 ### Sources and scope
 
-This guide follows the TileForge 0.4.2 source and its actual UI labels. Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.5.0 source and its actual UI labels. Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
 Browser viewport checks and automated source/binary tests support this release. Physical Android installation, file-picker/export behavior, Fold/Legion Go hardware and in-game behavior need testing on those devices/builds. Source previews are static daytime views. No map resizing, metatile assembly editor, animation playback, arbitrary script editor, compressed ROM graphics reinsertion, general ROM map detection or automated decompilation is included.
+
+### Asset and local AI sources
+
+The Fuecoco app sprite is the front sprite from the pinned [Emerald: Legends source](https://github.com/BabyCRTTV/pokeemerald-emerald-legends/blob/7cf9a7bfcb515ad33b4840ce38cd7d2e88008b8d/graphics/pokemon/fuecoco/front.png), based on RHH/pokeemerald-expansion; see its [contributors and sprite credits](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/CREDITS.md). Pokémon/Fuecoco belong to their respective rights holders. The local assistant uses HuggingFaceTB's [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct), the [ONNX Community conversion](https://huggingface.co/onnx-community/SmolLM2-360M-Instruct-ONNX) and [Transformers.js](https://huggingface.co/docs/transformers.js). These assets do not change ownership of game artwork.

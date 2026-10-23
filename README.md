@@ -1,14 +1,14 @@
 # TileForge Studio
 
-The 0.4.3 update keeps Paint, Fill, Pick and Move labels visible at every screen size. Newly opened workspaces start in Move; new source projects select a labelled plain-grass patch when available (Legends General #001). Map changes keep the active tool/valid brush, and drafts retain their saved brush.
+The 0.5.0 update adds location-aware palette defaults, advisory event review with optional on-device AI, recoverable draft deletion, an always-available quick guide, and a Fuecoco icon. Paint, Fill, Pick and Move labels remain visible at every screen size. Newly opened workspaces start in Move; new source projects select a labelled plain-grass patch when available (Legends General #001). Map changes keep the active tool/valid brush, and drafts retain their saved brush.
 
 The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the full Littleroot palette. It fixes whole-word/numbered-label matching, inherited Secret Base labels and exact-file custom variant labels, adds puzzle/warp groups, and fills verified gaps with hash-gated artwork annotations. Uncertain tiles remain Other and user groups retain priority. The editor layout and retro landing design are retained.
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.4.3 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.5.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.4.3.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.5.0.apk)**
 
 ## What works
 
@@ -59,7 +59,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 node tools/build.mjs
 ```
 
-GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.4.3 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
+GitHub Actions is enabled with owner approval, and Pages uses `.github/workflows/pages.yml` to publish `docs/` after the round-trip checks. The 0.5.0 web app and signed APK are live. Run **Publish TileForge Pages → Run workflow → main** if an API-created commit does not trigger publication automatically. The public landing page uses a responsive retro desktop design; the editor keeps its existing layout. `dist/index.html` is the landing page, `dist/editor.html` is the editor, and `dist/` contains their shared assets; `node tools/build.mjs` refreshes the tracked Pages copy.
 
 To prepare a source pack: `python3 tools/pack_project.py /path/to/legends legends-source.zip`.
 
@@ -75,3 +75,11 @@ Android uses a minimal Java WebView shell with bundled assets, HTTPS asset inter
 TileForge is an independent implementation. No Porymap/HMA implementation code or game ROMs are bundled. The practice island uses original programmatically drawn sample assets. Nintendo, Pokémon, Porymap and Hex Maniac Advance are not affiliated with this project. Imported source assets retain their original rights.
 
 To rebuild the reference guide, install Python packages `reportlab` and `beautifulsoup4` plus `pandoc`, then run `python3 tools/build_guide.py`. This creates `dist/guide.html` and its downloadable PDF. The normal static build needs no Python guide dependencies.
+
+## 0.5.0 updates
+
+Location switches reset palette filters and scrolling to that layout's actual saved primary/secondary pair. The searchable location/pair selector starts on the current location; borrowed tilesets and saved pair edits remain editable.
+
+**Review events** offers advisory integrity findings for the active and changed loaded maps, coverage notes, event-editor links and previewed, undoable field corrections. An optional on-device SmolLM2 360M assistant explains the supplied findings; download size is about 390 MB and CPU/WASM inference requires enough device memory. It runs in a worker; no project data is sent to a model server. Small-model text is experimental, cannot apply edits, and does not prove arbitrary game logic.
+
+Saved drafts have individual Delete controls with confirmation and autosave race protection. The header's **? Guide** remains reachable on phones and supports F1, with contextual links inside dialogs. Fuecoco is now the web/PWA/APK icon. See [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) for provenance and pinned AI assets.

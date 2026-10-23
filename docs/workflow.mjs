@@ -1,4 +1,4 @@
-export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,fit}){
+export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
  function load(){
@@ -26,13 +26,14 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,fi
  $('resumeBtn').onclick=load;
  $('saveDraftBtn').onclick=()=>task(saveDraft);
  $('exportSaveDraft').onclick=()=>task(saveDraft);
- function drafts(rows){
+ function drafts(rows,deleted=[]){
+  $('deletedDraftList').replaceChildren();$('deletedDraftPanel').hidden=!deleted.length;$('deletedDraftCount').textContent=deleted.length;for(const row of deleted){const b=document.createElement('button');b.className='draft-row draft-restore';b.type='button';b.textContent='Restore '+row.name+' · '+new Date(row.savedAt).toLocaleString();b.onclick=()=>task(()=>restoreDraft(row.key));$('deletedDraftList').append(b);}
   $('draftList').replaceChildren();$('resumeBtn').hidden=!rows.length;
   if(!rows.length){const p=document.createElement('p');p.className='draft-empty';p.textContent='Your drafts will appear here after you start editing.';$('draftList').append(p);return;}
-  for(const row of rows){const button=document.createElement('button');button.className='draft-row';button.type='button';
+  for(const row of rows){const entry=document.createElement('div');entry.className='draft-row';const button=document.createElement('button');button.className='draft-resume';button.type='button';
    const title=document.createElement('strong');title.textContent=row.name;
    const detail=document.createElement('small');detail.textContent=(row.kind==='rom'?'GBA workspace':'Source project')+(row.savedAt?' · '+new Date(row.savedAt).toLocaleString():' · Previous draft')+(row.changes!=null?' · '+row.changes+' changed file'+(row.changes===1?'':'s'):'');
-   button.append(title,detail);button.onclick=()=>run(()=>readDraft(true,row.key),'Restoring your project and undo history…');$('draftList').append(button);
+   button.append(title,detail);button.onclick=()=>run(()=>readDraft(true,row.key),'Restoring your project and undo history…');const remove=document.createElement('button');remove.className='draft-delete';remove.type='button';remove.textContent='Delete';remove.setAttribute('aria-label','Delete draft '+row.name);remove.onclick=()=>{const dialog=$('deleteDraftDialog');$('deleteDraftName').textContent=row.name+' · '+(row.savedAt?new Date(row.savedAt).toLocaleString():'Previous draft');$('confirmDeleteDraft').onclick=()=>task(async()=>{await deleteDraft(row.key);dialog.close();});dialog.showModal();};entry.append(button,remove);$('draftList').append(entry);
   }
  }
  function exportStage(){document.body.dataset.stage='export';$('stageLabel').textContent='3 · Export';$('exportBtn').classList.add('current-step');}
