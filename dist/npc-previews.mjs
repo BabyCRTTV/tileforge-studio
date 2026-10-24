@@ -1,4 +1,4 @@
-import * as C from './core.mjs?v=0.13.0';
+import * as C from './core.mjs?v=0.14.0';
 export const NPC_SOURCE_FILES=['src/data/object_events/object_event_graphics_info_pointers.h','src/data/object_events/object_event_graphics_info.h','src/data/object_events/object_event_pic_tables.h','src/data/object_events/object_event_graphics.h','src/graphics.c','src/event_object_movement.c','src/data/legends/family_palettes.h'];
 const plain=s=>s.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,'');
 const escape=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');

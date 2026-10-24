@@ -1,18 +1,17 @@
 {
   "format": "tileforge-update",
-  "version": "0.13.0",
-  "versionCode": 18,
+  "version": "0.14.0",
+  "versionCode": 19,
   "notes": [
-    "Tools & tasks helps beginners choose a goal and opens the appropriate tool.",
-    "Actionable next steps, friendlier map-setting names and clearer doorway labels.",
-    "Ten active draft slots with atomic saving/restoration limits, a usage counter and clear full-slot guidance.",
-    "Existing drafts can still save at capacity; no drafts are deleted automatically.",
-    "Small source sprite pictures in NPC/event menus, appearance choices and NPC summaries, including supported custom graphics."
+    "Browse all project NPC sprites directly from the NPC/event picker, independently of terrain tilesets.",
+    "Searchable sprite pictures and a separate On this map tab for placed events.",
+    "Choose an appearance first, then tap the map to add that NPC with the selected sprite.",
+    "The Add NPC button opens the full catalog; existing event summaries and Undo are preserved."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.13.0.apk",
-    "size": 220476,
-    "sha256": "d85c4c38c0e9744f6070209b34c0e21ff7a023c7c061099ef5a7297235cb1c91"
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.14.0.apk",
+    "size": 224572,
+    "sha256": "02fcd3d987cc01e59d6e6eb1df885c797701f125894b9f22b5ef418fcbb69dbd"
   }
 }

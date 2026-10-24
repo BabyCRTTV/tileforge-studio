@@ -1,4 +1,4 @@
-import {strFromU8,strToU8} from './core.mjs?v=0.13.0';
+import {strFromU8,strToU8} from './core.mjs?v=0.14.0';
 export const CATEGORIES=['Cliffs','Water','Signs','Buildings & doors','Stairs & bridges','Trees & plants','Ground & paths','Rocks & caves','Furniture & interiors','Fences & edges','Puzzles & switches','Warps & transitions','Other'];
 export const layoutFormat=l=>['frlg','firered'].includes(l?.layout_version)?'frlg':'emerald';
 export const friendly=s=>String(s).replace(/^gTileset_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|_Layout$/g,'').replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2');
@@ -18,6 +18,15 @@ export function jsonBytes(value,original){const text=original?strFromU8(original
 export function changeTilesets(original,id,primary,secondary){const doc=JSON.parse(strFromU8(original));const layout=doc.layouts.find(l=>l.id===id);if(!layout)throw Error('Layout not found');for(const [field,value]of [['primary_tileset',primary],['secondary_tileset',secondary]]){if(!tilesetChoices(doc.layouts,layout,field).some(c=>c.value===String(value)))throw Error('Choose a compatible '+field.replace('_',' '));}if(String(layout.primary_tileset)===String(primary)&&String(layout.secondary_tileset??'0')===String(secondary))return {doc,layout,bytes:original};layout.primary_tileset=primary;layout.secondary_tileset=secondary;return {doc,layout,bytes:jsonBytes(doc,original)};}
 export function missingTiles(cells,primaryCount,secondaryCount,format){const split=format==='frlg'?640:512;return [...cells].filter(c=>{const n=c&1023;return n<split?n>=Math.min(split,primaryCount):n-split>=Math.min(1024-split,secondaryCount);}).length;}
 export function sourceConstants(text,prefix){return [...new Set((text.match(new RegExp('\\b'+prefix+'[A-Z0-9_]+\\b','g'))||[]))].sort();}
+// Catalog source object sprites independently of map placements and terrain tilesets.
+export function npcGraphicsCatalog(header,pointers='',placed=[]){
+ const clean=s=>s.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,''),text=clean(header),ids=new Set();
+ for(const m of text.matchAll(/^\s*#define[ \t]+(OBJ_EVENT_GFX_[A-Z0-9_]+)(?=[ \t])/gm))ids.add(m[1]);
+ for(const block of text.matchAll(/enum(?:\s+\w+)?\s*\{([^}]+)\}/g))for(const token of block[1].split(',')){const m=token.trim().match(/^(OBJ_EVENT_GFX_[A-Z0-9_]+)(?:\s*=|\s*$)/);if(m)ids.add(m[1]);}
+ for(const m of clean(pointers).matchAll(/\[\s*(OBJ_EVENT_GFX_[A-Z0-9_]+)\s*\]\s*=\s*&\w+/g))ids.add(m[1]);
+ for(const id of placed)if(/^OBJ_EVENT_GFX_[A-Z0-9_]+$/.test(id))ids.add(id);
+ return [...ids].filter(id=>!/^OBJ_EVENT_GFX_(?:VAR_|VARS$|SPECIES(?:_|$))/.test(id)&&!/(?:^|_)(?:COUNT|START|END|FIRST|LAST|MAX)$/.test(id)).sort((a,b)=>friendly(a).localeCompare(friendly(b),undefined,{numeric:true}));
+}
 export function behaviorNames(text){
  const out=new Map(),values=new Map(),pending=[],clean=text.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,'');
  const valueOf=expression=>{const m=expression.replace(/[()\s]/g,'').match(/^(0x[\da-f]+|\d+|MB_\w+)(?:([+-])(0x[\da-f]+|\d+))?$/i);if(!m)return null;const base=/^MB_/.test(m[1])?values.get(m[1]):Number(m[1]);return base==null?null:base+(m[2]==='-'?-1:1)*Number(m[3]||0);};

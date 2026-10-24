@@ -1,8 +1,7 @@
 # TileForge Studio
 
-
-Version 0.13.0 completes the compact-screen work: full-width map and larger Tiles drawer on Fold-sized windows, a cover-screen notice, one scrollable palette with collapsible filters, resizable Android/DeX windows, simple passage brushes that keep elevation, and persistent beginner explanations beside the controls. Hardware Fold/DeX behavior remains unverified.
-Version 0.13.0 adds two-finger pinch zoom/pan, a one-tap **Original / Edited** source-map comparison, and a tile window you can resize by its left-edge grip. Original renders the imported baseline, including shared tiles/palettes, movement, borders and visible events, with a read-only canvas and unchanged Undo. Palette widths persist by orientation; manual zoom is retained while resizing.
+The editor includes the compact-screen work: full-width map and larger Tiles drawer on Fold-sized windows, a cover-screen notice, one scrollable palette with collapsible filters, resizable Android/DeX windows, simple passage brushes that keep elevation, and persistent beginner explanations beside the controls. Hardware Fold/DeX behavior remains unverified.
+It also includes two-finger pinch zoom/pan, a one-tap **Original / Edited** source-map comparison, and a tile window you can resize by its left-edge grip. Original renders the imported baseline, including shared tiles/palettes, movement, borders and visible events, with a read-only canvas and unchanged Undo. Palette widths persist by orientation; manual zoom is retained while resizing.
 
 The 0.6.0 update integrates missing workflows identified in a [Porymap / Hex Maniac Advance feature audit](REFERENCE-FEATURE-AUDIT.md): rectangular map selection, saved searchable stamps with explicit art/movement policy, a ruler, clean map PNG export, raw ROM byte/ASCII search, pointer navigation/reference candidates, Back/Forward and draft bookmarks. The comparison records partial support and larger remaining gaps; this is not full desktop-tool parity.
 
@@ -14,9 +13,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.13.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.14.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.13.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.14.0.apk)**
 
 ## What works
 
@@ -107,14 +106,14 @@ Use the header gear → Settings → Check for updates. Android downloads the AP
 
 Release process: update package/core/Android versions and package release notes, build and sign the APK with the existing key, then run `node tools/build.mjs`. The build prepares `dist/update.json` from the actual signed APK bytes and mirrors everything into docs. Never edit its size/hash manually or bundle the update manifest into the APK; publish metadata and APK in the same Pages deployment.
 
-### Source cell creation and guided warp links (0.13.0)
+### Source cell creation and guided warp links (0.11.0)
 
 New cell creates an interior/exterior with independent source files from a selected artwork template. Link warp chooses a destination entrance by coordinates, can append a paired return point, and can create a new interior first. Preview/Apply, stale-source guards and one-step Undo protect each operation. Direct Next guidance suggests painting, linking, reviewing and exporting. New files retain their missing-original baseline in portable projects.
 
-Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.13.0/TileForge-Studio-0.13.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
+Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.14.0/TileForge-Studio-0.14.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
 
 
-### More Porymap-inspired tools (0.13.0)
+### More Porymap-inspired tools (0.12.0)
 
 More map tools now offers source map properties, mirrored cardinal and dive/emerge connections with an alignment diagram, replace-all artwork with collision/elevation preserved, and wraparound terrain shifting. All use Preview/Apply, stale guards and one-step Undo. Terrain shifting deliberately leaves events and script coordinates in place with explicit acknowledgement. Ctrl+Y also redoes edits. Connected terrain rendering, coordinated resizing and encounter editors remain future work.
 
@@ -126,3 +125,7 @@ Tools & tasks presents common goals first, with additional map operations under 
 Each app/browser profile supports 10 active drafts total across source and ROM workspaces. Saving an existing draft remains allowed at capacity. Creating or restoring a draft requires a free slot; deletes remain recoverable and no draft is removed automatically. Existing profiles with more than 10 drafts keep their data but cannot add another until below the limit. Capacity checks occur in one IndexedDB read/write transaction, including concurrent tabs.
 
 NPC/event selectors, NPC appearance choices and summaries now show small static source sprite previews. Explicit graphics-info/frame/image declarations resolve PNGs or uncompressed 4bpp with a supported source palette. Custom asset paths are retained; missing/dynamic/ambiguous mappings show a placeholder. Source-only loads pin to the imported revision and never modify game files. Sprites are lazy-loaded for visible entries; proprietary sprite assets are not bundled in TileForge.
+
+### Full NPC sprite catalog (0.14.0)
+
+**NPC catalog & placed events** defaults to **All NPC sprites**, with searchable pictures from the project's object graphics definitions rather than the current terrain tileset or placed NPCs. Choose a sprite, then tap a map cell to add it. **On this map** keeps existing events and their read-only summaries available. **+ Add NPC · all sprites** opens the same catalog. Missing preview assets do not hide choices; runtime-variable slots and source range/count constants are not fixed character sprites.

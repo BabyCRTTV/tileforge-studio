@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.13.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.14.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -201,10 +201,10 @@ The declared JASC-PAL file is edited directly; other rows, newline style and ext
 ## 6. Add or edit NPCs, signs, triggers and warps
 
 1. Open **NPCs & events**. Confirm **Event map** is the intended source map. Several maps can share a layout, while their events remain separate.
-2. Tap a marker or choose it in **Select event** to open its summary. It shows the stored event type, position, appearance, movement, conditions, interaction script or dialogue, and warp destination as applicable. Tap **Edit event** to make changes; **Back to map** leaves everything untouched. A tap works in Move, while dragging still pans. If several events share a position, select the one you want at the top of the summary. Specialized source events can be inspected but remain read-only.
+2. Tap a marker or choose **NPC catalog & placed events → On this map** to open its summary. It shows the stored event type, position, appearance, movement, conditions, interaction script or dialogue, and warp destination as applicable. Tap **Edit event** to make changes; **Back to map** leaves everything untouched. A tap works in Move, while dragging still pans. If several events share a position, select the one you want at the top of the summary. Specialized source events can be inspected but remain read-only.
 
    To edit an existing event, choose **Edit event** from its summary. Markers are **N** (NPC), **S** (sign), **T** (trigger) and **W** (warp); these are source markers rather than animated character sprites.
-3. To add an event, tap **+ NPC**, **+ Sign**, **+ Trigger** or **+ Warp**, then tap the desired map cell. On compact screens the controls tuck away so you can place it.
+3. To add an NPC, open **+ Add NPC · all sprites** or **NPC catalog & placed events → All NPC sprites**, search for a character and select its picture/name, then tap the desired map cell. This catalog includes the project's fixed object sprites, including characters not yet placed here, and is independent of terrain tilesets. For other events, choose **+ Sign**, **+ Trigger** or **+ Warp**, then tap the map cell. On compact screens the controls tuck away so you can place it.
 4. Set X/Y and elevation. For an NPC, choose appearance and movement; set movement ranges only if needed. A visibility flag of 0 means no hide flag. Existing story flags should stay unchanged unless you intentionally want different story behavior.
 5. For NPCs/signs/triggers, keep **Existing script** when preserving the original interaction. For a simple new conversation, choose **Dialogue text**, enter standard ASCII text and press **Save event**. Existing script blocks remain intact; TileForge creates its own separate block. Changing an existing NPC's interaction to dialogue can replace its story/trainer interaction even though its other metadata is preserved.
 6. Tap the saved marker to reopen it and verify the fields. Undo rolls back map metadata and generated dialogue together.
@@ -333,7 +333,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.13.0; the current tools are described above:
+These are proposals beyond 0.14.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -345,7 +345,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.13.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.14.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -397,6 +397,8 @@ Deletion moves the snapshot to **Deleted drafts**. Deleted snapshots do not cons
 
 ## Small sprite pictures in NPC menus
 
-**Select NPC or event**, **NPC appearance**, and NPC summaries include a small picture when TileForge can resolve the project's explicit sprite declarations. This includes supported custom graphics and original source paths. The preview uses a static source frame; it does not simulate animations, story visibility, player appearance or runtime palette changes. Legends' custom Mom preview can use the default source family palette, rather than the player's current skin-tone selection.
+**NPC catalog & placed events**, **NPC appearance**, and NPC summaries include a small picture when TileForge can resolve the project's explicit sprite declarations. This includes supported custom graphics and original source paths. The preview uses a static source frame; it does not simulate animations, story visibility, player appearance or runtime palette changes. Legends' custom Mom preview can use the default source family palette, rather than the player's current skin-tone selection.
 
 Pictures load for visible menu entries and keep the text labels available. A question mark means that source assets are missing, dynamic or unsupported; it does not prevent choosing/editing an otherwise supported NPC. Internet access is needed to load uncached pictures in an online project. Current source packs and portable exports retain the corresponding read-only metadata and assets for offline use. Loading a picture does not count as a game edit. No project sprite artwork is bundled into the editor's installation files.
+
+The NPC catalog defaults to **All NPC sprites**. **On this map** lists only existing placements, including signs, triggers and warps. The counts distinguish the project catalog from the current map. Both lists are searchable. Choosing a catalog sprite prepares placement; source files change only when you save the event. Runtime-variable slots, species macros and range/count constants are not fixed character appearances, so they are not offered as new catalog choices; existing source values are retained in the event editor. Missing pictures do not remove the corresponding character from the catalog. Older incomplete source packs may need to be recreated to include graphics definitions.
