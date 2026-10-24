@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Settings now includes version details and Check for updates.",
-    "Android downloads and verifies updates inside the app, then opens Android installation.",
-    "The web app can save your workspace as a draft and refresh to the latest version."
+    "Pinch with two fingers to zoom and pan without leaving stray paint edits.",
+    "Tap Original / Edited in Map studio to compare with the imported source, including shared graphics.",
+    "Drag the tile window edge to resize it; portrait and landscape sizes are remembered."
   ]
 }

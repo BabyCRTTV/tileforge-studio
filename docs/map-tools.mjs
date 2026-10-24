@@ -65,5 +65,5 @@ export function createMapTools({S,C,$,tool,render,record,queueDraft,status,toast
   if(r){cx.fillStyle='#f6bc4938';cx.fillRect(r.x*16,r.y*16,r.w*16,r.h*16);cx.strokeStyle='#fff5a4';cx.lineWidth=1.5;cx.strokeRect(r.x*16+.5,r.y*16+.5,r.w*16-1,r.h*16-1);}
   if(ruler){const {a,b}=ruler,d=rulerDistance(a,b);cx.strokeStyle='#fff5a4';cx.lineWidth=2;cx.beginPath();cx.moveTo(a.x*16+8,a.y*16+8);cx.lineTo(b.x*16+8,b.y*16+8);cx.stroke();$('rulerReadout').textContent=`ΔX ${d.dx}, ΔY ${d.dy} · ${d.steps} tile steps · ${d.width} × ${d.height} cells`;}
  }
- return {sync,draw,pointerDown,pointerMove,pointerEnd,serialize:()=>({stamps}),reset(meta={}){stamps=Array.isArray(meta?.stamps)?meta.stamps.filter(validStamp).slice(0,64).map(s=>structuredClone(s)):[];active=null;selection=null;ruler=null;gesture=null;layoutId=null;},brushChosen(){if(S.tool==='stamp')tool('pencil');}};
+ return {sync,draw,pointerDown,pointerMove,pointerEnd,cancelGesture(){if(gesture?.tool==='select')selection=null;if(gesture?.tool==='ruler')ruler=null;gesture=null;hover=null;sync();},serialize:()=>({stamps}),reset(meta={}){stamps=Array.isArray(meta?.stamps)?meta.stamps.filter(validStamp).slice(0,64).map(s=>structuredClone(s)):[];active=null;selection=null;ruler=null;gesture=null;layoutId=null;},brushChosen(){if(S.tool==='stamp')tool('pencil');}};
 }

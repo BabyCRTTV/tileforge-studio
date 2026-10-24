@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.8.0 alpha · 23 October 2026 · By 8BitTrade
+TileForge 0.9.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -55,13 +55,25 @@ Replace both example paths with your folders. Transfer `legends-source.zip` to t
 1. Open TileForge and stay on **1 · Load** until you choose a project or a draft.
 2. Choose **Emerald: Legends** for the public project. A new import starts in **Littleroot** when that layout exists. A saved project/draft keeps its previously selected map.
 3. Choose **Map studio**. On a wide screen, maps appear in the left explorer. On a compact screen, use the searchable map dropdown above the canvas.
-4. Tap **Fit** to frame the map. Use **+ / -** to zoom. Select **Move** to drag the canvas with one finger without painting. Fit resumes automatic fitting after a rotation or resize.
+4. Tap **Fit** to frame the map. Use **+ / -** or pinch with two fingers to zoom. A two-finger gesture pans as its midpoint moves and cancels an in-progress paint or stamp. Lift both fingers before painting again. Select **Move** to drag the canvas with one finger without painting. Fit resumes automatic fitting after a rotation or resize.
 5. Choose **Tiles** in the palette. In **Collision & display**, leave **Paint collision** and **Paint elevation** off for an artwork-only edit.
 6. Choose **Pick**, then tap an existing ground cell. The tile becomes your brush, and the status readout shows X/Y, tile, collision and elevation. Coordinates start at zero at the map's top-left corner.
 7. Choose **Paint**, tap one nearby cell, then tap **Undo** to restore it. This confirms the basic editing loop before you make a larger change.
 8. Tap **Save draft** and wait for **Draft saved**. Continue with the task below that matches your edit.
 
 On narrow phones, the palette is behind **Tiles** in the toolbar. Selecting a brush closes the drawer and returns to the map. On compact displays, panels open over the canvas; **Done** tucks them away. The app adapts to available CSS viewport space, including system scaling and split-screen; device marketing resolution is not the same thing as that usable space.
+
+### Compare original and edited
+
+In **Map studio**, tap **Original** beside the zoom controls to view the imported baseline. The button becomes **Edited**; tap it to return to your working map. The original view includes the original tileset assignment, pixels, metatile pieces, palettes, map movement, repeated border and event markers when event mode is shown. It uses the baseline preserved with the draft or editable project, not a newly fetched latest game revision. The preview remains static daytime art.
+
+The original canvas is read-only; you can pan or pinch to inspect it. The toggle preserves zoom, scroll, your edits and Undo history. Source editing through other controls returns to the edited view when applied. Changing map or studio also returns to Edited. Export always uses your working edits.
+
+### Resize the tile window
+
+Drag the grip on the tile window's **left edge** left to widen it or right to narrow it. Tile thumbnails rearrange to use the space. The map refits only while **Fit** is active; a manual zoom stays as you set it. The size is remembered on this device separately for portrait/landscape and the narrow phone drawer. Window limits keep the map usable.
+
+On a narrow phone, open **Tiles** first and drag the same grip on the drawer. A keyboard can focus the grip and use **Left/Right** arrows to adjust it; **Home** restores the default size. Resizing only changes the interface, never game tile dimensions or exported files.
 
 ## 3. Find the right tile and paint the map
 
@@ -313,7 +325,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.8.0; the current tools are described above:
+These are proposals beyond 0.9.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -325,7 +337,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.8.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.9.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

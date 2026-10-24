@@ -1,6 +1,8 @@
 # TileForge Studio
 
-The 0.7.0 update integrates missing workflows identified in a [Porymap / Hex Maniac Advance feature audit](REFERENCE-FEATURE-AUDIT.md): rectangular map selection, saved searchable stamps with explicit art/movement policy, a ruler, clean map PNG export, raw ROM byte/ASCII search, pointer navigation/reference candidates, Back/Forward and draft bookmarks. The comparison records partial support and larger remaining gaps; this is not full desktop-tool parity.
+Version 0.9.0 adds two-finger pinch zoom/pan, a one-tap **Original / Edited** source-map comparison, and a tile window you can resize by its left-edge grip. Original renders the imported baseline, including shared tiles/palettes, movement, borders and visible events, with a read-only canvas and unchanged Undo. Palette widths persist by orientation; manual zoom is retained while resizing.
+
+The 0.6.0 update integrates missing workflows identified in a [Porymap / Hex Maniac Advance feature audit](REFERENCE-FEATURE-AUDIT.md): rectangular map selection, saved searchable stamps with explicit art/movement policy, a ruler, clean map PNG export, raw ROM byte/ASCII search, pointer navigation/reference candidates, Back/Forward and draft bookmarks. The comparison records partial support and larger remaining gaps; this is not full desktop-tool parity.
 
 Open **Areas & stamps** in Map studio. Select a rectangle by drag or coordinates, copy it, choose the fields, and tap **Stamp** at the top-left destination. Saved stamps are tied to compatible source pairs and travel with drafts and portable projects. In ROM workspace, open **Hex, search & navigation** to find bytes, follow raw pointers or save a named offset. Navigation never changes ROM bytes.
 
@@ -10,9 +12,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.8.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.9.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.8.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.9.0.apk)**
 
 ## What works
 

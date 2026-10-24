@@ -52,14 +52,27 @@ export function createLayout({S,$,fit}) {
  const observer=new ResizeObserver(reflow);observer.observe($('canvasWrap'));
  compact.addEventListener('change',sync);
  const narrow=matchMedia('(max-width: 540px)'),inspector=document.querySelector('.inspector'),palette=$('paletteDialog');
+ const resize=$('paletteResize'),workspace=document.querySelector('.workspace'),orientation=matchMedia('(orientation: portrait)');
+ let resizing=null;const sizes={};
+ try{Object.assign(sizes,JSON.parse(localStorage.getItem('tileforge-palette-sizes')||'{}'));}catch{}
+ const sizeKey=()=>`${orientation.matches?'portrait':'landscape'}-${narrow.matches?'drawer':'panel'}`;
+ function limits(){return narrow.matches?{min:220,max:Math.min(480,innerWidth-16)}:{min:160,max:Math.max(160,Math.min(480,innerWidth-(compact.matches?300:600)))};}
+ function positionHandle(){const r=(narrow.matches?palette:inspector).getBoundingClientRect();resize.hidden=narrow.matches?!palette.open:!r.height||workspace.hidden;resize.style.left=(r.left-12)+'px';resize.style.top=(r.top+8)+'px';resize.style.height=Math.max(44,r.height-16)+'px';}
+ function applyWidth(value,save=false){const l=limits(),fallback=narrow.matches?360:innerWidth<=800?168:innerWidth<=1366?200:260,width=Math.round(Math.max(l.min,Math.min(l.max,Number.isFinite(value)?value:fallback)));workspace.style.setProperty('--palette-width',width+'px');palette.style.setProperty('--palette-width',width+'px');resize.setAttribute('aria-valuemin',l.min);resize.setAttribute('aria-valuemax',l.max);resize.setAttribute('aria-valuenow',width);if(save){sizes[sizeKey()]=width;try{localStorage.setItem('tileforge-palette-sizes',JSON.stringify(sizes));}catch{}}positionHandle();reflow();}
+ resize.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();resizing={pointer:e.pointerId,x:e.clientX,width:Number(resize.getAttribute('aria-valuenow'))};resize.setPointerCapture(e.pointerId);});
+ resize.addEventListener('pointermove',e=>{if(resizing?.pointer===e.pointerId)applyWidth(resizing.width+resizing.x-e.clientX,true);});
+ for(const type of ['pointerup','pointercancel','lostpointercapture'])resize.addEventListener(type,()=>resizing=null);
+ resize.addEventListener('keydown',e=>{let width=Number(resize.getAttribute('aria-valuenow'));if(e.key==='ArrowLeft')width+=16;else if(e.key==='ArrowRight')width-=16;else if(e.key==='Home'){delete sizes[sizeKey()];width=undefined;}else return;e.preventDefault();applyWidth(width,true);});
+ const paletteObserver=new ResizeObserver(positionHandle);paletteObserver.observe(inspector);paletteObserver.observe(workspace);
+ orientation.addEventListener('change',()=>applyWidth(sizes[sizeKey()]));window.addEventListener('resize',()=>applyWidth(sizes[sizeKey()]));
  const anchor=document.createComment('tile palette position');inspector.before(anchor);
  function placePalette(){
   if(palette.open)palette.close();
-  if(narrow.matches)palette.append(inspector);else anchor.parentNode.insertBefore(inspector,anchor.nextSibling);
+  if(narrow.matches){palette.append(resize,inspector);}else{workspace.append(resize);anchor.parentNode.insertBefore(inspector,anchor.nextSibling);}applyWidth(sizes[sizeKey()]);
   $('brushToggle').setAttribute('aria-expanded','false');reflow();
  }
- $('brushToggle').onclick=()=>{palette.showModal();$('brushToggle').setAttribute('aria-expanded','true');};
- palette.addEventListener('close',()=>{$('brushToggle').setAttribute('aria-expanded','false');});
+ $('brushToggle').onclick=()=>{palette.showModal();positionHandle();$('brushToggle').setAttribute('aria-expanded','true');};
+ palette.addEventListener('close',()=>{positionHandle();$('brushToggle').setAttribute('aria-expanded','false');});
  inspector.addEventListener('click',e=>{
   if(palette.open&&e.target.closest('#tilePalette button,#movementChoices button,#swatches button'))queueMicrotask(()=>palette.close());
  },true);
