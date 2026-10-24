@@ -4,6 +4,9 @@ on:
     branches: [main]
     paths: ['dist/**', 'desktop/**', '.github/workflows/windows.yml']
   workflow_dispatch:
+concurrency:
+  group: tileforge-windows
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
