@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.10.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.11.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -333,7 +333,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.10.0; the current tools are described above:
+These are proposals beyond 0.11.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -345,7 +345,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.10.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.11.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -354,3 +354,17 @@ Browser viewport checks and automated source/binary tests support this release. 
 ### Asset and local AI sources
 
 The Fuecoco app sprite is the front sprite from the pinned [Emerald: Legends source](https://github.com/BabyCRTTV/pokeemerald-emerald-legends/blob/7cf9a7bfcb515ad33b4840ce38cd7d2e88008b8d/graphics/pokemon/fuecoco/front.png), based on RHH/pokeemerald-expansion; see its [contributors and sprite credits](https://github.com/rh-hideout/pokeemerald-expansion/blob/master/CREDITS.md). Pokémon/Fuecoco belong to their respective rights holders. The local assistant uses HuggingFaceTB's [SmolLM2](https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct), the [ONNX Community conversion](https://huggingface.co/onnx-community/SmolLM2-360M-Instruct-ONNX) and [Transformers.js](https://huggingface.co/docs/transformers.js). These assets do not change ownership of game artwork.
+
+## Create a cell and connect a doorway
+
+In Map studio choose **New cell**, give it a unique source name (letters/digits/underscores), choose **Interior** or **Exterior**, and select a template with matching artwork. Choose a size from 4 to 128 tiles per side. **Preview cell** lists the exact files; **Apply** creates a blank map with its own layout, events, border and script. It inherits the template's tilesets and header settings, without its NPCs, warps, connections or story scripts. Paint the new floor/ground and walls next. Tile #000 is only a starting fill; it is not automatically a suitable floor in every tileset.
+
+New cells append a separate map group so existing map IDs stay in place. The source ZIP must include `data/maps/map_groups.json` and `data/event_scripts.s`; current editor packs include these. Online Legends loads them as needed. Creating maps is source-project work; arbitrary GBA ROMs do not expose this feature.
+
+For a doorway, open **NPCs & events**, choose **+ Warp**, and tap its map tile. Alternatively **Link warp** opens the wizard with editable source coordinates. Choose a destination cell, then choose an existing entrance by its coordinates or keep **Create a return warp linked back here** enabled and set an empty destination tile. **Create a new interior first** creates a cell and returns to the link wizard. Preview shows all affected source files before Apply. Existing warp entries are appended to rather than renumbered. One Undo restores the whole link or creation operation.
+
+Warp events alone do not make ordinary floor trigger a warp: paint suitable doorway/stair/warp metatiles, check movement and elevation, run **Review events**, then save a draft and export. Test both directions in the rebuilt game. The **Next** guidance beneath the toolbar suggests the next action. Cell creation and linking do not automatically integrate into the game repository or build a ROM.
+
+## Windows desktop
+
+The Windows x64 installer bundles the same editor modules as Android and web. File pickers and export downloads run through the desktop window. Drafts live in the desktop app's local profile. Settings checks the official version information and opens the matching Windows release page after saving a draft; run the downloaded installer to replace the application. The alpha installer is unsigned. Windows packaging verifies bundled file hashes and launches the packaged editor in CI; that does not replace testing your own exports and gameplay.

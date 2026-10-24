@@ -1,0 +1,5 @@
+{
+ "name":"tileforge-studio-desktop","productName":"TileForge Studio","version":"0.11.0","description":"TileForge source map editor","author":"8BitTrade","main":"main.cjs","private":true,
+ "devDependencies":{"electron":"45.0.0","electron-builder":"26.18.0"},
+ "build":{"appId":"com.eightbittrade.tileforge","asar":true,"files":["main.cjs","package.json"],"extraResources":[{"from":"../dist","to":"www","filter":["**/*","!downloads/**","!update.json"]}],"win":{"target":[{"target":"nsis","arch":["x64"]}],"signAndEditExecutable":false},"nsis":{"oneClick":false,"perMachine":false,"allowToChangeInstallationDirectory":true,"createDesktopShortcut":true,"artifactName":"TileForge-Studio-${version}-Setup.exe"},"directories":{"output":"release"}}
+}

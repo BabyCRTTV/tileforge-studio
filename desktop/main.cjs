@@ -1,0 +1,18 @@
+const {app,BrowserWindow,protocol,net,session,shell,dialog}=require('electron');
+const path=require('node:path'),fs=require('node:fs'),{pathToFileURL}=require('node:url');
+protocol.registerSchemesAsPrivileged([{scheme:'tileforge',privileges:{standard:true,secure:true,supportFetchAPI:true,corsEnabled:true}}]);
+app.setAppUserModelId('com.eightbittrade.tileforge');
+const base=()=>app.isPackaged?path.join(process.resourcesPath,'www'):path.resolve(__dirname,'../dist');
+const external=url=>{try{const u=new URL(url);if(u.protocol==='https:'&&['babycrttv.github.io','github.com','www.electronjs.org'].includes(u.hostname))shell.openExternal(u.href);}catch{}};
+app.whenReady().then(()=>{
+ protocol.handle('tileforge',req=>{try{const u=new URL(req.url);if(u.host!=='studio')return new Response('Not found',{status:404});const pathname=decodeURIComponent(u.pathname),file=path.resolve(base(),'.'+pathname);if(!file.startsWith(base()+path.sep)||!fs.statSync(file).isFile())return new Response('Not found',{status:404});return net.fetch(pathToFileURL(file).href);}catch{return new Response('Not found',{status:404});}});
+ session.defaultSession.setPermissionRequestHandler((_w,_p,callback)=>callback(false));
+ session.defaultSession.on('will-download',(_e,item)=>item.setSaveDialogOptions({title:'Save TileForge export',defaultPath:path.join(app.getPath('downloads'),item.getFilename())}));
+ const smoke=app.commandLine.hasSwitch('smoke-test'),win=new BrowserWindow({width:1280,height:850,minWidth:360,minHeight:300,show:!smoke,backgroundColor:'#f5f5ee',webPreferences:{nodeIntegration:false,contextIsolation:true,sandbox:true}});win.setMenuBarVisibility(false);
+ win.webContents.setWindowOpenHandler(({url})=>{external(url);return {action:'deny'};});
+ win.webContents.on('will-navigate',(e,url)=>{if(!url.startsWith('tileforge://studio/')){e.preventDefault();external(url);}});
+ win.webContents.on('will-prevent-unload',event=>{if(dialog.showMessageBoxSync(win,{type:'question',buttons:['Keep editing','Close'],defaultId:0,cancelId:0,message:'Close TileForge? Export or save a draft before closing.'})===1)event.preventDefault();});
+ if(smoke){win.webContents.once('did-finish-load',async()=>{try{const result=await win.webContents.executeJavaScript(`(async()=>{document.getElementById('helpBtn').click();document.getElementById('startPractice').click();await new Promise(r=>setTimeout(r,1500));return {stage:document.body.dataset.stage,newCell:!!document.getElementById('newCellBtn'),warp:!!document.getElementById('linkWarpBtn'),version:document.querySelector('.version').textContent};})()`);fs.writeFileSync(process.env.TILEFORGE_SMOKE_RESULT,JSON.stringify(result));app.exit(result.stage==='studio'&&result.newCell&&result.warp?0:1);}catch(e){console.error(e);app.exit(1);}});setTimeout(()=>app.exit(1),30000);}
+ win.loadURL('tileforge://studio/editor.html?desktop=1');
+});
+app.on('window-all-closed',()=>app.quit());

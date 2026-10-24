@@ -1,6 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.10.0</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.11.0</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
 <p><strong>From your first map edit to a new game build</strong><br/>
-TileForge 0.10.0 alpha · 24 October 2026 · By 8BitTrade</p>
+TileForge 0.11.0 alpha · 24 October 2026 · By 8BitTrade</p>
 <p><a href="https://babycrttv.github.io/tileforge-studio/">Open
 TileForge</a> · <a href="https://babycrttv.github.io/tileforge-studio/editor.html">Open the
 editor</a> · <a href="https://babycrttv.github.io/tileforge-studio/guide.html">Read this
@@ -16,7 +16,8 @@ changing it</a></li><li><a href="#8-save-drafts-undo-mistakes-and-make-backups">
 undo mistakes and make backups</a></li><li><a href="#9-export-and-send-the-required-files-back-to-chat">9. Export and
 send the required files back to chat</a></li><li><a href="#10-integrate-build-and-check-the-result">10. Integrate, build
 and check the result</a></li><li><a href="#11-troubleshooting-and-next-improvements">11. Troubleshooting
-and next improvements</a></li></ol></nav><h2 id="1-choose-the-right-starting-point">1. Choose the right starting
+and next improvements</a></li><li><a href="#create-a-cell-and-connect-a-doorway">Create a cell and connect a
+doorway</a></li><li><a href="#windows-desktop">Windows desktop</a></li></ol></nav><h2 id="1-choose-the-right-starting-point">1. Choose the right starting
 point</h2>
 <p>For Emerald: Legends maps, use <strong>source mode</strong>.
 TileForge edits the project's map, graphics and event files. You export
@@ -899,7 +900,7 @@ undone. Save an editable project to keep preferences.</td>
 </tbody>
 </table></div>
 <h3 id="ideas-worth-prioritizing">Ideas worth prioritizing</h3>
-<p>These are proposals beyond 0.10.0; the current tools are described
+<p>These are proposals beyond 0.11.0; the current tools are described
 above:</p>
 <ol type="1">
 <li><strong>Before/after export preview and affected-map list.</strong>
@@ -925,7 +926,7 @@ beyond the source checker.</li>
 helps you verify exactly what you will send and catches unintended
 shared changes early.</p>
 <h3 id="sources-and-scope">Sources and scope</h3>
-<p>This guide follows the TileForge 0.10.0 source and its actual UI
+<p>This guide follows the TileForge 0.11.0 source and its actual UI
 labels. Feature comparison: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md">REFERENCE-FEATURE-AUDIT.md</a>.
 Category audit: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md">CATEGORY-AUDIT.md</a>.
 The editor is an independent alpha inspired by <a href="https://huderlem.github.io/porymap/">Porymap</a> and <a href="https://github.com/haven1433/HexManiacAdvance">Hex Maniac
@@ -951,4 +952,48 @@ rights holders. The local assistant uses HuggingFaceTB's <a href="https://huggin
 the <a href="https://huggingface.co/onnx-community/SmolLM2-360M-Instruct-ONNX">ONNX
 Community conversion</a> and <a href="https://huggingface.co/docs/transformers.js">Transformers.js</a>.
 These assets do not change ownership of game artwork.</p>
+<h2 id="create-a-cell-and-connect-a-doorway">Create a cell and connect a
+doorway</h2>
+<p>In Map studio choose <strong>New cell</strong>, give it a unique
+source name (letters/digits/underscores), choose
+<strong>Interior</strong> or <strong>Exterior</strong>, and select a
+template with matching artwork. Choose a size from 4 to 128 tiles per
+side. <strong>Preview cell</strong> lists the exact files;
+<strong>Apply</strong> creates a blank map with its own layout, events,
+border and script. It inherits the template's tilesets and header
+settings, without its NPCs, warps, connections or story scripts. Paint
+the new floor/ground and walls next. Tile #000 is only a starting fill;
+it is not automatically a suitable floor in every tileset.</p>
+<p>New cells append a separate map group so existing map IDs stay in
+place. The source ZIP must include
+<code>data/maps/map_groups.json</code> and
+<code>data/event_scripts.s</code>; current editor packs include these.
+Online Legends loads them as needed. Creating maps is source-project
+work; arbitrary GBA ROMs do not expose this feature.</p>
+<p>For a doorway, open <strong>NPCs &amp; events</strong>, choose
+<strong>+ Warp</strong>, and tap its map tile. Alternatively
+<strong>Link warp</strong> opens the wizard with editable source
+coordinates. Choose a destination cell, then choose an existing entrance
+by its coordinates or keep <strong>Create a return warp linked back
+here</strong> enabled and set an empty destination tile. <strong>Create
+a new interior first</strong> creates a cell and returns to the link
+wizard. Preview shows all affected source files before Apply. Existing
+warp entries are appended to rather than renumbered. One Undo restores
+the whole link or creation operation.</p>
+<p>Warp events alone do not make ordinary floor trigger a warp: paint
+suitable doorway/stair/warp metatiles, check movement and elevation, run
+<strong>Review events</strong>, then save a draft and export. Test both
+directions in the rebuilt game. The <strong>Next</strong> guidance
+beneath the toolbar suggests the next action. Cell creation and linking
+do not automatically integrate into the game repository or build a
+ROM.</p>
+<h2 id="windows-desktop">Windows desktop</h2>
+<p>The Windows x64 installer bundles the same editor modules as Android
+and web. File pickers and export downloads run through the desktop
+window. Drafts live in the desktop app's local profile. Settings checks
+the official version information and opens the matching Windows release
+page after saving a draft; run the downloaded installer to replace the
+application. The alpha installer is unsigned. Windows packaging verifies
+bundled file hashes and launches the packaged editor in CI; that does
+not replace testing your own exports and gameplay.</p>
 </main></div></body></html>

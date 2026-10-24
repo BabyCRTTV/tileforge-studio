@@ -307,3 +307,4 @@ body{height:100dvh;min-height:0;overflow:hidden}
  .tile-palette button:hover{border-color:var(--green);background:var(--mint)}
  .palette-resize{width:20px}.canvas-wrap{scrollbar-gutter:stable}
 }
+.world-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:6px;flex-shrink:0}.world-actions button{font-size:11px;min-height:44px}.world-actions span{font-size:11px;color:#42644b;flex:1;min-width:160px;line-height:1.5}.world-dialog{width:680px;overflow:auto}.world-dialog label{display:flex;flex-direction:column;gap:6px;margin:12px 0;font-size:13px}.world-dialog label:has(input[type=checkbox]){flex-direction:row;align-items:center}.world-dialog pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px}.world-dialog select{width:100%}.world-dialog #worldError{color:#933b36;line-height:1.6}.next-step{padding:12px;background:var(--mint);font-size:13px;line-height:1.6}.world-actions~.canvas-wrap{min-height:140px}

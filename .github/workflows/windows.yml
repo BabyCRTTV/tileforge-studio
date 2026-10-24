@@ -1,0 +1,51 @@
+name: Build TileForge Windows
+on:
+  push:
+    branches: [main]
+    paths: ['dist/**', 'desktop/**', '.github/workflows/windows.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - run: npm ci --prefix desktop
+      - name: Build matching Windows installer
+        working-directory: desktop
+        run: npx electron-builder --win nsis --publish never
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+      - name: Verify bundled editor parity and launch desktop
+        shell: pwsh
+        run: |
+          $source = Get-ChildItem dist -File -Recurse | Where-Object { $_.FullName -notmatch '[\\/]downloads[\\/]' -and $_.Name -ne 'update.json' }
+          foreach ($file in $source) {
+            $relative = [IO.Path]::GetRelativePath((Resolve-Path dist), $file.FullName)
+            $target = Join-Path 'desktop/release/win-unpacked/resources/www' $relative
+            if ((Get-FileHash $file.FullName).Hash -ne (Get-FileHash $target).Hash) { throw "Asset mismatch: $relative" }
+          }
+          $env:TILEFORGE_SMOKE_RESULT = Join-Path $env:RUNNER_TEMP 'tileforge-smoke.json'
+          $process = Start-Process 'desktop/release/win-unpacked/TileForge Studio.exe' -ArgumentList '--smoke-test' -PassThru -Wait
+          if ($process.ExitCode -ne 0) { throw 'Windows launch check failed' }
+          Get-Content $env:TILEFORGE_SMOKE_RESULT
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TileForge-Windows-Installer
+          path: desktop/release/*Setup.exe
+      - name: Publish Windows installer
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = (Get-Content package.json | ConvertFrom-Json).version
+          $tag = "windows-v$version"
+          gh release view $tag 2>$null
+          if ($LASTEXITCODE -ne 0) { gh release create $tag --target $env:GITHUB_SHA --title "TileForge Studio $version for Windows" --notes 'Windows x64 installer. Includes the same editor assets as the matching web app and APK. Unsigned alpha build.' }
+          gh release upload $tag desktop/release/*Setup.exe --clobber

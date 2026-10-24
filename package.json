@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,9 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Fold and compact windows use a full-width map with a larger Tiles drawer and a small-screen notice.",
-    "Tile filters collapse to give the palette a single scroll area with every tile reachable.",
-    "Resizable Android windows support DeX, keyboard changes and fold/unfold without reloading the editor.",
-    "Movement has simple passage brushes that preserve height, plus persistent beginner help throughout the studio."
+    "Create interior or exterior source cells from a compatible template, with previews and Undo.",
+    "Link warp entrances by location or create a paired return point, including a new interior.",
+    "Next-step guidance appears directly in the map studio.",
+    "Windows installer bundles the same editor files as web and Android."
   ]
 }
