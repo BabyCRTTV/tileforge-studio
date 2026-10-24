@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.14.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.15.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -261,7 +261,9 @@ After a set of edits has been integrated, open a fresh source pack or a fresh li
 
 ### Delete old drafts
 
-Choose **Load**, find the saved draft and tap **Delete**. The confirmation identifies the project and timestamp. Deleted drafts stay on this device and can be restored; deleting is not a portable backup or a way to clear their storage. Export a portable project first if you need a backup. Confirming moves that device copy to **Deleted drafts**, where **Restore** recovers it with its original baseline and undo history; it does not delete exported files or the open workspace. If the deleted draft was open, pending autosave is cancelled and the app does not immediately recreate it. Your next edit or explicit **Save draft** creates a new draft. Other drafts keep their own identity and baselines.
+Choose **Load**, find the saved draft and tap **Delete**. The confirmation identifies the project and timestamp. Deleted drafts stay on this device and can be restored; moving a draft here is not a portable backup and does not clear its storage. Export a portable project first if you need a backup. Confirming moves that device copy to **Deleted drafts**, where **Restore** recovers it with its original baseline and undo history; it does not delete exported files or the open workspace. If the deleted draft was open, pending autosave is cancelled and the app does not immediately recreate it. Your next edit or explicit **Save draft** creates a new draft. Other drafts keep their own identity and baselines.
+
+In **Deleted drafts**, choose **Delete permanently** beside one entry, or **Clear deleted drafts** to remove the deleted entries listed in the confirmation. Review the names and count, then confirm. **Keep deleted drafts** cancels. Permanent deletion removes those device snapshots, including their original baselines and undo history; they cannot be restored. Active drafts, exported files and the open workspace stay available. A draft restored before removal is protected, and entries newly deleted after the confirmation opened are kept for a separate review. These actions remain available when all ten active draft slots are full.
 
 ## 9. Export and send the required files back to chat
 
@@ -333,7 +335,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.14.0; the current tools are described above:
+These are proposals beyond 0.15.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -345,7 +347,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.14.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.15.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

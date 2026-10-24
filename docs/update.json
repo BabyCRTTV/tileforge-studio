@@ -1,17 +1,17 @@
 {
   "format": "tileforge-update",
-  "version": "0.14.0",
-  "versionCode": 19,
+  "version": "0.15.0",
+  "versionCode": 20,
   "notes": [
-    "Browse all project NPC sprites directly from the NPC/event picker, independently of terrain tilesets.",
-    "Searchable sprite pictures and a separate On this map tab for placed events.",
-    "Choose an appearance first, then tap the map to add that NPC with the selected sprite.",
-    "The Add NPC button opens the full catalog; existing event summaries and Undo are preserved."
+    "Permanently delete individual entries from Deleted drafts, with confirmation.",
+    "Clear deleted drafts together after reviewing their names and count.",
+    "Active and restored drafts stay protected; only the deleted snapshots shown in the confirmation can be removed.",
+    "Restore, the ten active draft slots and your open workspace are preserved."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.14.0.apk",
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.15.0.apk",
     "size": 224572,
-    "sha256": "02fcd3d987cc01e59d6e6eb1df885c797701f125894b9f22b5ef418fcbb69dbd"
+    "sha256": "749995664ed187ce06439e04282894c1d704b47ebc560c2ed1891c043457ca8f"
   }
 }

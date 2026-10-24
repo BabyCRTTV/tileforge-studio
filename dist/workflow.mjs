@@ -1,5 +1,5 @@
-import {DRAFT_LIMIT} from './drafts.mjs?v=0.14.0';
-export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,fit}){
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.15.0';
+export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
  function load(){
@@ -28,7 +28,13 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
  $('saveDraftBtn').onclick=()=>task(saveDraft);
  $('exportSaveDraft').onclick=()=>task(saveDraft);
  function drafts(rows,deleted=[]){$('draftCapacity').textContent=rows.length+' / '+DRAFT_LIMIT+' drafts';$('draftCapacity').classList.toggle('at-capacity',rows.length>=DRAFT_LIMIT);
-  $('deletedDraftList').replaceChildren();$('deletedDraftPanel').hidden=!deleted.length;$('deletedDraftCount').textContent=deleted.length;for(const row of deleted){const b=document.createElement('button');b.className='draft-row draft-restore';b.type='button';b.textContent='Restore '+row.name+' · '+new Date(row.savedAt).toLocaleString();b.disabled=rows.length>=DRAFT_LIMIT;b.title=b.disabled?'Delete an active draft to free a slot before restoring.':'Restore this draft';b.onclick=()=>task(()=>restoreDraft(row.key));$('deletedDraftList').append(b);}
+  $('deletedDraftList').replaceChildren();$('deletedDraftPanel').hidden=!deleted.length;$('deletedDraftCount').textContent=deleted.length;$('clearDeletedDrafts').disabled=!deleted.length;
+  $('clearDeletedDrafts').onclick=()=>confirmPurge(deleted,true);
+  for(const row of deleted){
+   const entry=document.createElement('div');entry.className='draft-row deleted-draft-row';const name=document.createElement('strong');name.textContent=row.name;const detail=document.createElement('small');detail.textContent=(row.kind==='rom'?'GBA workspace':'Source project')+' · '+(row.savedAt?new Date(row.savedAt).toLocaleString():'Previous draft');
+   const actions=document.createElement('div');actions.className='deleted-draft-actions';const restore=document.createElement('button');restore.className='draft-restore';restore.type='button';restore.textContent='Restore';restore.disabled=rows.length>=DRAFT_LIMIT;restore.setAttribute('aria-label','Restore '+row.name);restore.title=restore.disabled?'Delete an active draft to free a slot before restoring.':'Restore this draft';restore.onclick=()=>task(()=>restoreDraft(row.key));
+   const remove=document.createElement('button');remove.className='draft-purge';remove.type='button';remove.textContent='Delete permanently';remove.setAttribute('aria-label','Permanently delete '+row.name);remove.onclick=()=>confirmPurge([row],false);actions.append(restore,remove);entry.append(name,detail,actions);$('deletedDraftList').append(entry);
+  }
   $('draftList').replaceChildren();$('resumeBtn').hidden=!rows.length;
   if(!rows.length){const p=document.createElement('p');p.className='draft-empty';p.textContent='Your drafts will appear here after you start editing.';$('draftList').append(p);return;}
   for(const row of rows){const entry=document.createElement('div');entry.className='draft-row';const button=document.createElement('button');button.className='draft-resume';button.type='button';
@@ -36,6 +42,11 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
    const detail=document.createElement('small');detail.textContent=(row.kind==='rom'?'GBA workspace':'Source project')+(row.savedAt?' · '+new Date(row.savedAt).toLocaleString():' · Previous draft')+(row.changes!=null?' · '+row.changes+' changed file'+(row.changes===1?'':'s'):'');
    button.append(title,detail);button.onclick=()=>run(()=>readDraft(true,row.key),'Restoring your project and undo history…');const remove=document.createElement('button');remove.className='draft-delete';remove.type='button';remove.textContent='Delete';remove.setAttribute('aria-label','Delete draft '+row.name);remove.onclick=()=>{const dialog=$('deleteDraftDialog');$('deleteDraftName').textContent=row.name+' · '+(row.savedAt?new Date(row.savedAt).toLocaleString():'Previous draft');$('confirmDeleteDraft').onclick=()=>task(async()=>{await deleteDraft(row.key);dialog.close();});dialog.showModal();};entry.append(button,remove);$('draftList').append(entry);
   }
+ }
+ function confirmPurge(rows,all){
+  if(!rows.length)return;const dialog=$('purgeDraftDialog'),keys=rows.map(row=>row.key);$('purgeDraftTitle').textContent=all?'Clear '+rows.length+' deleted draft'+(rows.length===1?'':'s')+' permanently?':'Permanently delete this draft?';$('purgeDraftError').textContent='';$('purgeDraftNames').replaceChildren();
+  for(const row of rows){const item=document.createElement('li');item.textContent=row.name+' · '+(row.savedAt?new Date(row.savedAt).toLocaleString():'Previous draft');$('purgeDraftNames').append(item);}
+  $('confirmPurgeDrafts').textContent=all?'Clear deleted drafts permanently':'Delete permanently';$('confirmPurgeDrafts').onclick=()=>task(async()=>{const buttons=[...dialog.querySelectorAll('button')];buttons.forEach(b=>b.disabled=true);try{if(all)await clearDeletedDrafts(keys);else await permanentlyDeleteDraft(keys[0]);dialog.close();}catch(error){$('purgeDraftError').textContent=error.message;throw error;}finally{buttons.forEach(b=>b.disabled=false);}});dialog.showModal();
  }
  function exportStage(){document.body.dataset.stage='export';$('stageLabel').textContent='3 · Export';$('exportBtn').classList.add('current-step');}
  for(const id of ['exportDialog','downloadDialog'])$(id).addEventListener('close',()=>{

@@ -42,3 +42,22 @@ export async function listDrafts(deleted=false){
 async function trashState(key,deleted){return mutateDraft(key,value=>{if(!value)return null;if(deleted)value.deletedAt=Date.now();else delete value.deletedAt;return value;});}
 export const deleteDraft=key=>trashState(key,true);
 export const restoreDraft=key=>trashState(key,false);
+
+// Purge only the reviewed keys, and recheck deleted state inside the write
+// transaction. A concurrent restore wins if it commits before this transaction.
+async function purgeDeleted(keys,requireDeleted=false){
+ if(!Array.isArray(keys))throw Error('Choose the deleted drafts to remove.');
+ const selected=[...new Set(keys)];if(selected.some(key=>typeof key!=='string'||!key))throw Error('Invalid draft selection.');
+ const db=await database();
+ try{return await new Promise((resolve,reject)=>{
+  const tx=db.transaction('drafts','readwrite'),store=tx.objectStore('drafts'),removed=[];let failure=null;
+  for(const key of selected){const request=store.get(key);request.onsuccess=()=>{
+   const value=request.result;if(!value)return;
+   if(!value.deletedAt){if(requireDeleted){failure=Error('This draft is no longer in Deleted drafts. Refresh the list before trying again.');failure.code='DRAFT_NOT_DELETED';tx.abort();}return;}
+   store.delete(key);removed.push(key);
+  };}
+  tx.oncomplete=()=>resolve(removed);tx.onerror=()=>reject(failure||tx.error);tx.onabort=()=>reject(failure||tx.error||Error('Permanent deletion interrupted'));
+ });}finally{db.close();}
+}
+export const permanentlyDeleteDraft=key=>purgeDeleted([key],true);
+export const clearDeletedDrafts=keys=>purgeDeleted(keys);
