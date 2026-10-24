@@ -69,3 +69,10 @@ In ROM workspace, expand **Hex, search & navigation**. Enter a hex offset and **
 - [HMA interface](https://github.com/haven1433/HexManiacAdvance/wiki/Overview-of-the-Interface), [pointers/anchors](https://github.com/haven1433/HexManiacAdvance/wiki/Pointers-and-Anchors), [pinned command/search flow](https://github.com/haven1433/HexManiacAdvance/blob/c8de1e8acf753522af7feed810d6324ce52474a3/src/HexManiac.Core/ViewModels/EditorViewModel.cs), [FindTests](https://github.com/haven1433/HexManiacAdvance/blob/c8de1e8acf753522af7feed810d6324ce52474a3/src/HexManiac.Tests/Before_Baseclass/FindTests.cs).
 
 Porymap is LGPL-3.0; HMA is MIT. Their implementation code, game prefabs and artwork are not bundled. New modules were authored independently from the documented workflows and binary formats. Existing third-party assets and runtime notices remain in THIRD-PARTY-NOTICES.md.
+
+
+## Porymap additions in 0.12.0 (24 October 2026)
+
+Compared again with the official map-header, connections and map-tile manuals. Map properties now edit declared music/weather/type/section/battle-background values and existing boolean gameplay flags. Connections support explicit mirrored add/update/remove and dive/emerge, with a rectangle alignment preview; this is not rendered connected-map terrain. Replace tiles updates all matching cells with movement preserved. Shift terrain wraps full block words and explicitly leaves events/script coordinates/connections unchanged. Ctrl+Y is an additional Redo shortcut. All source edits preview before Apply and use one Undo transaction.
+
+0.11.0 also added source interior/exterior creation and guided paired warp creation; the older table above is historical. Resize with coordinated event/connection relocation, event deletion/ID remapping, map rendering across seams, smart-path painting and custom encounter editors remain unimplemented.

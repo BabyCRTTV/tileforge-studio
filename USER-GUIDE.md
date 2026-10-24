@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.11.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.12.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -333,7 +333,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.11.0; the current tools are described above:
+These are proposals beyond 0.12.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -345,7 +345,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.11.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.12.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -368,3 +368,17 @@ Warp events alone do not make ordinary floor trigger a warp: paint suitable door
 ## Windows desktop
 
 The Windows x64 installer bundles the same editor modules as Android and web. File pickers and export downloads run through the desktop window. Drafts live in the desktop app's local profile. Settings checks the official version information and opens the matching Windows release page after saving a draft; run the downloaded installer to replace the application. The alpha installer is unsigned. Windows packaging verifies bundled file hashes and launches the packaged editor in CI; that does not replace testing your own exports and gameplay.
+
+## More map tools: properties, connections and terrain operations
+
+Open **More map tools** under the main map controls. Each tool previews its affected files before **Apply changes** and can be reversed with one Undo.
+
+**Map properties** edits music, weather on entry, map type, region map section, battle background and supported running, cycling, escaping, Flash and location-name switches. Choices come from the loaded project's constants; unavailable fields keep their values. Changing a region section does not change its shared display-name text. Engine code and scripts can override header settings. Save and test in a rebuilt copy of the game.
+
+**Connections** joins map edges for seamless travel. Search the destination, choose north/south/east/west and an offset measured in tiles. For north/south, positive offsets move the destination right; for east/west, positive offsets move it down. Negative offsets move left/up. **Mirror the return connection** updates both maps with opposite directions and offsets. The rectangle preview shows alignment, not rendered terrain or proof that movement is traversable. Paint matching ground and movement along the seam before testing. A conflicting destination edge or non-overlapping edge is refused. Existing links to the same map/direction can be updated. **Remove this connection instead** previews removal; mirrored removal refuses a mismatched return offset. Review the destination separately if its return link differs. Dive/emerge links use zero offset and can be mirrored; their game behavior still depends on the engine. **Open destination map** leaves the dialog without applying its unsaved preview.
+
+**Replace tiles** replaces every matching artwork tile on the current layout, including disconnected patches. The preview states the number of matching cells. Collision, elevation, events and border are retained. Other maps using the same layout also use its changed cells.
+
+**Shift terrain** wraps all tile block words by the specified horizontal/vertical tile steps. Positive moves right/down; negative moves left/up. Artwork and movement fields travel together. Events, warps, scripts and map connections stay in place; acknowledge this in the dialog before Apply, then review their alignment. This is not a map resize or automatic event relocation. Other maps sharing this layout use the shifted cells too.
+
+**Ctrl+Y** redoes an edit, alongside Ctrl+Shift+Z. The web, Android and Windows packages use the same editor modules.

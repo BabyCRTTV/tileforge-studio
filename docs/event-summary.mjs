@@ -1,4 +1,4 @@
-import {friendly,readDialogue} from './project.mjs?v=0.11.0';
+import {friendly,readDialogue} from './project.mjs?v=0.12.0';
 
 const missing=v=>v==null||v==='';
 const source=v=>missing(v)?'Not specified':String(v);

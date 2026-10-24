@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,9 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Create interior or exterior source cells from a compatible template, with previews and Undo.",
-    "Link warp entrances by location or create a paired return point, including a new interior.",
-    "Next-step guidance appears directly in the map studio.",
-    "Windows installer bundles the same editor files as web and Android."
+    "Map properties: music, weather, map type, region section, battle background and supported gameplay toggles.",
+    "Add, update or remove mirrored map connections with offset preview, plus dive/emerge links.",
+    "Replace every matching artwork tile while retaining collision and elevation.",
+    "Shift terrain with wraparound and explicit event-position guidance; Ctrl+Y now redoes."
   ]
 }

@@ -1,17 +1,17 @@
 {
   "format": "tileforge-update",
-  "version": "0.11.0",
-  "versionCode": 16,
+  "version": "0.12.0",
+  "versionCode": 17,
   "notes": [
-    "Create interior or exterior source cells from a compatible template, with previews and Undo.",
-    "Link warp entrances by location or create a paired return point, including a new interior.",
-    "Next-step guidance appears directly in the map studio.",
-    "Windows installer bundles the same editor files as web and Android."
+    "Map properties: music, weather, map type, region section, battle background and supported gameplay toggles.",
+    "Add, update or remove mirrored map connections with offset preview, plus dive/emerge links.",
+    "Replace every matching artwork tile while retaining collision and elevation.",
+    "Shift terrain with wraparound and explicit event-position guidance; Ctrl+Y now redoes."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.11.0.apk",
-    "size": 203792,
-    "sha256": "c76a4219d8d8b194d86668da1cb509c81b70d3a2524bcf7ffc2424571d884a61"
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.12.0.apk",
+    "size": 212137,
+    "sha256": "f499fb8dc8f917aca9ddf94901e876323d3f50bcc69a849d352f9caab6ddc178"
   }
 }
