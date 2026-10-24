@@ -1,3 +1,4 @@
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.13.0';
 export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
@@ -26,8 +27,8 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
  $('resumeBtn').onclick=load;
  $('saveDraftBtn').onclick=()=>task(saveDraft);
  $('exportSaveDraft').onclick=()=>task(saveDraft);
- function drafts(rows,deleted=[]){
-  $('deletedDraftList').replaceChildren();$('deletedDraftPanel').hidden=!deleted.length;$('deletedDraftCount').textContent=deleted.length;for(const row of deleted){const b=document.createElement('button');b.className='draft-row draft-restore';b.type='button';b.textContent='Restore '+row.name+' · '+new Date(row.savedAt).toLocaleString();b.onclick=()=>task(()=>restoreDraft(row.key));$('deletedDraftList').append(b);}
+ function drafts(rows,deleted=[]){$('draftCapacity').textContent=rows.length+' / '+DRAFT_LIMIT+' drafts';$('draftCapacity').classList.toggle('at-capacity',rows.length>=DRAFT_LIMIT);
+  $('deletedDraftList').replaceChildren();$('deletedDraftPanel').hidden=!deleted.length;$('deletedDraftCount').textContent=deleted.length;for(const row of deleted){const b=document.createElement('button');b.className='draft-row draft-restore';b.type='button';b.textContent='Restore '+row.name+' · '+new Date(row.savedAt).toLocaleString();b.disabled=rows.length>=DRAFT_LIMIT;b.title=b.disabled?'Delete an active draft to free a slot before restoring.':'Restore this draft';b.onclick=()=>task(()=>restoreDraft(row.key));$('deletedDraftList').append(b);}
   $('draftList').replaceChildren();$('resumeBtn').hidden=!rows.length;
   if(!rows.length){const p=document.createElement('p');p.className='draft-empty';p.textContent='Your drafts will appear here after you start editing.';$('draftList').append(p);return;}
   for(const row of rows){const entry=document.createElement('div');entry.className='draft-row';const button=document.createElement('button');button.className='draft-resume';button.type='button';

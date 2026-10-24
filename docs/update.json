@@ -1,17 +1,18 @@
 {
   "format": "tileforge-update",
-  "version": "0.12.0",
-  "versionCode": 17,
+  "version": "0.13.0",
+  "versionCode": 18,
   "notes": [
-    "Map properties: music, weather, map type, region section, battle background and supported gameplay toggles.",
-    "Add, update or remove mirrored map connections with offset preview, plus dive/emerge links.",
-    "Replace every matching artwork tile while retaining collision and elevation.",
-    "Shift terrain with wraparound and explicit event-position guidance; Ctrl+Y now redoes."
+    "Tools & tasks helps beginners choose a goal and opens the appropriate tool.",
+    "Actionable next steps, friendlier map-setting names and clearer doorway labels.",
+    "Ten active draft slots with atomic saving/restoration limits, a usage counter and clear full-slot guidance.",
+    "Existing drafts can still save at capacity; no drafts are deleted automatically.",
+    "Small source sprite pictures in NPC/event menus, appearance choices and NPC summaries, including supported custom graphics."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.12.0.apk",
-    "size": 212137,
-    "sha256": "f499fb8dc8f917aca9ddf94901e876323d3f50bcc69a849d352f9caab6ddc178"
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.13.0.apk",
+    "size": 220476,
+    "sha256": "d85c4c38c0e9744f6070209b34c0e21ff7a023c7c061099ef5a7297235cb1c91"
   }
 }

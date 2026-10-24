@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.12.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.13.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -333,7 +333,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.12.0; the current tools are described above:
+These are proposals beyond 0.13.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -345,7 +345,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.12.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.13.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -382,3 +382,21 @@ Open **More map tools** under the main map controls. Each tool previews its affe
 **Shift terrain** wraps all tile block words by the specified horizontal/vertical tile steps. Positive moves right/down; negative moves left/up. Artwork and movement fields travel together. Events, warps, scripts and map connections stay in place; acknowledge this in the dialog before Apply, then review their alignment. This is not a map resize or automatic event relocation. Other maps sharing this layout use the shifted cells too.
 
 **Ctrl+Y** redoes an edit, alongside Ctrl+Shift+Z. The web, Android and Windows packages use the same editor modules.
+
+## Beginner-friendly tasks and ten draft slots
+
+Choose **Tools & tasks** to start with a goal: paint the map, change where the player can walk, add an event, create an area, link a doorway, or save/share work. TileForge opens the appropriate controls. **More map tools** inside that chooser contains map settings, connections, replacement and shifting. All existing tools remain available.
+
+The guidance under the map controls has an action button. It can show tiles, choose Paint, explain a tool, or open event review. It responds to tool and brush choices. Selecting a task or following guidance changes the interface; it does not paint cells or apply source edits for you. On short screens the editor scrolls so that the map and lower controls remain reachable.
+
+Map settings use readable option names while retaining the exact source constants underneath. Doorway controls explain columns/rows and arrival points. New-area names can include spaces or hyphens, which become underscores in the source folder and ID. The source still requires a name beginning with a letter and using letters, digits or underscores after that conversion.
+
+The Load screen shows **Saved drafts · N / 10 drafts**. A maximum of 10 active drafts is shared by source projects and GBA workspaces within each app/browser profile. Existing drafts can continue saving at capacity. A new draft or a restored deleted draft needs a free slot. If all slots are full, your open work stays available; use **Manage drafts** to delete an old draft or **Export backup** to save a portable copy. Return to the studio and press Save draft after freeing a slot.
+
+Deletion moves the snapshot to **Deleted drafts**. Deleted snapshots do not consume active slots, but Restore is unavailable until there is room. No drafts are deleted automatically. Profiles already holding more than 10 drafts retain them and can update existing drafts; delete enough to go below the limit before adding or restoring another. Exports remain available at capacity.
+
+## Small sprite pictures in NPC menus
+
+**Select NPC or event**, **NPC appearance**, and NPC summaries include a small picture when TileForge can resolve the project's explicit sprite declarations. This includes supported custom graphics and original source paths. The preview uses a static source frame; it does not simulate animations, story visibility, player appearance or runtime palette changes. Legends' custom Mom preview can use the default source family palette, rather than the player's current skin-tone selection.
+
+Pictures load for visible menu entries and keep the text labels available. A question mark means that source assets are missing, dynamic or unsupported; it does not prevent choosing/editing an otherwise supported NPC. Internet access is needed to load uncached pictures in an online project. Current source packs and portable exports retain the corresponding read-only metadata and assets for offline use. Loading a picture does not count as a game edit. No project sprite artwork is bundled into the editor's installation files.

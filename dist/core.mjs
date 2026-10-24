@@ -1,10 +1,18 @@
-import {unzipSync,zipSync,strToU8,strFromU8,unzlibSync,zlibSync} from './vendor/fflate.mjs?v=0.12.0';
+import {unzipSync,zipSync,strToU8,strFromU8,unzlibSync,zlibSync} from './vendor/fflate.mjs?v=0.13.0';
 export {zipSync,strToU8,strFromU8};
-export const VERSION='0.12.0';
+export const VERSION='0.13.0';
 export const equal=(a,b)=>a?.length===b?.length&&a.every((x,i)=>x===b[i]);
 export const sha256=async a=>globalThis.crypto?.subtle?[...new Uint8Array(await crypto.subtle.digest('SHA-256',a))].map(x=>x.toString(16).padStart(2,'0')).join(''):sha256Fallback(a);
 export function safePath(p){if(!p||p.includes('\\')||p.startsWith('/')||p.split('/').some(x=>x==='..'||x==='.'||!x)||p.includes(':'))throw Error('Unsafe project path');return p;}
-export function sourceZip(bytes){let total=0;const raw=unzipSync(bytes,{filter:f=>{const take=/(^|\/)(data\/(?:(layouts|tilesets|maps)\/|event_scripts\.s$)|src\/(?:data\/tilesets\/|graphics\.c$)|include\/|tileforge-project.json|VERSION$)/.test(f.name)&&!f.name.endsWith('/');if(take&&(f.originalSize>32*1024*1024||(total+=f.originalSize)>220*1024*1024))throw Error('Project archive exceeds the 220 MB source limit. Use a smaller editor pack.');return take;}});const files=new Map();for(let [p,b]of Object.entries(raw)){const start=p.search(/(?:^|\/)(?:data\/|src\/|include\/|VERSION$|tileforge-project.json$)/);if(start<0)continue;p=p.slice(start).replace(/^\//,'');files.set(safePath(p),b);}if(!files.has('data/layouts/layouts.json'))throw Error('No data/layouts/layouts.json found. Open a pokeemerald source ZIP or TileForge project.');return files;}
+export function sourceZip(bytes){
+ let total=0;
+ const bounded=f=>{if(f.originalSize>32*1024*1024||(total+=f.originalSize)>220*1024*1024)throw Error('Project archive exceeds the 220 MB source limit. Use a smaller editor pack.');return true;};
+ const relative=p=>{const start=p.search(/(?:^|\/)(?:data\/|src\/|include\/|graphics\/|VERSION$|tileforge-project.json$)/);return start<0?null:safePath(p.slice(start).replace(/^\//,''));};
+ const raw=unzipSync(bytes,{filter:f=>!f.name.endsWith('/')&&/(^|\/)(data\/(?:(layouts|tilesets|maps)\/|event_scripts\.s$)|src\/(?:data\/(?:tilesets|object_events)\/|graphics\.c$|event_object_movement\.c$|data\/legends\/family_palettes\.h$)|include\/|tileforge-project.json|VERSION$)/.test(f.name)&&bounded(f)});
+ const references=new Set();for(const[p,b]of Object.entries(raw))if(/src\/(?:data\/object_events\/.*\.h|graphics\.c)$/.test(p))for(const m of strFromU8(b).matchAll(/"(graphics\/[^"\n]+\.(?:png|pal|4bpp(?:\.lz)?))"/g)){references.add(safePath(m[1]));references.add(safePath(m[1].replace(/\.4bpp(?:\.lz)?$/,'.png')));};
+ Object.assign(raw,unzipSync(bytes,{filter:f=>{if(f.name.endsWith('/'))return false;const p=relative(f.name);return p!=null&&references.has(p)&&bounded(f);}}));
+ const files=new Map();for(const[p,b]of Object.entries(raw)){const rel=relative(p);if(rel)files.set(rel,b);}if(!files.has('data/layouts/layouts.json'))throw Error('No data/layouts/layouts.json found. Open a pokeemerald source ZIP or TileForge project.');return files;
+}
 export function decodeBlocks(b,w,h){if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w*h>262144||b.length!==w*h*2)throw Error('Map dimensions do not match map.bin');const v=new DataView(b.buffer,b.byteOffset,b.byteLength);return Uint16Array.from({length:w*h},(_,i)=>v.getUint16(i*2,true));}
 export function encodeBlocks(c){const b=new Uint8Array(c.length*2),v=new DataView(b.buffer);c.forEach((x,i)=>v.setUint16(i*2,x,true));return b;}
 export function paintBlock(old,tile,collision=null,elevation=null){return (tile==null?old&1023:tile&1023)|((collision==null?(old>>>10)&3:collision&3)<<10)|((elevation==null?(old>>>12)&15:elevation&15)<<12);}

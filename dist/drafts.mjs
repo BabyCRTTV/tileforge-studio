@@ -4,13 +4,25 @@ const database=()=>new Promise((resolve,reject)=>{
  request.onupgradeneeded=()=>request.result.createObjectStore('drafts');
  request.onsuccess=()=>resolve(request.result);request.onerror=()=>reject(request.error);
 });
-export async function putDraft(key,value){
+export const DRAFT_LIMIT=10;
+export const DRAFT_LIMIT_MESSAGE='All 10 draft slots are full. Delete a draft from Load → Saved drafts, then try again. Your open work is still available to export.';
+// A single read/write transaction enforces capacity across concurrent tabs too.
+async function mutateDraft(key,change){
  const db=await database();
  try{await new Promise((resolve,reject)=>{
-  const tx=db.transaction('drafts','readwrite');tx.objectStore('drafts').put(value,key);
-  tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('Draft save interrupted'));
+  const tx=db.transaction('drafts','readwrite'),store=tx.objectStore('drafts');let failure=null;
+  const fail=error=>{failure=error;tx.abort();};
+  const read=store.get(key);read.onsuccess=()=>{
+   const previous=read.result,wasActive=previous&&!previous.deletedAt,value=change(previous);if(!value)return;
+   if(value.deletedAt||wasActive){store.put(value,key);return;}
+   let active=0;const cursor=store.openCursor();cursor.onsuccess=()=>{const current=cursor.result;if(current){if(!current.value.deletedAt)active++;current.continue();return;}
+    if(active>=DRAFT_LIMIT){const error=Error(DRAFT_LIMIT_MESSAGE);error.code='DRAFT_LIMIT';fail(error);}else store.put(value,key);
+   };
+  };
+  tx.oncomplete=resolve;tx.onerror=()=>reject(failure||tx.error);tx.onabort=()=>reject(failure||tx.error||Error('Draft save interrupted'));
  });}finally{db.close();}
 }
+export const putDraft=(key,value)=>mutateDraft(key,()=>value);
 export async function getDraft(key){
  const db=await database();
  try{return await new Promise((resolve,reject)=>{const r=db.transaction('drafts').objectStore('drafts').get(key);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
@@ -27,9 +39,6 @@ export async function listDrafts(deleted=false){
 }
 
 // Soft deletion keeps a normal recovery path, including baseline and undo history.
-async function trashState(key,deleted){
- const db=await database();
- try{await new Promise((resolve,reject)=>{const tx=db.transaction('drafts','readwrite'),store=tx.objectStore('drafts'),read=store.get(key);read.onsuccess=()=>{const value=read.result;if(!value)return;if(deleted)value.deletedAt=Date.now();else delete value.deletedAt;store.put(value,key);};tx.oncomplete=resolve;tx.onerror=()=>reject(tx.error);tx.onabort=()=>reject(tx.error||Error('Draft change interrupted'));});}finally{db.close();}
-}
+async function trashState(key,deleted){return mutateDraft(key,value=>{if(!value)return null;if(deleted)value.deletedAt=Date.now();else delete value.deletedAt;return value;});}
 export const deleteDraft=key=>trashState(key,true);
 export const restoreDraft=key=>trashState(key,false);
