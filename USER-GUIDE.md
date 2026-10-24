@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.9.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.10.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -129,14 +129,22 @@ Each location opens its own saved primary and secondary tilesets. Changing maps 
 
 This changes the active layout's references; it does not copy one isolated metatile or add a third tileset. Other source maps sharing this layout also share its visual map data. Location details show where a shared set is used, rather than claiming it belongs to a single town.
 
+### Compact screens, Fold and DeX
+
+At widths up to 1100 CSS pixels, **Tiles** opens a larger brush drawer and leaves the map at full width. On a cover screen or small window, a notice recommends opening the Fold or using a larger window for the full experience. This follows available window space rather than guessing a device model. **Browse & filter tiles** holds the search, source, category and pin filters. Close it to leave more space for artwork; the palette has one scroll area so the last tile remains reachable. Choose a tile to close the drawer, or close it with ×. Larger windows keep the resizable palette alongside the map.
+
+Android windows are resizable for DeX and split screen. Fold/unfold, keyboard and display-size changes retain the current workspace; Fit automatically reframes only while Fit mode is active. Short windows allow the editor to scroll rather than cut off the canvas. Use mouse scrolling, the labelled tools, keyboard shortcuts and the palette resize grip on a monitor. Physical Fold/DeX hardware behavior still needs device testing.
+
+Tap a **?** beside controls for an explanation that stays open until you close it. Help covers map tools, tile filters, shared artwork, movement, borders, stamps, tilesets and events.
+
 ## 4. View and edit collision and elevation
 
 **Collision** controls passability. **Elevation** controls which level connects to another. A picture of water, a bridge or a cliff is not enough by itself to set the correct movement.
 
 1. Open **Collision & display**, enable **Movement overlay**, and adjust **Opacity** so the art remains visible. Viewing the overlay alone does not edit anything.
 2. Choose **Pick** and tap a working nearby cell to inspect its collision/elevation. For routine edits, copy the values used by the same feature nearby.
-3. Choose **Movement** in the palette for 32 common presets. The left column is walkable; the right column is blocked. The displayed character is elevation in hexadecimal.
-4. Select a preset, switch to **Paint**, then paint the relevant cells. The preset enables both movement fields; artwork is retained.
+3. Open **Tiles** to show the palette on compact screens, then choose **Movement**. Choose **Allow passage** or **Block passage** for a simple collision brush that keeps each cell’s existing elevation.
+4. Choose **Paint** and apply the brush to the relevant cells. For height changes, expand **Set passage + elevation together** and select a preset. Those presets replace both fields; artwork is retained. A–F label heights 10–15.
 5. For a change to only one field, use **Paint collision** / **Paint elevation** in Collision & display. Enable only what you intend to change; set collision 0–3 and elevation 0–15.
 6. Choose **Tiles** when finished, and check the two paint toggles before returning to artwork edits.
 
@@ -325,7 +333,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.9.0; the current tools are described above:
+These are proposals beyond 0.10.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -337,7 +345,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.9.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.10.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

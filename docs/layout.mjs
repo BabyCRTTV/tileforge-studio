@@ -49,9 +49,10 @@ export function createLayout({S,$,fit}) {
   if(compact.matches)$('eventsPanel').classList.add('controls-tucked');
  });
  window.addEventListener('resize',reflow);
+ window.visualViewport?.addEventListener('resize',reflow);
  const observer=new ResizeObserver(reflow);observer.observe($('canvasWrap'));
  compact.addEventListener('change',sync);
- const narrow=matchMedia('(max-width: 540px)'),inspector=document.querySelector('.inspector'),palette=$('paletteDialog');
+ const narrow=matchMedia('(max-width: 1100px)'),inspector=document.querySelector('.inspector'),palette=$('paletteDialog');
  const resize=$('paletteResize'),workspace=document.querySelector('.workspace'),orientation=matchMedia('(orientation: portrait)');
  let resizing=null;const sizes={};
  try{Object.assign(sizes,JSON.parse(localStorage.getItem('tileforge-palette-sizes')||'{}'));}catch{}
@@ -71,7 +72,7 @@ export function createLayout({S,$,fit}) {
   if(narrow.matches){palette.append(resize,inspector);}else{workspace.append(resize);anchor.parentNode.insertBefore(inspector,anchor.nextSibling);}applyWidth(sizes[sizeKey()]);
   $('brushToggle').setAttribute('aria-expanded','false');reflow();
  }
- $('brushToggle').onclick=()=>{palette.showModal();positionHandle();$('brushToggle').setAttribute('aria-expanded','true');};
+ $('brushToggle').onclick=()=>{if(!palette.open)palette.showModal();positionHandle();$('brushToggle').setAttribute('aria-expanded','true');};
  palette.addEventListener('close',()=>{positionHandle();$('brushToggle').setAttribute('aria-expanded','false');});
  inspector.addEventListener('click',e=>{
   if(palette.open&&e.target.closest('#tilePalette button,#movementChoices button,#swatches button'))queueMicrotask(()=>palette.close());

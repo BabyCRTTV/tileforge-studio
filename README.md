@@ -1,6 +1,8 @@
 # TileForge Studio
 
-Version 0.9.0 adds two-finger pinch zoom/pan, a one-tap **Original / Edited** source-map comparison, and a tile window you can resize by its left-edge grip. Original renders the imported baseline, including shared tiles/palettes, movement, borders and visible events, with a read-only canvas and unchanged Undo. Palette widths persist by orientation; manual zoom is retained while resizing.
+
+Version 0.10.0 completes the compact-screen work: full-width map and larger Tiles drawer on Fold-sized windows, a cover-screen notice, one scrollable palette with collapsible filters, resizable Android/DeX windows, simple passage brushes that keep elevation, and persistent beginner explanations beside the controls. Hardware Fold/DeX behavior remains unverified.
+Version 0.10.0 adds two-finger pinch zoom/pan, a one-tap **Original / Edited** source-map comparison, and a tile window you can resize by its left-edge grip. Original renders the imported baseline, including shared tiles/palettes, movement, borders and visible events, with a read-only canvas and unchanged Undo. Palette widths persist by orientation; manual zoom is retained while resizing.
 
 The 0.6.0 update integrates missing workflows identified in a [Porymap / Hex Maniac Advance feature audit](REFERENCE-FEATURE-AUDIT.md): rectangular map selection, saved searchable stamps with explicit art/movement policy, a ruler, clean map PNG export, raw ROM byte/ASCII search, pointer navigation/reference candidates, Back/Forward and draft bookmarks. The comparison records partial support and larger remaining gaps; this is not full desktop-tool parity.
 
@@ -12,14 +14,14 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.9.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.10.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.9.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.10.0.apk)**
 
 ## What works
 
 - Guided **Load → Studio → Export** flow. The editor starts at project selection; the practice island is an explicit choice. Open Legends, another source project, a `.gba` file or a saved draft.
-- Compact layouts for unfolded portrait/landscape screens and handheld PCs, including the Galaxy Fold and Legion Go. A searchable map strip replaces the left explorer below 1367 CSS pixels. Tool panels open over the canvas. The palette scrolls separately, with larger interface-only tile thumbnails. Below 541 CSS pixels it becomes a drawer so the canvas keeps the full width; small landscape screens also adapt automatically.
+- Compact layouts for unfolded portrait/landscape screens and handheld PCs, including the Galaxy Fold and Legion Go. A searchable map strip replaces the left explorer below 1367 CSS pixels. Tool panels open over the canvas. The palette uses one scroll area and collapsible filters, with larger interface-only tile thumbnails. At widths up to 1100 CSS pixels it becomes a drawer so the canvas keeps the full width; small landscape screens also adapt automatically.
 - A labelled Undo button with an available-edit count; Ctrl+Z / Ctrl+Shift+Z still work. Device drafts save automatically after edits or immediately with Save draft. Multiple source/ROM drafts appear on the Load screen and retain undo/redo history and original baselines. Local drafts depend on this browser/app's storage; editable project exports provide portable backups.
 - Source map border painting and repeating-border preview. Borders load from their original `border_filepath`, use declared dimensions or the Emerald 2 × 2 default, preserve movement bits, support undo and export the exact changed border file. Border resizing and connected-map rendering are outside this release.
 
