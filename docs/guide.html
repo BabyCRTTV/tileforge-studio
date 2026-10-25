@@ -1,6 +1,6 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.18.0</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Start-to-finish TileForge guide: load Legends, edit maps, collision, borders, tilesets and NPCs, save drafts, export and integrate."><title>TileForge field guide · 8BitTrade</title><link rel="icon" href="./icon.svg"><style>*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:74px}body{margin:0;background:#087b7b;color:#243c35;font:17px/1.65 system-ui,sans-serif}.bar{position:sticky;top:0;z-index:2;background:#c8c9c5;border-bottom:3px solid #333;display:flex;gap:18px;align-items:center;padding:12px max(16px,calc((100% - 1020px)/2))}.bar a{color:#123f48;font-weight:750;white-space:nowrap}.bar a:last-child{margin-left:auto}.window{max-width:1020px;margin:32px auto 80px;background:#f7f6ec;border:3px outset #eee;box-shadow:8px 8px #003f43}.titlebar{background:#142d7d;color:white;padding:8px 18px;font-weight:700;font-size:14px;letter-spacing:.04em}main{padding:30px 56px 55px}h1{font-size:clamp(28px,4vw,42px);line-height:1.15;color:#163e35;margin:16px 0}h2{font-size:27px;line-height:1.25;border-top:2px solid #ccd5c5;padding-top:28px;margin-top:48px;scroll-margin-top:72px}h3{font-size:20px;line-height:1.3;margin-top:28px}a{color:#146563}p,li{max-width:86ch}li{padding-left:4px;margin:8px 0}strong{color:#183f37}code{background:#e8ecdf;padding:1px 4px;border-radius:3px;font-size:.88em;overflow-wrap:anywhere}pre{padding:18px;background:#e8ecdf;overflow-x:auto;border-left:4px solid #1f6655}pre code{background:none;padding:0;overflow-wrap:normal}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.5}th,td{text-align:left;border:1px solid #cbd2c5;padding:12px;vertical-align:top}th{background:#dfe8d6}.table-scroll{overflow-x:auto;margin:24px 0}nav.contents{background:#e7ecdc;padding:18px 24px;margin:28px 0;border:1px solid #bdc9b8}nav.contents ol{columns:2;padding-left:22px;margin:0;font-size:15px}nav.contents a{text-decoration:none}.print{font:inherit;border:2px outset #eee;background:#ddd;padding:4px 12px;color:#243c35;cursor:pointer}@media(max-width:650px){body{font-size:16px}.bar{gap:12px;font-size:13px;flex-wrap:wrap}.bar a:last-child{margin-left:0}.window{margin:12px 8px 30px}main{padding:20px 18px 35px}h2{font-size:24px}nav.contents ol{columns:1}th,td{padding:8px;min-width:120px}}@media print{body{background:white;color:#111;font-size:10pt}.bar,.titlebar,.contents{display:none}.window{border:0;box-shadow:none;margin:0;max-width:none}main{padding:0}h2{break-before:page;margin-top:0}a{color:inherit}pre{white-space:pre-wrap;overflow-wrap:anywhere}table{font-size:9pt}tr,pre{break-inside:avoid}.table-scroll{overflow:visible}}</style></head><body><nav class="bar"><a href="./">← TileForge</a><a href="./editor.html" target="_blank" rel="noopener">Open studio ↗</a><a href="./downloads/TileForge-Field-Guide.pdf" download>Download PDF ↓</a><button class="print" onclick="print()">Print</button></nav><div class="window"><div class="titlebar">TILEFORGE STUDIO / FIELD GUIDE / 0.19.0</div><main><h1 id="tileforge-studio-field-guide">TileForge Studio field guide</h1>
 <p><strong>From your first map edit to a new game build</strong><br/>
-TileForge 0.18.0 alpha · 25 October 2026 · By 8BitTrade</p>
+TileForge 0.19.0 alpha · 25 October 2026 · By 8BitTrade</p>
 <p><a href="https://babycrttv.github.io/tileforge-studio/">Open
 TileForge</a> · <a href="https://babycrttv.github.io/tileforge-studio/editor.html">Open the
 editor</a> · <a href="https://babycrttv.github.io/tileforge-studio/guide.html">Read this
@@ -139,18 +139,17 @@ choose a project or a draft.</li>
 <li>Choose <strong>Emerald: Legends</strong> for the public project. A
 new import starts in <strong>Littleroot</strong> when that layout
 exists. A saved project/draft keeps its previously selected map.</li>
-<li>Choose <strong>Map studio</strong>. On a wide screen, maps appear in
-the left explorer. On a compact screen, use the searchable map dropdown
-above the canvas.</li>
+<li>Choose <strong>Map studio</strong>. Use the searchable map dropdown
+above the canvas. The Classic layout keeps the canvas and right-hand
+brushes in view.</li>
 <li>Tap <strong>Fit</strong> to frame the map. Use <strong>+ /
 -</strong> or pinch with two fingers to zoom. A two-finger gesture pans
 as its midpoint moves and cancels an in-progress paint or stamp. Lift
 both fingers before painting again. Select <strong>Move</strong> to drag
 the canvas with one finger without painting. Fit resumes automatic
 fitting after a rotation or resize.</li>
-<li>Choose <strong>Tiles</strong> in the palette. In <strong>Collision
-&amp; display</strong>, leave <strong>Paint collision</strong> and
-<strong>Paint elevation</strong> off for an artwork-only edit.</li>
+<li>Choose <strong>Tiles</strong> in the navigation bar. This resets
+movement painting for an artwork-only edit.</li>
 <li>Choose <strong>Pick</strong>, then tap an existing ground cell. The
 tile becomes your brush, and the status readout shows X/Y, tile,
 collision and elevation. Coordinates start at zero at the map's top-left
@@ -209,46 +208,63 @@ map uses one primary set and one secondary set.</p>
 </thead>
 <tbody>
 <tr class="odd">
+<td><strong>Show all tilesets</strong></td>
+<td>On by default: browse all compatible primary/secondary pairs
+referenced by project layouts. Groups show actual source names and
+example locations.</td>
+</tr>
+<tr class="even">
+<td><strong>Interior / Exterior</strong></td>
+<td>One tap narrows the project list and clears Show all tilesets.
+Shared/unknown sets remain visible in both filters.</td>
+</tr>
+<tr class="odd">
+<td><strong>All-project search</strong></td>
+<td>Search across pair sources, locations, tile names, categories,
+behaviors and hexadecimal IDs. Search may need to load more source
+assets. Thumbnails load/render as you scroll.</td>
+</tr>
+<tr class="even">
 <td><strong>P / S</strong>, source legend and category subheaders</td>
 <td>Identify the actual primary or secondary tileset supplying the
 tile.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Tileset source</strong> dropdown</td>
 <td>Show both sets, only the primary, or only the secondary.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Tile category</strong> dropdown</td>
 <td>Browse a type such as Cliffs, Water, Signs or Furniture &amp;
 interiors. Search inside the dropdown. Empty categories are hidden.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Search tiles</strong></td>
 <td>Search names, categories, behaviors, tileset names, location usage
 or IDs. Try <code>water</code>, <code>Petalburg</code> or
 <code>#01B</code>. Filters combine.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Pinned</strong></td>
 <td>Show brushes you starred. Select a brush and tap the star beside its
 source to pin/unpin it.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Used</strong></td>
 <td>Show metatiles present on the active map. This counts map cells, not
 the border or other maps.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Recent</strong></td>
 <td>Show the last 16 selected brush identities. This is a filter, not a
 chronological history panel.</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td><strong>Clear filters</strong></td>
 <td>Restore the full primary/secondary palette if a tile seems to have
 disappeared.</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><strong>Selected tile → Tile group → Group selected
 tile</strong></td>
 <td>Override a tile's category. Choose <strong>Automatic group</strong>
@@ -256,6 +272,14 @@ to remove your override.</td>
 </tr>
 </tbody>
 </table></div>
+<p>Uncheck <strong>Show all tilesets</strong> without choosing
+Interior/Exterior to use the active-pair category, pin, used and recent
+filters below. Selecting an active-pair tile only chooses a brush.
+Selecting a tile from another pair opens a whole-map artwork preview;
+<strong>Keep current tilesets</strong> cancels without changing files,
+and <strong>Apply &amp; select tile</strong> updates the pair in one
+Undo entry. A missing-asset group stays named with a Retry action
+instead of silently losing its tiles.</p>
 <p>The ID on a thumbnail is its combined map ID, written in hexadecimal.
 Selected tile details also show its local ID within its own source.
 Matching numbers in different tilesets do not guarantee matching
@@ -278,12 +302,13 @@ readout; select Paint again to place the brush.</p>
 <h3 id="copy-an-area-and-reuse-it-as-a-stamp">Copy an area and reuse it
 as a stamp</h3>
 <ol type="1">
-<li>Open <strong>Areas &amp; stamps</strong> in Map studio. Choose
-<strong>Select area</strong> and drag from one corner to the other.
-Alternatively, enter <strong>X</strong>, <strong>Y</strong>,
-<strong>Width</strong> and <strong>Height</strong>, then choose
-<strong>Select coordinates</strong>. Coordinates start at zero. The
-maximum copied area is 64 by 64 cells.</li>
+<li>Open <strong>Tools &amp; tasks → More map tools → Areas &amp;
+stamps</strong> in Map studio. Choose <strong>Select area</strong> and
+drag from one corner to the other. Alternatively, enter
+<strong>X</strong>, <strong>Y</strong>, <strong>Width</strong> and
+<strong>Height</strong>, then choose <strong>Select
+coordinates</strong>. Coordinates start at zero. The maximum copied area
+is 64 by 64 cells.</li>
 <li>Open the panel again and choose <strong>Copy selected area</strong>.
 This captures the current map cells without changing the map. Events are
 not copied.</li>
@@ -315,11 +340,12 @@ They do not remove the original area or create new game tiles. Sparse
 masks, smart paths and automatic edge joining remain future work.</p>
 <h3 id="measure-and-export-a-clean-map-preview">Measure and export a
 clean map preview</h3>
-<p>Choose <strong>Areas &amp; stamps → Ruler</strong>, then drag between
-two cells. Reopen the panel to read signed X/Y displacement, Manhattan
-tile steps and the inclusive rectangle size. Tile steps measure
-geometry; they do not account for collision or calculate a walkable
-route. <strong>Clear guides</strong> removes the ruler.</p>
+<p>Choose <strong>Tools &amp; tasks → More map tools → Areas &amp;
+stamps → Ruler</strong>, then drag between two cells. Reopen the panel
+to read signed X/Y displacement, Manhattan tile steps and the inclusive
+rectangle size. Tile steps measure geometry; they do not account for
+collision or calculate a walkable route. <strong>Clear guides</strong>
+removes the ruler.</p>
 <p>Choose <strong>Map PNG</strong> to export static map artwork at 16
 pixels per metatile. Editor selection/grid/movement overlays, event
 markers and the repeating border are omitted. This is useful for sharing
@@ -328,23 +354,28 @@ changed-source ZIP for integration. Large images above 16,777,216 pixels
 are refused.</p>
 <h3 id="use-tiles-from-another-location">Use tiles from another
 location</h3>
-<p>Each location opens its own saved primary and secondary tilesets.
-Changing maps clears palette search, category/source and quick filters
-and resets palette scrolling. The location picker shows the active map.
-This does not revert an edited tileset assignment: saved source
-references remain authoritative. You can still search other locations,
-switch either set, scroll the entire active pair, or apply any
-category/source filter.</p>
+<p>Each location retains its own saved primary and secondary tilesets.
+The default project browser shows all compatible source pairs with the
+active pair first; Interior/Exterior narrow that browser. The
+active-pair category/source filters reset on map changes. The location
+picker shows the active map. This does not revert an edited tileset
+assignment: saved source references remain authoritative. You can still
+search other locations, switch either set, scroll the entire active
+pair, or apply any category/source filter.</p>
 <ol type="1">
 <li>Save a draft or editable project before experimenting.</li>
-<li>Open <strong>Map tilesets</strong>.</li>
+<li>Leave <strong>Show all tilesets</strong> checked to browse other
+source pairs, or open <strong>Tools &amp; tasks → More map tools → Map
+tilesets</strong> for explicit pair controls.</li>
 <li>Search <strong>Use pair from location</strong> to choose an existing
 location's compatible primary/secondary pair. Alternatively, search
 <strong>Primary tileset</strong> or <strong>Secondary tileset</strong>
 to replace just one half.</li>
-<li>Review the whole map and the border. Existing cell IDs remain the
-same, so changing a set can change existing artwork throughout the
-layout. Collision/elevation stay intact.</li>
+<li>Review the side-by-side playable-map preview before <strong>Apply
+&amp; select tile</strong>. The preview omits the repeating border;
+inspect that after Apply, or Undo to cancel the change. Existing cell
+IDs remain the same, so changing a set can change existing artwork
+throughout the layout. Collision/elevation stay intact.</li>
 <li>If cells turn magenta, choose available replacement tiles or Undo
 the swap. Changed-source export is blocked if a changed tileset pair
 still leaves missing tiles. An editable project can still preserve the
@@ -356,15 +387,18 @@ layout also share its visual map data. Location details show where a
 shared set is used, rather than claiming it belongs to a single
 town.</p>
 <h3 id="a-map-first-workspace">A map-first workspace</h3>
-<p><strong>Map studio</strong> stays in the navigation bar. Open
-<strong>☰ Menu</strong> on its right for <strong>Pixel studio</strong>,
-<strong>ROM workspace</strong>, and <strong>Resume draft</strong>. Pixel
-studio edits shared tileset pixels; ROM workspace opens a
-<code>.gba</code> file for manual graphics and hex work. Cancelling that
-file picker keeps the current source map. Pixel studio is unavailable in
-a ROM workspace because it needs source assets. The visible Map studio
-button returns you from Pixel studio. From a ROM, it opens the confirmed
-home flow so you can choose a source project.</p>
+<p><strong>Tiles</strong>, <strong>Collision</strong> and
+<strong>Events</strong> are the main map-editing tabs. <strong>Tools
+&amp; tasks</strong> holds goal guidance, map settings, View options,
+tileset setup and Areas &amp; stamps. Open <strong>☰ Menu</strong> on
+its right for <strong>Pixel studio</strong>, <strong>ROM
+workspace</strong>, and <strong>Resume draft</strong>. Pixel studio
+edits shared tileset pixels; ROM workspace opens a <code>.gba</code>
+file for manual graphics and hex work. Cancelling that file picker keeps
+the current source map. Pixel studio is unavailable in a ROM workspace
+because it needs source assets. The visible Map studio button returns
+you from Pixel studio. From a ROM, it opens the confirmed home flow so
+you can choose a source project.</p>
 <p><strong>Load</strong>, <strong>Resume draft</strong>, and other
 routes back to home ask <strong>Return to home?</strong> while a
 workspace is open. <strong>Keep editing</strong>, ×, or Escape cancels.
@@ -423,27 +457,27 @@ collision and elevation</h2>
 picture of water, a bridge or a cliff is not enough by itself to set the
 correct movement.</p>
 <ol type="1">
-<li>Open <strong>Collision &amp; display</strong>, enable
-<strong>Movement overlay</strong>, and adjust <strong>Opacity</strong>
-so the art remains visible. Viewing the overlay alone does not edit
-anything.</li>
-<li>Choose <strong>Pick</strong> and tap a working nearby cell to
-inspect its collision/elevation. For routine edits, copy the values used
-by the same feature nearby.</li>
-<li>Open <strong>Tiles</strong> to show the palette on compact screens,
-then choose <strong>Movement</strong>. Choose <strong>Allow
-passage</strong> or <strong>Block passage</strong> for a simple
-collision brush that keeps each cell’s existing elevation.</li>
-<li>Choose <strong>Paint</strong> and apply the brush to the relevant
-cells. For height changes, expand <strong>Set passage + elevation
-together</strong> and select a preset. Those presets replace both
-fields; artwork is retained. A–F label heights 10–15.</li>
-<li>For a change to only one field, use <strong>Paint collision</strong>
-/ <strong>Paint elevation</strong> in Collision &amp; display. Enable
-only what you intend to change; set collision 0–3 and elevation
-0–15.</li>
-<li>Choose <strong>Tiles</strong> when finished, and check the two paint
-toggles before returning to artwork edits.</li>
+<li>Choose <strong>Collision</strong> in the navigation bar. The
+movement overlay turns on: green permits passage and red marks blocked
+cells. Artwork remains visible.</li>
+<li>Choose <strong>Walkable</strong> or <strong>Blocked</strong>. These
+brushes keep the tile artwork and each cell's current elevation.</li>
+<li>Choose <strong>Paint</strong>, then tap or drag over the map.
+<strong>Fill</strong> applies across a connected matching movement
+region. Undo reverses the stroke/fill.</li>
+<li>Use <strong>Copy from map</strong> (Pick) to sample a nearby working
+cell's stored values, then choose Paint. The field checkboxes decide
+which sampled fields will be painted.</li>
+<li>Expand <strong>Advanced movement</strong> for raw
+collision/elevation fields or <strong>Set passage + elevation
+together</strong> for all 32 combined presets. Combined presets replace
+both fields; A-F label heights 10-15. Copy working stairs/water/bridges
+rather than guessing their height.</li>
+<li><strong>Tools &amp; tasks → More map tools → View options</strong>
+contains opacity and <strong>Show elevation numbers</strong>, off by
+default. Viewing an overlay never edits source files.</li>
+<li>Choose <strong>Tiles</strong> to return to artwork-only painting, or
+<strong>Events</strong> to place/inspect source events.</li>
 </ol>
 <div class="table-scroll"><table>
 <thead>
@@ -482,16 +516,16 @@ level.</td>
 engine/scripts and metatile behaviors still determine the result. Do not
 flatten a cliff or bridge to one value just because it looks connected.
 Keep raw collision values 2/3 when they already have a project-specific
-use. A blocked overlay is red, and walkable labels are white. Movement
-fill follows only the enabled movement fields and can cross different
-art tiles.</p>
+use. A blocked overlay is red and passable cells are green; optional
+elevation numbers show the stored height. Movement fill follows only the
+enabled movement fields and can cross different art tiles.</p>
 <p>When you export, request a game test that walks the changed route
 from both directions and checks stairs, surf edges and bridges. An
 overlay is an editing aid, not a gameplay simulation.</p>
 <h2 id="5-change-the-map-border-or-tileset-pixels">5. Change the map
 border or tileset pixels</h2>
 <h3 id="repeating-map-border">Repeating map border</h3>
-<p>Open <strong>Map border</strong> above the palette, choose a
+<p>Open <strong>Map border</strong> below the palette, choose a
 metatile, then tap the small border-pattern cell you want to replace.
 Enable <strong>Show around map</strong> to preview the repeated pattern.
 Undo restores border painting. Source exports include the layout's exact
@@ -959,7 +993,7 @@ undone. Save an editable project to keep preferences.</td>
 </tbody>
 </table></div>
 <h3 id="ideas-worth-prioritizing">Ideas worth prioritizing</h3>
-<p>These are proposals beyond 0.18.0; the current tools are described
+<p>These are proposals beyond 0.19.0; the current tools are described
 above:</p>
 <ol type="1">
 <li><strong>Before/after export preview and affected-map list.</strong>
@@ -985,7 +1019,7 @@ beyond the source checker.</li>
 helps you verify exactly what you will send and catches unintended
 shared changes early.</p>
 <h3 id="sources-and-scope">Sources and scope</h3>
-<p>This guide follows the TileForge 0.18.0 source and its actual UI
+<p>This guide follows the TileForge 0.19.0 source and its actual UI
 labels. Feature comparison: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md">REFERENCE-FEATURE-AUDIT.md</a>.
 Category audit: <a href="https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md">CATEGORY-AUDIT.md</a>.
 The editor is an independent alpha inspired by <a href="https://huderlem.github.io/porymap/">Porymap</a> and <a href="https://github.com/haven1433/HexManiacAdvance">Hex Maniac
@@ -1013,16 +1047,17 @@ Community conversion</a> and <a href="https://huggingface.co/docs/transformers.j
 These assets do not change ownership of game artwork.</p>
 <h2 id="create-a-cell-and-connect-a-doorway">Create a cell and connect a
 doorway</h2>
-<p>In Map studio choose <strong>New cell</strong>, give it a unique
-source name (letters/digits/underscores), choose
-<strong>Interior</strong> or <strong>Exterior</strong>, and select a
-template with matching artwork. Choose a size from 4 to 128 tiles per
-side. <strong>Preview cell</strong> lists the exact files;
-<strong>Apply</strong> creates a blank map with its own layout, events,
-border and script. It inherits the template's tilesets and header
-settings, without its NPCs, warps, connections or story scripts. Paint
-the new floor/ground and walls next. Tile #000 is only a starting fill;
-it is not automatically a suitable floor in every tileset.</p>
+<p>In Map studio choose <strong>Tools &amp; tasks → Create a room or
+outdoor area</strong>, give it a unique source name
+(letters/digits/underscores), choose <strong>Interior</strong> or
+<strong>Exterior</strong>, and select a template with matching artwork.
+Choose a size from 4 to 128 tiles per side. <strong>Preview
+cell</strong> lists the exact files; <strong>Apply</strong> creates a
+blank map with its own layout, events, border and script. It inherits
+the template's tilesets and header settings, without its NPCs, warps,
+connections or story scripts. Paint the new floor/ground and walls next.
+Tile #000 is only a starting fill; it is not automatically a suitable
+floor in every tileset.</p>
 <p>New cells append a separate map group so existing map IDs stay in
 place. The source ZIP must include
 <code>data/maps/map_groups.json</code> and

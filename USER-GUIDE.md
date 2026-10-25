@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.18.0 alpha · 25 October 2026 · By 8BitTrade
+TileForge 0.19.0 alpha · 25 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -54,9 +54,9 @@ Replace both example paths with your folders. Transfer `legends-source.zip` to t
 
 1. Open TileForge and stay on **1 · Load** until you choose a project or a draft.
 2. Choose **Emerald: Legends** for the public project. A new import starts in **Littleroot** when that layout exists. A saved project/draft keeps its previously selected map.
-3. Choose **Map studio**. On a wide screen, maps appear in the left explorer. On a compact screen, use the searchable map dropdown above the canvas.
+3. Choose **Map studio**. Use the searchable map dropdown above the canvas. The Classic layout keeps the canvas and right-hand brushes in view.
 4. Tap **Fit** to frame the map. Use **+ / -** or pinch with two fingers to zoom. A two-finger gesture pans as its midpoint moves and cancels an in-progress paint or stamp. Lift both fingers before painting again. Select **Move** to drag the canvas with one finger without painting. Fit resumes automatic fitting after a rotation or resize.
-5. Choose **Tiles** in the palette. In **Collision & display**, leave **Paint collision** and **Paint elevation** off for an artwork-only edit.
+5. Choose **Tiles** in the navigation bar. This resets movement painting for an artwork-only edit.
 6. Choose **Pick**, then tap an existing ground cell. The tile becomes your brush, and the status readout shows X/Y, tile, collision and elevation. Coordinates start at zero at the map's top-left corner.
 7. Choose **Paint**, tap one nearby cell, then tap **Undo** to restore it. This confirms the basic editing loop before you make a larger change.
 8. Tap **Save draft** and wait for **Draft saved**. Continue with the task below that matches your edit.
@@ -81,6 +81,9 @@ A **metatile** is the 16 × 16 unit you place on a map. The thumbnail is enlarge
 
 | Palette control | What it does |
 | --- | --- |
+| **Show all tilesets** | On by default: browse all compatible primary/secondary pairs referenced by project layouts. Groups show actual source names and example locations. |
+| **Interior / Exterior** | One tap narrows the project list and clears Show all tilesets. Shared/unknown sets remain visible in both filters. |
+| **All-project search** | Search across pair sources, locations, tile names, categories, behaviors and hexadecimal IDs. Search may need to load more source assets. Thumbnails load/render as you scroll. |
 | **P / S**, source legend and category subheaders | Identify the actual primary or secondary tileset supplying the tile. |
 | **Tileset source** dropdown | Show both sets, only the primary, or only the secondary. |
 | **Tile category** dropdown | Browse a type such as Cliffs, Water, Signs or Furniture & interiors. Search inside the dropdown. Empty categories are hidden. |
@@ -90,6 +93,8 @@ A **metatile** is the 16 × 16 unit you place on a map. The thumbnail is enlarge
 | **Recent** | Show the last 16 selected brush identities. This is a filter, not a chronological history panel. |
 | **Clear filters** | Restore the full primary/secondary palette if a tile seems to have disappeared. |
 | **Selected tile → Tile group → Group selected tile** | Override a tile's category. Choose **Automatic group** to remove your override. |
+
+Uncheck **Show all tilesets** without choosing Interior/Exterior to use the active-pair category, pin, used and recent filters below. Selecting an active-pair tile only chooses a brush. Selecting a tile from another pair opens a whole-map artwork preview; **Keep current tilesets** cancels without changing files, and **Apply & select tile** updates the pair in one Undo entry. A missing-asset group stays named with a Retry action instead of silently losing its tiles.
 
 The ID on a thumbnail is its combined map ID, written in hexadecimal. Selected tile details also show its local ID within its own source. Matching numbers in different tilesets do not guarantee matching artwork.
 
@@ -101,7 +106,7 @@ Select a metatile, choose **Paint**, then tap or drag across the map. One comple
 
 ### Copy an area and reuse it as a stamp
 
-1. Open **Areas & stamps** in Map studio. Choose **Select area** and drag from one corner to the other. Alternatively, enter **X**, **Y**, **Width** and **Height**, then choose **Select coordinates**. Coordinates start at zero. The maximum copied area is 64 by 64 cells.
+1. Open **Tools & tasks → More map tools → Areas & stamps** in Map studio. Choose **Select area** and drag from one corner to the other. Alternatively, enter **X**, **Y**, **Width** and **Height**, then choose **Select coordinates**. Coordinates start at zero. The maximum copied area is 64 by 64 cells.
 2. Open the panel again and choose **Copy selected area**. This captures the current map cells without changing the map. Events are not copied.
 3. Choose what the stamp copies: **Art only** keeps the destination's movement; **Art + collision + elevation** copies complete block values; **Movement only** keeps destination art. The two movement fields are copied together in movement mode.
 4. Choose **Stamp**, then tap the destination's top-left cell. One tap makes one Undo entry. Cells beyond a map edge are skipped rather than wrapping to another row. A drag does not place a stamp.
@@ -113,25 +118,25 @@ Stamps place a full rectangular snapshot, not a moving selection. They do not re
 
 ### Measure and export a clean map preview
 
-Choose **Areas & stamps → Ruler**, then drag between two cells. Reopen the panel to read signed X/Y displacement, Manhattan tile steps and the inclusive rectangle size. Tile steps measure geometry; they do not account for collision or calculate a walkable route. **Clear guides** removes the ruler.
+Choose **Tools & tasks → More map tools → Areas & stamps → Ruler**, then drag between two cells. Reopen the panel to read signed X/Y displacement, Manhattan tile steps and the inclusive rectangle size. Tile steps measure geometry; they do not account for collision or calculate a walkable route. **Clear guides** removes the ruler.
 
 Choose **Map PNG** to export static map artwork at 16 pixels per metatile. Editor selection/grid/movement overlays, event markers and the repeating border are omitted. This is useful for sharing a visual plan; the image does not contain editable source data. Use the changed-source ZIP for integration. Large images above 16,777,216 pixels are refused.
 
 ### Use tiles from another location
 
-Each location opens its own saved primary and secondary tilesets. Changing maps clears palette search, category/source and quick filters and resets palette scrolling. The location picker shows the active map. This does not revert an edited tileset assignment: saved source references remain authoritative. You can still search other locations, switch either set, scroll the entire active pair, or apply any category/source filter.
+Each location retains its own saved primary and secondary tilesets. The default project browser shows all compatible source pairs with the active pair first; Interior/Exterior narrow that browser. The active-pair category/source filters reset on map changes. The location picker shows the active map. This does not revert an edited tileset assignment: saved source references remain authoritative. You can still search other locations, switch either set, scroll the entire active pair, or apply any category/source filter.
 
 1. Save a draft or editable project before experimenting.
-2. Open **Map tilesets**.
+2. Leave **Show all tilesets** checked to browse other source pairs, or open **Tools & tasks → More map tools → Map tilesets** for explicit pair controls.
 3. Search **Use pair from location** to choose an existing location's compatible primary/secondary pair. Alternatively, search **Primary tileset** or **Secondary tileset** to replace just one half.
-4. Review the whole map and the border. Existing cell IDs remain the same, so changing a set can change existing artwork throughout the layout. Collision/elevation stay intact.
+4. Review the side-by-side playable-map preview before **Apply & select tile**. The preview omits the repeating border; inspect that after Apply, or Undo to cancel the change. Existing cell IDs remain the same, so changing a set can change existing artwork throughout the layout. Collision/elevation stay intact.
 5. If cells turn magenta, choose available replacement tiles or Undo the swap. Changed-source export is blocked if a changed tileset pair still leaves missing tiles. An editable project can still preserve the unfinished work.
 
 This changes the active layout's references; it does not copy one isolated metatile or add a third tileset. Other source maps sharing this layout also share its visual map data. Location details show where a shared set is used, rather than claiming it belongs to a single town.
 
 ### A map-first workspace
 
-**Map studio** stays in the navigation bar. Open **☰ Menu** on its right for **Pixel studio**, **ROM workspace**, and **Resume draft**. Pixel studio edits shared tileset pixels; ROM workspace opens a `.gba` file for manual graphics and hex work. Cancelling that file picker keeps the current source map. Pixel studio is unavailable in a ROM workspace because it needs source assets. The visible Map studio button returns you from Pixel studio. From a ROM, it opens the confirmed home flow so you can choose a source project.
+**Tiles**, **Collision** and **Events** are the main map-editing tabs. **Tools & tasks** holds goal guidance, map settings, View options, tileset setup and Areas & stamps. Open **☰ Menu** on its right for **Pixel studio**, **ROM workspace**, and **Resume draft**. Pixel studio edits shared tileset pixels; ROM workspace opens a `.gba` file for manual graphics and hex work. Cancelling that file picker keeps the current source map. Pixel studio is unavailable in a ROM workspace because it needs source assets. The visible Map studio button returns you from Pixel studio. From a ROM, it opens the confirmed home flow so you can choose a source project.
 
 **Load**, **Resume draft**, and other routes back to home ask **Return to home?** while a workspace is open. **Keep editing**, ×, or Escape cancels. **Go to home** shows the Load screen while retaining your open workspace; **Back to studio** returns to that same project. Returning home does not export or replace source files.
 
@@ -153,12 +158,13 @@ Tap a **?** beside controls for an explanation that stays open until you close i
 
 **Collision** controls passability. **Elevation** controls which level connects to another. A picture of water, a bridge or a cliff is not enough by itself to set the correct movement.
 
-1. Open **Collision & display**, enable **Movement overlay**, and adjust **Opacity** so the art remains visible. Viewing the overlay alone does not edit anything.
-2. Choose **Pick** and tap a working nearby cell to inspect its collision/elevation. For routine edits, copy the values used by the same feature nearby.
-3. Open **Tiles** to show the palette on compact screens, then choose **Movement**. Choose **Allow passage** or **Block passage** for a simple collision brush that keeps each cell’s existing elevation.
-4. Choose **Paint** and apply the brush to the relevant cells. For height changes, expand **Set passage + elevation together** and select a preset. Those presets replace both fields; artwork is retained. A–F label heights 10–15.
-5. For a change to only one field, use **Paint collision** / **Paint elevation** in Collision & display. Enable only what you intend to change; set collision 0–3 and elevation 0–15.
-6. Choose **Tiles** when finished, and check the two paint toggles before returning to artwork edits.
+1. Choose **Collision** in the navigation bar. The movement overlay turns on: green permits passage and red marks blocked cells. Artwork remains visible.
+2. Choose **Walkable** or **Blocked**. These brushes keep the tile artwork and each cell's current elevation.
+3. Choose **Paint**, then tap or drag over the map. **Fill** applies across a connected matching movement region. Undo reverses the stroke/fill.
+4. Use **Copy from map** (Pick) to sample a nearby working cell's stored values, then choose Paint. The field checkboxes decide which sampled fields will be painted.
+5. Expand **Advanced movement** for raw collision/elevation fields or **Set passage + elevation together** for all 32 combined presets. Combined presets replace both fields; A-F label heights 10-15. Copy working stairs/water/bridges rather than guessing their height.
+6. **Tools & tasks → More map tools → View options** contains opacity and **Show elevation numbers**, off by default. Viewing an overlay never edits source files.
+7. Choose **Tiles** to return to artwork-only painting, or **Events** to place/inspect source events.
 
 | Common elevation | Typical purpose |
 | --- | --- |
@@ -168,7 +174,7 @@ Tap a **?** beside controls for an explanation that stays open until you close i
 | **2–E** | Ordinary distinct elevation levels. Many outdoor paths use 3, but inspect the actual map. |
 | **F** | Multi-level bridge behavior; preserves the player's approach level. |
 
-These describe the conventional Gen III movement model; the game's engine/scripts and metatile behaviors still determine the result. Do not flatten a cliff or bridge to one value just because it looks connected. Keep raw collision values 2/3 when they already have a project-specific use. A blocked overlay is red, and walkable labels are white. Movement fill follows only the enabled movement fields and can cross different art tiles.
+These describe the conventional Gen III movement model; the game's engine/scripts and metatile behaviors still determine the result. Do not flatten a cliff or bridge to one value just because it looks connected. Keep raw collision values 2/3 when they already have a project-specific use. A blocked overlay is red and passable cells are green; optional elevation numbers show the stored height. Movement fill follows only the enabled movement fields and can cross different art tiles.
 
 When you export, request a game test that walks the changed route from both directions and checks stairs, surf edges and bridges. An overlay is an editing aid, not a gameplay simulation.
 
@@ -176,7 +182,7 @@ When you export, request a game test that walks the changed route from both dire
 
 ### Repeating map border
 
-Open **Map border** above the palette, choose a metatile, then tap the small border-pattern cell you want to replace. Enable **Show around map** to preview the repeated pattern. Undo restores border painting. Source exports include the layout's exact declared border file. The common Emerald pattern is 2 × 2, but declared supported dimensions are retained.
+Open **Map border** below the palette, choose a metatile, then tap the small border-pattern cell you want to replace. Enable **Show around map** to preview the repeated pattern. Undo restores border painting. Source exports include the layout's exact declared border file. The common Emerald pattern is 2 × 2, but declared supported dimensions are retained.
 
 This edits the repeating border pattern. It does not draw connected neighboring maps or resize the map/border. A shared border file affects every layout referencing that file.
 
@@ -347,7 +353,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.18.0; the current tools are described above:
+These are proposals beyond 0.19.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -359,7 +365,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.18.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.19.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -371,7 +377,7 @@ The Fuecoco app sprite is the front sprite from the pinned [Emerald: Legends sou
 
 ## Create a cell and connect a doorway
 
-In Map studio choose **New cell**, give it a unique source name (letters/digits/underscores), choose **Interior** or **Exterior**, and select a template with matching artwork. Choose a size from 4 to 128 tiles per side. **Preview cell** lists the exact files; **Apply** creates a blank map with its own layout, events, border and script. It inherits the template's tilesets and header settings, without its NPCs, warps, connections or story scripts. Paint the new floor/ground and walls next. Tile #000 is only a starting fill; it is not automatically a suitable floor in every tileset.
+In Map studio choose **Tools & tasks → Create a room or outdoor area**, give it a unique source name (letters/digits/underscores), choose **Interior** or **Exterior**, and select a template with matching artwork. Choose a size from 4 to 128 tiles per side. **Preview cell** lists the exact files; **Apply** creates a blank map with its own layout, events, border and script. It inherits the template's tilesets and header settings, without its NPCs, warps, connections or story scripts. Paint the new floor/ground and walls next. Tile #000 is only a starting fill; it is not automatically a suitable floor in every tileset.
 
 New cells append a separate map group so existing map IDs stay in place. The source ZIP must include `data/maps/map_groups.json` and `data/event_scripts.s`; current editor packs include these. Online Legends loads them as needed. Creating maps is source-project work; arbitrary GBA ROMs do not expose this feature.
 
