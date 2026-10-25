@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.17.0 alpha · 25 October 2026 · By 8BitTrade
+TileForge 0.18.0 alpha · 25 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -129,11 +129,19 @@ Each location opens its own saved primary and secondary tilesets. Changing maps 
 
 This changes the active layout's references; it does not copy one isolated metatile or add a third tileset. Other source maps sharing this layout also share its visual map data. Location details show where a shared set is used, rather than claiming it belongs to a single town.
 
+### A map-first workspace
+
+**Map studio** stays in the navigation bar. Open **☰ Menu** on its right for **Pixel studio**, **ROM workspace**, and **Resume draft**. Pixel studio edits shared tileset pixels; ROM workspace opens a `.gba` file for manual graphics and hex work. Cancelling that file picker keeps the current source map. Pixel studio is unavailable in a ROM workspace because it needs source assets. The visible Map studio button returns you from Pixel studio. From a ROM, it opens the confirmed home flow so you can choose a source project.
+
+**Load**, **Resume draft**, and other routes back to home ask **Return to home?** while a workspace is open. **Keep editing**, ×, or Escape cancels. **Go to home** shows the Load screen while retaining your open workspace; **Back to studio** returns to that same project. Returning home does not export or replace source files.
+
+Map borders display around new map views by default. Turn **Map border → Show around map** off when you want only the editable map; this display choice does not change border files.
+
 ### Compact screens, Fold and DeX
 
 At widths up to 1100 CSS pixels, **Tiles** opens a larger brush drawer and leaves the map at full width. On a cover screen or small window, a notice recommends opening the Fold or using a larger window for the full experience. This follows available window space rather than guessing a device model. **Browse & filter tiles** holds the search, source, category and pin filters. Close it to leave more space for artwork; the palette has one scroll area so the last tile remains reachable. Choose a tile to close the drawer, or close it with ×. Larger windows keep the resizable palette alongside the map.
 
-Android windows are resizable for DeX and split screen. Fold/unfold, keyboard and display-size changes retain the current workspace; Fit automatically reframes only while Fit mode is active. Short windows allow the editor to scroll rather than cut off the canvas. Use mouse scrolling, the labelled tools, keyboard shortcuts and the palette resize grip on a monitor. Physical Fold/DeX hardware behavior still needs device testing.
+Android windows are resizable for DeX and split screen. Fold/unfold, keyboard and display-size changes retain the current workspace; Fit automatically reframes only while Fit mode is active. The editor section scrolls vertically past the tools to a larger map canvas, in portrait and landscape. Swipe beside the map or over the control area to scroll the editor; with Move selected, dragging inside the map pans the map itself. Short windows keep the canvas at a usable minimum height rather than squeezing it beneath all the controls. Use mouse scrolling, the labelled tools, keyboard shortcuts and the palette resize grip on a monitor. Physical Fold/DeX hardware behavior still needs device testing.
 
 In the Android app, a native container keeps the actual editor viewport outside the status bar, camera cutout, navigation buttons and mandatory gesture area. Keyboard and DeX caption space are included. The container updates during rotation, folding and window resizing without reopening the project. This requires installing the current APK; updating only the website cannot replace an older Android shell. Browser/PWA dialogs, tile drawers, dropdowns, resize grips and notifications also respect available safe areas. In short landscape windows, floating tool panels stay within that space and scroll internally.
 
@@ -339,7 +347,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.17.0; the current tools are described above:
+These are proposals beyond 0.18.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -351,7 +359,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.17.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.18.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -403,8 +411,8 @@ Deletion moves the snapshot to **Deleted drafts**. Deleted snapshots do not cons
 
 ## Small sprite pictures in NPC menus
 
-**NPC catalog & placed events**, **NPC appearance**, and NPC summaries include a small picture when TileForge can resolve the project's explicit sprite declarations. This includes supported custom graphics and original source paths. The preview uses a static source frame; it does not simulate animations, story visibility, player appearance or runtime palette changes. Legends' custom Mom preview can use the default source family palette, rather than the player's current skin-tone selection.
+**NPC catalog & placed events**, **NPC appearance**, and NPC summaries include a small picture when TileForge can resolve the project's explicit sprite declarations. This includes supported custom graphics and original source paths. The preview uses a static source frame; it does not simulate animations, story visibility, active outfits or runtime palette changes. Dolls, cushions, scenery objects, FRLG graphics, berry-tree tables and field effects follow their declared source formats. Player-state aliases show their source-defined default appearance. Legends' custom Mom preview can use the default source family palette, rather than the player's current skin-tone selection.
 
-Pictures load for visible menu entries and keep the text labels available. A question mark means that source assets are missing, dynamic or unsupported; it does not prevent choosing/editing an otherwise supported NPC. Internet access is needed to load uncached pictures in an online project. Current source packs and portable exports retain the corresponding read-only metadata and assets for offline use. Loading a picture does not count as a game edit. No project sprite artwork is bundled into the editor's installation files.
+Pictures load for visible menu entries and keep the text labels available. A question mark means that source assets are missing or unsupported; it does not prevent choosing/editing an otherwise supported NPC. The runtime Pokémon slot is labelled Live because the game selects its Pokémon; an unused slot with no declared image is labelled None. Internet access is needed to load uncached pictures in an online project. Current source packs and portable exports retain the corresponding read-only metadata and assets for offline use. Loading a picture does not count as a game edit. No project sprite artwork is bundled into the editor's installation files.
 
 The NPC catalog defaults to **All NPC sprites**. **On this map** lists only existing placements, including signs, triggers and warps. The counts distinguish the project catalog from the current map. Both lists are searchable. Choosing a catalog sprite prepares placement; source files change only when you save the event. Runtime-variable slots, species macros and range/count constants are not fixed character appearances, so they are not offered as new catalog choices; existing source values are retained in the event editor. Missing pictures do not remove the corresponding character from the catalog. Older incomplete source packs may need to be recreated to include graphics definitions.

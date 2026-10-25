@@ -6,3 +6,27 @@ test('sprite crops use the declared frame, retain indices and refuse malformed d
 test('portable source import retains sprite metadata and custom referenced images without unrelated graphics',()=>{const f=fixture();f.set('data/layouts/layouts.json',C.strToU8('{"layouts":[]}'));f.set('data/event_scripts.s',C.strToU8('test'));f.set('graphics/my_people/custom.png',new Uint8Array([1,2,3]));f.set('graphics/unrelated.png',new Uint8Array([9]));const imported=C.sourceZip(C.zipSync(Object.fromEntries(f)));assert(imported.has(NPC_SOURCE_FILES[0]));assert(imported.has('graphics/my_people/custom.png'));assert(imported.has('data/event_scripts.s'));assert(!imported.has('graphics/unrelated.png'));});
 
 test('binary sprite fallback uses declared palette data and tile frame order',async()=>{const {resolveNpcPalette,decodeNpcBinary}=await import('../dist/npc-previews.mjs');const f=fixture();f.set('src/event_object_movement.c',C.strToU8('const struct SpritePalette test[] = {{gCustomPalette[0], OBJ_EVENT_PAL_TAG_CUSTOM}};'));f.set('src/data/legends/family_palettes.h',C.strToU8('const u16 gCustomPalette[1][16] = {{0x0000,0x001F,0x03E0,0x7C00,0,0,0,0,0,0,0,0,0,0,0,0}};'));const colors=resolveNpcPalette(f,'OBJ_EVENT_PAL_TAG_CUSTOM').palette;assert.deepEqual(colors[1],[255,0,0]);assert.deepEqual(colors[2],[0,255,0]);assert.deepEqual(colors[3],[0,0,255]);const raw=new Uint8Array(8*32).fill(0x11);raw.fill(0x22,32,64);const frame=decodeNpcBinary(raw,{width:16,height:32,frame:0},colors);assert.equal(frame.pixels[0],1);assert.equal(frame.pixels[8],2);assert.equal(frame.pixels[16*8],1);assert.throws(()=>decodeNpcBinary(raw,{width:16,height:32,frame:1},colors));});
+
+test('dolls and objects resolve whole-frame macros and both source word sizes',()=>{
+ for(const macro of ['INCGFX_U16','INCBIN_U16','INCGFX_U32','INCBIN_U32']){
+  const f=fixture();f.set(NPC_SOURCE_FILES[1],C.strToU8('const struct ObjectEventGraphicsInfo gInfoCustom = {.width=32,.height=32,.images=sPicTable_Custom};'));
+  f.set(NPC_SOURCE_FILES[2],C.strToU8('static const struct SpriteFrameImage sPicTable_Custom[] = {obj_frame_tiles(gPic_Custom),};'));
+  f.set(NPC_SOURCE_FILES[3],C.strToU8('const u16 gPic_Custom[] = '+macro+'("graphics/props/doll.png", ".4bpp");'));
+  assert.deepEqual(resolveNpcPreview(f,'OBJ_EVENT_GFX_TWIN'),{image:'graphics/props/doll.png',width:32,height:32,frame:0});
+ }
+});
+test('large and mixed-size frame tables follow descriptor geometry with matching byte area',()=>{
+ const f=fixture();f.set(NPC_SOURCE_FILES[1],C.strToU8('const struct ObjectEventGraphicsInfo gInfoCustom={.width=32,.height=16,.images=sPicTable_Custom};'));
+ f.set(NPC_SOURCE_FILES[2],C.strToU8('const struct SpriteFrameImage sPicTable_Custom[]={overworld_frame(gPic_Custom,2,2,0),overworld_frame(gPic_Custom,2,4,1)};'));
+ assert.deepEqual(resolveNpcPreview(f,'OBJ_EVENT_GFX_TWIN'),{image:'graphics/my_people/custom.png',width:32,height:16,frame:1});
+ f.set(NPC_SOURCE_FILES[2],C.strToU8('const struct SpriteFrameImage sPicTable_Custom[]={overworld_frame(gPic_Custom,8,8,0)};'));assert.throws(()=>resolveNpcPreview(f,'OBJ_EVENT_GFX_TWIN'),/layout/);
+});
+test('declared player aliases show base source appearance without inventing runtime colors',()=>{
+ const f=fixture();f.set('include/legends_appearance.h',C.strToU8('#define LEGENDS_APPEARANCE_STATES 2'));f.set('include/constants/event_objects.h',C.strToU8('#define OBJ_EVENT_GFX_LEGENDS_PLAYER_1 (OBJ_EVENT_GFX_LEGENDS_PLAYER_START + 1)'));
+ f.set('src/legends_appearance_graphics.c',C.strToU8('static const u16 sBaseGraphicsIds[2][LEGENDS_APPEARANCE_STATES]={{OBJ_EVENT_GFX_TWIN,OBJ_EVENT_GFX_TWIN},{OBJ_EVENT_GFX_TWIN,OBJ_EVENT_GFX_TWIN}};u16 LegendsGetBasePlayerGraphicsId(u16 graphicsId){return sBaseGraphicsIds[index / LEGENDS_APPEARANCE_STATES][index % LEGENDS_APPEARANCE_STATES];}'));
+ const d=resolveNpcPreview(f,'OBJ_EVENT_GFX_LEGENDS_PLAYER_1');assert.equal(d.image,'graphics/my_people/custom.png');assert.match(d.note,/Default player appearance/);
+});
+test('source ZIP retains field-effect tables and only referenced preview assets',()=>{
+ const f=fixture();f.set('data/layouts/layouts.json',C.strToU8('{"layouts":[]}'));f.set('src/data/field_effects/field_effect_objects.h',C.strToU8('const u16 light[]=INCGFX_U16("graphics/light.png", ".4bpp");'));f.set('graphics/light.png',new Uint8Array([1,2]));f.set('graphics/unused.png',new Uint8Array([3]));f.set('src/legends_appearance_graphics.c',C.strToU8('static const u16 sBaseGraphicsIds[2][9] = {{0}};'));
+ const imported=C.sourceZip(C.zipSync(Object.fromEntries(f)));assert(imported.has('src/data/field_effects/field_effect_objects.h'));assert(imported.has('src/legends_appearance_graphics.c'));assert(imported.has('graphics/light.png'));assert(!imported.has('graphics/unused.png'));
+});

@@ -1,4 +1,4 @@
-import {usableViewport} from './viewport.mjs?v=0.17.0';
+import {usableViewport} from './viewport.mjs?v=0.18.0';
 // Keep the canvas usable as a foldable changes width, height or orientation.
 export function createLayout({S,$,fit}) {
  const compact=matchMedia('(max-width: 1366px)');

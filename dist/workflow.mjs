@@ -1,12 +1,21 @@
-import {DRAFT_LIMIT} from './drafts.mjs?v=0.17.0';
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.18.0';
 export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
- function load(){
+ let homeTarget='home';
+ function load(target){
+  homeTarget=target==='drafts'?'drafts':'home';
+  if(ready&&$('loadScreen').hidden){
+   if(!$('homeConfirmDialog').open){$('homeConfirmDialog').showModal();$('keepEditing').focus();}
+   return;
+  }
+  showLoad();
+ }
+ function showLoad(){
   $('loadScreen').hidden=false;workspace.hidden=true;tabs.hidden=true;
   document.body.dataset.stage='load';$('stageLabel').textContent='1 · Load';
   $('returnStudio').hidden=!ready;$('openBtn').classList.add('current-step');
-  $('exportBtn').classList.remove('current-step');readDraft().catch(()=>{$('draftList').textContent='Draft storage is unavailable. You can still open and export files.';});
+  $('exportBtn').classList.remove('current-step');readDraft().then(()=>{if(homeTarget==='drafts'&&!$('loadScreen').hidden)$('draftList').scrollIntoView({block:'start'});}).catch(()=>{$('draftList').textContent='Draft storage is unavailable. You can still open and export files.';});
  }
  function enter(){
   ready=true;$('loadScreen').hidden=true;workspace.hidden=false;tabs.hidden=false;
@@ -24,7 +33,9 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
  $('startFile').onclick=()=>$('fileInput').click();
  $('startPractice').onclick=()=>{$('helpDialog').close();run(demo,'Preparing the optional offline practice map…');};
  $('returnStudio').onclick=enter;$('openBtn').onclick=load;
- $('resumeBtn').onclick=load;
+ $('resumeBtn').onclick=()=>{$('workspaceMenu').close();load('drafts');};
+ $('keepEditing').onclick=()=>$('homeConfirmDialog').close();
+ $('confirmHome').onclick=()=>{$('homeConfirmDialog').close();showLoad();};
  $('saveDraftBtn').onclick=()=>task(saveDraft);
  $('exportSaveDraft').onclick=()=>task(saveDraft);
  function drafts(rows,deleted=[]){$('draftCapacity').textContent=rows.length+' / '+DRAFT_LIMIT+' drafts';$('draftCapacity').classList.toggle('at-capacity',rows.length>=DRAFT_LIMIT);
@@ -35,7 +46,7 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
    const actions=document.createElement('div');actions.className='deleted-draft-actions';const restore=document.createElement('button');restore.className='draft-restore';restore.type='button';restore.textContent='Restore';restore.disabled=rows.length>=DRAFT_LIMIT;restore.setAttribute('aria-label','Restore '+row.name);restore.title=restore.disabled?'Delete an active draft to free a slot before restoring.':'Restore this draft';restore.onclick=()=>task(()=>restoreDraft(row.key));
    const remove=document.createElement('button');remove.className='draft-purge';remove.type='button';remove.textContent='Delete permanently';remove.setAttribute('aria-label','Permanently delete '+row.name);remove.onclick=()=>confirmPurge([row],false);actions.append(restore,remove);entry.append(name,detail,actions);$('deletedDraftList').append(entry);
   }
-  $('draftList').replaceChildren();$('resumeBtn').hidden=!rows.length;
+  $('draftList').replaceChildren();$('resumeBtn').disabled=!rows.length;
   if(!rows.length){const p=document.createElement('p');p.className='draft-empty';p.textContent='Your drafts will appear here after you start editing.';$('draftList').append(p);return;}
   for(const row of rows){const entry=document.createElement('div');entry.className='draft-row';const button=document.createElement('button');button.className='draft-resume';button.type='button';
    const title=document.createElement('strong');title.textContent=row.name;

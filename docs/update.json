@@ -1,16 +1,19 @@
 {
   "format": "tileforge-update",
-  "version": "0.17.0",
-  "versionCode": 22,
+  "version": "0.18.0",
+  "versionCode": 23,
   "notes": [
-    "Visible top-right close buttons on Collision & display, Map tilesets, Areas & stamps and NPCs & events.",
-    "Tool menu headers stay visible while scrolling on compact screens.",
-    "Close buttons and Escape ask for confirmation, with Keep menu open selected first. Confirming NPCs & events also exits event mode."
+    "Map studio stays prominent; Pixel studio, ROM workspace and Resume draft move into the hamburger Menu.",
+    "Load and Resume draft ask Return to home? with Keep editing selected first. Your workspace remains available through Back to studio.",
+    "ROM workspace opens a .GBA picker without switching or replacing your project until you choose a file.",
+    "Map borders are shown by default.",
+    "Tablet and compact editors scroll past the controls to a larger map canvas; action rows use less space.",
+    "Sprite pictures now cover dolls, objects, FRLG graphics, player-state defaults, berry trees and field effects beside their names."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.17.0.apk",
-    "size": 228737,
-    "sha256": "9f1c2e3ee466bd425b8e3f9d73990d01a3f9b2ab74191854fc892275378fd76e"
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.18.0.apk",
+    "size": 232833,
+    "sha256": "60e1fb389b2c2036accb88bea02f1edb2a5fc32f5d27cbd986cc24d4c320d9e4"
   }
 }

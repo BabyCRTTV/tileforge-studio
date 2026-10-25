@@ -1,8 +1,8 @@
-import {usableViewport} from './viewport.mjs?v=0.17.0';
-import {createNpcPreviews} from './npc-previews.mjs?v=0.17.0';
-import * as P from './project.mjs?v=0.17.0';
-import {summarizeEvent} from './event-summary.mjs?v=0.17.0';
-import {reviewedCategories} from './reviewed-categories.mjs?v=0.17.0';
+import {usableViewport} from './viewport.mjs?v=0.18.0';
+import {createNpcPreviews} from './npc-previews.mjs?v=0.18.0';
+import * as P from './project.mjs?v=0.18.0';
+import {summarizeEvent} from './event-summary.mjs?v=0.18.0';
+import {reviewedCategories} from './reviewed-categories.mjs?v=0.18.0';
 export function createStudio(h){
  const {S,C,$,task,toast,status,getFile,recordBatch,queueDraft,render,paletteUI,selectLayout,loadLayoutAssets,activateLayout}=h;
  const F={tags:{},favorites:new Set(),recent:[],usage:new Map(),origins:[],tileView:'all',info:new Map(),mode:false,mapPath:null,map:null,pending:null,placing:null,npcSprite:null,catalogFiles:null,catalog:[],editing:null,changing:false,layoutId:null,summary:null};
