@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.19.1 alpha · 25 October 2026 · By 8BitTrade
+TileForge 0.20.0 alpha · 25 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -159,10 +159,10 @@ Tap a **?** beside controls for an explanation that stays open until you close i
 **Collision** controls passability. **Elevation** controls which level connects to another. A picture of water, a bridge or a cliff is not enough by itself to set the correct movement.
 
 1. Choose **Collision** in the navigation bar. The movement overlay turns on: green permits passage and red marks blocked cells. Artwork remains visible.
-2. Choose **Walkable** or **Blocked**. These brushes keep the tile artwork and each cell's current elevation.
+2. Beneath **Walkable** or **Blocked**, choose **Keep existing** (the default) or elevation **0–15**. Keep existing changes passage only; a numbered row changes passage and elevation together. Tile artwork stays unchanged. Tap the row’s **?** for a description without changing your brush. Help stays open until dismissed.
 3. Choose **Paint**, then tap or drag over the map. **Fill** applies across a connected matching movement region. Undo reverses the stroke/fill.
 4. Use **Copy from map** (Pick) to sample a nearby working cell's stored values, then choose Paint. The field checkboxes decide which sampled fields will be painted.
-5. Expand **Advanced movement** for raw collision/elevation fields or **Set passage + elevation together** for all 32 combined presets. Combined presets replace both fields; A-F label heights 10-15. Copy working stairs/water/bridges rather than guessing their height.
+5. All 32 passage/elevation combinations appear directly in the two lists. **Advanced movement** retains the raw field controls, including collision values 2 and 3. The lists use decimal 0–15; A–F elsewhere means 10–15. Copy working stairs/water/bridges rather than guessing their level.
 6. **Tools & tasks → More map tools → View options** contains opacity and **Show elevation numbers**, off by default. Viewing an overlay never edits source files.
 7. Choose **Tiles** to return to artwork-only painting, or **Events** to place/inspect source events.
 
@@ -353,7 +353,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.19.1; the current tools are described above:
+These are proposals beyond 0.20.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -365,7 +365,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.19.1 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.20.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

@@ -1,24 +1,24 @@
-import {createClassicUI} from './classic-ui.mjs?v=0.19.1';
-import {createTileLibrary} from './tile-library.mjs?v=0.19.1';
-import {createViewport} from './viewport.mjs?v=0.19.1';
-import {createBeginnerFlow} from './beginner-flow.mjs?v=0.19.1';
-import {createManagement} from './map-management-ui.mjs?v=0.19.1';
-import {createWorldUI} from './world-ui.mjs?v=0.19.1';
-import {createBeginnerHelp} from './beginner-help.mjs?v=0.19.1';
-import {createTouchNavigation} from './canvas-navigation.mjs?v=0.19.1';
-import {createSettings} from './updates.mjs?v=0.19.1';
-import {createTilesetEditor} from './tileset-editor.mjs?v=0.19.1';
-import {createMapTools} from './map-tools.mjs?v=0.19.1';
-import {createRomTools} from './rom-tools.mjs?v=0.19.1';
-import * as C from './core.mjs?v=0.19.1';
-import {defaultLayout} from './project.mjs?v=0.19.1';
-import {createStudio} from './studio.mjs?v=0.19.1';
-import {createLayout} from './layout.mjs?v=0.19.1';
-import {createWorkflow} from './workflow.mjs?v=0.19.1';
-import * as Drafts from './drafts.mjs?v=0.19.1';
-import {isEventTap} from './event-summary.mjs?v=0.19.1';
-import {createReview} from './review-ui.mjs?v=0.19.1';
-import {createBorder} from './border.mjs?v=0.19.1';
+import {createClassicUI} from './classic-ui.mjs?v=0.20.0';
+import {createTileLibrary} from './tile-library.mjs?v=0.20.0';
+import {createViewport} from './viewport.mjs?v=0.20.0';
+import {createBeginnerFlow} from './beginner-flow.mjs?v=0.20.0';
+import {createManagement} from './map-management-ui.mjs?v=0.20.0';
+import {createWorldUI} from './world-ui.mjs?v=0.20.0';
+import {createBeginnerHelp} from './beginner-help.mjs?v=0.20.0';
+import {createTouchNavigation} from './canvas-navigation.mjs?v=0.20.0';
+import {createSettings} from './updates.mjs?v=0.20.0';
+import {createTilesetEditor} from './tileset-editor.mjs?v=0.20.0';
+import {createMapTools} from './map-tools.mjs?v=0.20.0';
+import {createRomTools} from './rom-tools.mjs?v=0.20.0';
+import * as C from './core.mjs?v=0.20.0';
+import {defaultLayout} from './project.mjs?v=0.20.0';
+import {createStudio} from './studio.mjs?v=0.20.0';
+import {createLayout} from './layout.mjs?v=0.20.0';
+import {createWorkflow} from './workflow.mjs?v=0.20.0';
+import * as Drafts from './drafts.mjs?v=0.20.0';
+import {isEventTap} from './event-summary.mjs?v=0.20.0';
+import {createReview} from './review-ui.mjs?v=0.20.0';
+import {createBorder} from './border.mjs?v=0.20.0';
 const $=id=>document.getElementById(id), $$=s=>[...document.querySelectorAll(s)], decoder=new TextDecoder();
 const S={movement:false,files:new Map(),base:new Map(),layouts:[],layout:null,cells:null,sets:[],palettes:[],tiles:new Map(),view:'map',tool:'pan',selected:0,color:1,zoom:2,autoFit:true,history:[],redo:[],source:{type:'none'},rom:null,romBase:null,romPixels:null,romPreview:false,sheet:null,stroke:null,busy:false,loadToken:0};
 let beginnerFlow=null,tileLibrary=null,classicUI=null;
@@ -40,7 +40,24 @@ function buildPalettes(state=S,files=S.files){const n=split(state.layout).pals;s
 function rebuildTiles(state=S,ids=null){state.tiles=new Map();const sp=split(state.layout);for(let si=0;si<state.sets.length;si++){const set=state.sets[si],v=new DataView(set.meta.buffer,set.meta.byteOffset,set.meta.byteLength),count=Math.min(si?1024-sp.meta:sp.meta,set.meta.length/16);for(let t=0;t<count;t++){if(ids&&!ids.has(t+(si?sp.meta:0)))continue;const cv=document.createElement('canvas');cv.width=cv.height=16;const cx=cv.getContext('2d'),im=cx.createImageData(16,16);for(let layer=0;layer<2;layer++)for(let q=0;q<4;q++){const a=v.getUint16(t*16+layer*8+q*2,true),idx=a&1023,pal=state.palettes[a>>>12]||state.palettes[0],sheet=idx<sp.tiles?state.sets[0].png:state.sets[1].png,local=idx<sp.tiles?idx:idx-sp.tiles,tx=local%(sheet.w/8)*8,ty=Math.floor(local/(sheet.w/8))*8;for(let y=0;y<8;y++)for(let x=0;x<8;x++){const pi=sheet.pixels[(ty+((a&2048)?7-y:y))*sheet.w+tx+((a&1024)?7-x:x)]||0;if(layer&&pi===0)continue;const rgb=pal[pi]||[255,0,255],di=((Math.floor(q/2)*8+y)*16+(q%2)*8+x)*4;im.data.set([...rgb,255],di);}}cx.putImageData(im,0,0);state.tiles.set(t+(si?sp.meta:0),cv);}}}
 function populateSheets(){const sh=$('sheetSelect');sh.replaceChildren();S.sets.forEach((s,i)=>{const o=document.createElement('option');o.value=i;o.textContent=(i?'Secondary · ':'Primary · ')+s.symbol.replace('gTileset_','');sh.append(o);});sh.value=Math.max(0,S.sets.indexOf(S.sheet));const p=$('paletteSelect');p.replaceChildren();for(let i=0;i<13;i++){const o=document.createElement('option');o.value=i;o.textContent='Palette '+i;p.append(o);}}
 function movementMode(on){S.movement=on;$('movementPanel').hidden=!on;$('tilePalette').hidden=on;$('metatileMode').classList.toggle('active',!on);$('movementMode').classList.toggle('active',on);$('paintCollision').checked=on;$('paintElevation').checked=false;$('collisionToggle').checked=on;$('paletteHeading').textContent=on?'COLLISION PAINTER':'TILE PAINTER';$('paletteDescription').textContent=on?'Choose a passage brush, then Paint or Fill. Tile art stays unchanged.':'Tap a tile to use it as your brush.';studio.viewChanged();paletteUI();render();}
-function movementChoices(){const pc=$('paintCollision').checked,pe=$('paintElevation').checked;$('movementBrush').textContent=pc||pe?'Brush: '+(pc?(+$('collisionValue').value===0?'allow passage':+$('collisionValue').value===1?'block passage':'collision '+$('collisionValue').value):'keep passage')+' · '+(pe?'set height '+Number($('elevationValue').value).toString(16).toUpperCase():'keep each cell’s height'):'Art brush · movement stays unchanged';for(const [id,value]of [['allowWalking',0],['blockWalking',1]]){$(id).classList.toggle('active',pc&&!pe&&Number($('collisionValue').value)===value);$(id).setAttribute('aria-pressed',String(pc&&!pe&&Number($('collisionValue').value)===value));}const el=$('movementChoices');if(!S.movement||S.view!=='map')return;el.replaceChildren();for(let level=0;level<16;level++)for(let blocked=0;blocked<2;blocked++){const b=document.createElement('button');b.className=(blocked?'blocked ':'')+(Number($('elevationValue').value)===level&&Number($('collisionValue').value)===blocked?'active':'');const name=level===0?(blocked?'Impassable':'Transition'):level===1?'Surf':level===15?'Multi-level':'Level '+level.toString(16).toUpperCase();b.textContent=level.toString(16).toUpperCase();const small=document.createElement('small');small.textContent=name;b.append(small);b.setAttribute('aria-label',name+' · '+(blocked?'passage blocked':'passage allowed'));b.onclick=()=>{$('collisionValue').value=blocked;$('elevationValue').value=level;$('paintCollision').checked=true;$('paintElevation').checked=true;movementChoices();};el.append(b);}}
+function movementChoices(){
+ const pc=$('paintCollision').checked,pe=$('paintElevation').checked,collision=Number($('collisionValue').value),level=Number($('elevationValue').value);
+ $('movementBrush').textContent=pc||pe?'Brush: '+(pc?(collision===0?'Walkable':collision===1?'Blocked':'collision '+collision):'keep passage')+' · '+(pe?'elevation '+level:'keep each cell’s elevation'):'Art brush · movement stays unchanged';
+ for(const[id,value]of [['allowWalking',0],['blockWalking',1]]){const active=pc&&collision===value;$(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',String(active));}
+ if(!S.movement||S.view!=='map')return;
+ for(const blocked of [0,1]){const list=$(blocked?'blockedElevations':'walkableElevations');if(!list)continue;
+  if(!list.children.length)for(const n of ['keep',...Array.from({length:16},(_,i)=>i)]){
+   const mode=blocked?'Blocked':'Walkable',name=n==='keep'?'Keep existing':n===0?(blocked?'0 · Impassable':'0 · Transition'):n===1?'1 · Water':n===15?'15 · Multi-level':n+' · Level '+n;
+   const row=document.createElement('div');row.className='elevation-row';row.dataset.elevation=n;
+   const pick=document.createElement('button');pick.type='button';pick.className='elevation-pick';pick.textContent=name;pick.setAttribute('aria-label',mode+' · '+name);
+   pick.onclick=()=>{$('collisionValue').value=blocked;$('paintCollision').checked=true;$('paintElevation').checked=n!=='keep';if(n!=='keep')$('elevationValue').value=n;movementChoices();};
+   const help=document.createElement('button');help.type='button';help.className='help-tip elevation-help';help.textContent='?';help.setAttribute('aria-label',n==='keep'?mode+' · Keep existing elevation':'Elevation '+n+' · '+mode);
+   help.dataset.tip=n==='keep'?'Changes passage only. Every painted cell retains its current elevation. Use this to allow or block passage without changing levels.':n===0?(blocked?'A general obstacle with no fixed level. Useful for signs and solid objects that must be interacted with from different elevations.':'Connects different elevations, commonly at stairs. Use a transition tile between paths on different levels.'):n===1?(blocked?'Blocks passage at the water elevation; it does not create water artwork.':'The water / Surf elevation. Tile behavior must also support water. In the standard games, Surf starts and ends beside land at level 3.'):n===15?(blocked?'A blocked cell using the multi-level value; the blocked form has no special bridge benefit.':'Keeps the player’s incoming level across multi-level terrain, such as a bridge. Match the exit level to the level the player entered from.'):'Sets this cell to level '+n+'. '+(blocked?'Passage stays blocked; this sets its level as well.':'Passage is allowed, but the player normally needs a matching level.')+(n===3?' Level 3 is commonly used for land beside Surf water.':' Match nearby working terrain. Use a transition where different levels need to connect.')+' Elevation controls connections, not the drawn height. Custom game rules may differ.';
+   row.append(pick,help);list.append(row);
+  }
+  for(const row of list.children){const active=pc&&collision===blocked&&(pe?row.dataset.elevation===String(level):row.dataset.elevation==='keep');row.classList.toggle('active',active);row.querySelector('.elevation-pick').setAttribute('aria-pressed',String(active));}
+ }
+}
 function inspectCell(x,y){const R=S.original||S;if(S.view!=='map'||!R.cells||x<0||y<0||x>=R.layout.width||y>=R.layout.height)return;const b=R.cells[y*R.layout.width+x],c=b>>>10&3,e=b>>>12;$('cellReadout').textContent='Cell '+x+', '+y+'\nTile #'+(b&1023).toString(16).padStart(3,'0')+'\nCollision '+c+(c?' · blocked':' · walkable')+'\nElevation '+e.toString(16).toUpperCase()+' ('+e+')';$('cursorPosition').textContent='X '+x+' · Y '+y+' · C '+c+' · E '+e.toString(16).toUpperCase();}
 function updateTitle(){const l=S.layout;$('mapTitle').textContent=S.view==='map'?(l?.name||'Choose a map'):S.view==='tiles'?'Small pixels. Big changes.':'Inside your GBA file';$('breadcrumb').textContent=S.view==='rom'?'LOCAL FILE / GRAPHICS & HEX':(S.source.name||'SOURCE PROJECT').toUpperCase()+' / '+(S.view==='tiles'?'TILESET GRAPHICS':'MAP LAYOUT');$('dimensions').textContent=S.view==='map'&&l?l.width+' × '+l.height+' tiles':S.view==='tiles'&&S.sheet?S.sheet.png.w+' × '+S.sheet.png.h+' px':S.rom?(S.rom.length/1048576).toFixed(1)+' MB':'No ROM';}
 function view(v){if(v==='rom'&&!S.rom){$('romFileInput').click();return;}if(v!=='rom'&&S.rom){workflow.load();return;}document.querySelector('.world-actions').hidden=v!=='map';clearComparison();S.view=v;$('pixelSourceNote').hidden=!S.rom;document.querySelector('#workspaceMenu [data-view=tiles]').disabled=!!S.rom;$('editMetatile').hidden=v!=='map';$('compareBtn').hidden=v!=='map';$$('[data-view]').forEach(b=>{b.classList.toggle('active',b.dataset.view===v);b.setAttribute('aria-pressed',String(b.dataset.view===v));});$('mapOptions').hidden=v!=='map';studio.viewChanged();$('pixelOptions').hidden=v!=='tiles';$('romOptions').hidden=v!=='rom';$('colorPalette').hidden=v==='map';$('tilePalette').hidden=v!=='map'||S.movement;$('movementPanel').hidden=v!=='map'||!S.movement;document.querySelector('.inspector-tabs').hidden=v!=='map';$('paletteHeading').textContent=v==='map'?'MAP TILES':'COLOR INDICES';$('paletteDescription').textContent=v==='map'?'Tap a tile to use it as your brush.':'Pick a color, zoom in, and paint a pixel.';$('canvasTip').textContent=v==='map'?'Choose a tile, then paint. Use Move to scroll.':v==='tiles'?'Editing shared graphics. Every use of this tile will update.':'Raw graphics use a preview palette. Offsets are game-specific.';$$('[data-tool="fill"]').forEach(b=>b.disabled=v!=='map');$$('[data-tool="select"],[data-tool="stamp"],[data-tool="ruler"]').forEach(b=>b.disabled=v!=='map'||b.dataset.tool==='stamp'&&$('areaStamp').disabled);if(['fill','select','stamp','ruler'].includes(S.tool)&&v!=='map')tool('pencil');updateTitle();paletteUI();render();fit();}
@@ -124,7 +141,7 @@ createTouchNavigation({wrap:$('canvasWrap'),canvas:$('canvas'),getZoom:()=>S.zoo
 createViewport();tool('pan');workflow.load();if('serviceWorker'in navigator&&location.protocol!=='file:')navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 createBeginnerHelp({$});
-for(const [id,value] of [['allowWalking',0],['blockWalking',1]])$(id).onclick=()=>{$('collisionValue').value=value;$('paintCollision').checked=true;$('paintElevation').checked=false;movementChoices();};
+for(const [id,value] of [['allowWalking',0],['blockWalking',1]])$(id).onclick=()=>{$('collisionValue').value=value;$('paintCollision').checked=true;movementChoices();};
 for(const id of ['paintCollision','paintElevation'])$(id).addEventListener('change',movementChoices);
 
 const worldUI=createWorldUI({S,$,getFile,task,studio,recordBatch,refresh,selectLayout,loadLayoutAssets,status});

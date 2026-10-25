@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.19.1",
+  "version": "0.20.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Removed the bundled practice island, its Help launcher and its download-page artwork.",
-    "Start with Emerald: Legends, your own project files or a saved draft.",
-    "Existing drafts and exported projects remain available."
+    "Choose Keep existing or elevation 0\u201315 beneath Walkable and Blocked.",
+    "Each elevation has its own ? explanation; opening help never changes the brush.",
+    "Collision painting preserves tile artwork; Keep existing also preserves elevation."
   ]
 }

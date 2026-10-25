@@ -2,10 +2,10 @@
 const topics={
  movement:['Player movement',
   'Start with Pick on a nearby tile that already works in game. It copies that cell’s passage and elevation values into the controls.',
-  'For a simple wall or floor fix, choose Collision, then Walkable or Blocked, then choose Paint and drag over cells. These brushes keep each cell’s height and tile art. Undo reverses the whole stroke.',
+  'For a simple wall or floor fix, choose Collision, then Walkable or Blocked, then choose Paint and drag over cells. Keep existing preserves each cell’s elevation. Choosing level 0–15 replaces elevation as well. Tile art stays the same. Undo reverses the whole stroke.',
   'Fill replaces the connected area matching the fields you enabled. For a small correction, use Paint first. Fill can cross different-looking tiles when only collision is enabled.',
   'Elevation is a connection level, not the height of a drawing. Adjacent paths usually need compatible levels; bridges can use different levels above and below. Level 0 is a transition, 1 is commonly used for water, and F is a special multi-level value. Copy an existing working example rather than guessing.',
-  'The passage + elevation presets replace both fields. A–F are hexadecimal labels for 10–15. Advanced movement also provides advanced collision values 2 and 3; retain them unless you know the project’s rules.',
+  'The two elevation lists each include Keep existing and decimal levels 0–15, with a ? explanation beside every choice. Pick copies both fields from a map cell. A–F elsewhere are hexadecimal labels for 10–15. Advanced movement also provides advanced collision values 2 and 3; retain them unless you know the project’s rules.',
   'The overlay is a preview: red marks nonzero collision and green marks passable cells; optional numbers show elevation. Tile behavior, events and scripts also affect movement, so confirm the result in the rebuilt game.'],
  tools:['Map tools',
   'Move pans the map without painting. Pinch with two fingers to zoom and pan. Fit frames the map again after manual zoom.',
