@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.15.0 alpha · 24 October 2026 · By 8BitTrade
+TileForge 0.16.0 alpha · 24 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -134,6 +134,8 @@ This changes the active layout's references; it does not copy one isolated metat
 At widths up to 1100 CSS pixels, **Tiles** opens a larger brush drawer and leaves the map at full width. On a cover screen or small window, a notice recommends opening the Fold or using a larger window for the full experience. This follows available window space rather than guessing a device model. **Browse & filter tiles** holds the search, source, category and pin filters. Close it to leave more space for artwork; the palette has one scroll area so the last tile remains reachable. Choose a tile to close the drawer, or close it with ×. Larger windows keep the resizable palette alongside the map.
 
 Android windows are resizable for DeX and split screen. Fold/unfold, keyboard and display-size changes retain the current workspace; Fit automatically reframes only while Fit mode is active. Short windows allow the editor to scroll rather than cut off the canvas. Use mouse scrolling, the labelled tools, keyboard shortcuts and the palette resize grip on a monitor. Physical Fold/DeX hardware behavior still needs device testing.
+
+In the Android app, a native container keeps the actual editor viewport outside the status bar, camera cutout, navigation buttons and mandatory gesture area. Keyboard and DeX caption space are included. The container updates during rotation, folding and window resizing without reopening the project. This requires installing the current APK; updating only the website cannot replace an older Android shell. Browser/PWA dialogs, tile drawers, dropdowns, resize grips and notifications also respect available safe areas. In short landscape windows, floating tool panels stay within that space and scroll internally.
 
 Tap a **?** beside controls for an explanation that stays open until you close it. Help covers map tools, tile filters, shared artwork, movement, borders, stamps, tilesets and events.
 
@@ -335,7 +337,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.15.0; the current tools are described above:
+These are proposals beyond 0.16.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -347,7 +349,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.15.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.16.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 

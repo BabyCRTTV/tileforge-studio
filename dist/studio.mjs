@@ -1,7 +1,8 @@
-import {createNpcPreviews} from './npc-previews.mjs?v=0.15.0';
-import * as P from './project.mjs?v=0.15.0';
-import {summarizeEvent} from './event-summary.mjs?v=0.15.0';
-import {reviewedCategories} from './reviewed-categories.mjs?v=0.15.0';
+import {usableViewport} from './viewport.mjs?v=0.16.0';
+import {createNpcPreviews} from './npc-previews.mjs?v=0.16.0';
+import * as P from './project.mjs?v=0.16.0';
+import {summarizeEvent} from './event-summary.mjs?v=0.16.0';
+import {reviewedCategories} from './reviewed-categories.mjs?v=0.16.0';
 export function createStudio(h){
  const {S,C,$,task,toast,status,getFile,recordBatch,queueDraft,render,paletteUI,selectLayout,loadLayoutAssets,activateLayout}=h;
  const F={tags:{},favorites:new Set(),recent:[],usage:new Map(),origins:[],tileView:'all',info:new Map(),mode:false,mapPath:null,map:null,pending:null,placing:null,npcSprite:null,catalogFiles:null,catalog:[],editing:null,changing:false,layoutId:null,summary:null};
@@ -30,8 +31,8 @@ export function createStudio(h){
  }
  picker.querySelector('input').oninput=renderPicker;
  picker.addEventListener('keydown',e=>{if(e.key==='ArrowDown'&&e.target===picker.querySelector('input')){e.preventDefault();picker.querySelector('[role=option]')?.focus();}else if(['ArrowDown','ArrowUp'].includes(e.key)&&e.target.getAttribute('role')==='option'){e.preventDefault();const a=[...picker.querySelectorAll('[role=option]')],n=a.indexOf(e.target);a[(n+(e.key==='ArrowDown'?1:-1)+a.length)%a.length]?.focus();}});
- function positionPicker(){if(!picker.open||!returnFocus)return;const r=returnFocus.getBoundingClientRect(),w=Math.min(380,innerWidth-28),height=Math.min(picker.getBoundingClientRect().height,innerHeight-24),top=r.bottom+8+height>innerHeight?Math.max(14,r.top-height-8):r.bottom+8;picker.style.margin='0';picker.style.width=w+'px';picker.style.left=Math.min(Math.max(14,r.left),innerWidth-w-14)+'px';picker.style.top=Math.max(12,Math.min(top,innerHeight-height-14))+'px';}
- window.addEventListener('resize',positionPicker);
+ function positionPicker(){if(!picker.open||!returnFocus)return;const v=usableViewport(),r=returnFocus.getBoundingClientRect(),w=Math.max(1,Math.min(380,v.width-24));picker.style.width=w+'px';const height=Math.min(picker.getBoundingClientRect().height,Math.max(0,v.height-24)),top=r.bottom+8+height>v.bottom-12?r.top-height-8:r.bottom+8;picker.style.margin='0';picker.style.right='auto';picker.style.bottom='auto';picker.style.left=Math.min(Math.max(v.left+12,r.left),v.right-w-12)+'px';picker.style.top=Math.max(v.top+12,Math.min(top,v.bottom-height-12))+'px';}
+ window.addEventListener('resize',positionPicker);window.addEventListener('usableviewportchange',positionPicker);
  function upgrade(select){if(selects.has(select))return;const wrap=document.createElement('span');wrap.className='search-select';if(select.id==='mobileMapPicker')wrap.classList.add('mobile-picker-wrap');select.parentNode.insertBefore(wrap,select);wrap.append(select);select.hidden=true;const button=document.createElement('button');button.type='button';button.setAttribute('role','combobox');button.setAttribute('aria-label',select.getAttribute('aria-label')||'Choose option');button.setAttribute('aria-haspopup','listbox');button.setAttribute('aria-expanded','false');wrap.append(button);selects.set(select,{button,wrap});button.onclick=()=>task(()=>openSelect(select));select.addEventListener('change',()=>syncSelect(select));new MutationObserver(()=>syncSelect(select)).observe(select,{childList:true,subtree:true,attributes:true,attributeFilter:['disabled']});syncSelect(select);}
  function options(id,entries,value){const el=$(id);el.replaceChildren();for(const e of entries){const o=document.createElement('option');o.value=String(e.value);o.textContent=e.label;o.dataset.search=e.search||'';o.dataset.detail=e.detail||'';o.dataset.sprite=e.sprite||'';el.append(o);}if(value!=null)el.value=String(value);upgrade(el);syncSelect(el);}
  const sourceMapNames=()=>P.mapNames(S.files);

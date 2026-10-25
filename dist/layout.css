@@ -1,5 +1,5 @@
 /* The unfolded workspace follows available CSS space, including split-screen. */
-body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+body{padding:var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left)}
 .brand,.header-actions,.header-actions button,.editor-heading>div{min-width:0}
 .header-actions{flex-shrink:0}.brand{white-space:nowrap}
 .panel-done{display:none}.studio-popover{min-width:0}
@@ -23,7 +23,7 @@ body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-i
 .border-grid canvas{width:44px;height:44px;image-rendering:pixelated;display:block}
 .canvas-wrap{min-height:0}
 .brush-toggle{display:none!important}
-.palette-dialog{width:360px;height:min(720px,calc(100dvh - 24px));max-width:calc(100vw - 16px);padding:14px;margin:auto 8px auto auto;overflow:hidden}
+.palette-dialog{width:360px;height:min(720px,calc(var(--usable-height) - 24px));max-width:calc(var(--usable-width) - 24px);padding:14px;margin:auto 0 auto auto;overflow:hidden}
 .palette-dialog[open]{display:flex;flex-direction:column}
 .palette-dialog>.dialog-head{flex-shrink:0;margin-bottom:8px;align-items:center}
 .palette-dialog .dialog-head h2{font-size:18px;margin:0}
@@ -129,7 +129,7 @@ body[data-stage=load] .header .project-pill{display:none}
  .tag-details>summary{font-size:11px;min-height:44px;padding:14px 0}
  #movementPanel{max-height:none;overflow:auto;flex:1 1 0;min-height:100px}.movement-choices button{min-height:44px}.movement-choices{gap:6px}
  #movementPanel>p{font-size:10px}.cell-readout{padding:8px}
- dialog{max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);padding:20px;border-radius:12px}
+ dialog{max-width:calc(100vw - 24px);max-height:calc(var(--usable-height) - 24px);padding:20px;border-radius:12px}
  .dialog-head{margin-bottom:14px}.dialog-head h2{font-size:22px}.dialog-head button{min-height:44px}
  .event-dialog{width:620px}.event-dialog input,.event-dialog textarea{font-size:16px;min-height:44px}
  .event-dialog .search-select>button{font-size:12px;min-height:44px}
@@ -275,7 +275,7 @@ body{height:100dvh;min-height:0;overflow:hidden}
 .palette-filters>summary,.movement-levels>summary{cursor:pointer;min-height:44px;padding:12px 0;font-size:12px;font-weight:650}
 .palette-filters>.help-tip{margin-bottom:8px}
 .compact-notice{display:none;padding:5px 12px;background:#edf2e3;border-bottom:1px solid #becdaf;color:#3d6043;font-size:10px;line-height:1.4}
-.context-help{width:620px;max-height:calc(100dvh - 24px);overflow:auto}
+.context-help{width:620px;max-height:calc(var(--usable-height) - 24px);overflow:auto}
 .context-help p{font-size:14px;line-height:1.7;overflow-wrap:anywhere}
 .context-help>.dialog-head{align-items:start}.context-help h2{white-space:normal}
 .context-help>button:last-child{min-height:44px;display:block;margin:16px 0 0 auto}
@@ -314,6 +314,13 @@ body{height:100dvh;min-height:0;overflow:hidden}
 .picker-options button.has-sprite,.search-select>button.has-sprite{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:10px;align-items:center;text-align:left;min-height:56px}.has-sprite>.sprite-thumb{grid-column:1;grid-row:1 / span 2}.has-sprite>strong,.has-sprite>small,.has-sprite>.sprite-option-label{grid-column:2;min-width:0;overflow-wrap:anywhere}.sprite-thumb{width:44px;height:48px;display:grid;place-items:center;flex-shrink:0;background:#e8eedf;border:1px solid #d5dfcd;border-radius:6px;font-size:16px;color:#78916f}.sprite-thumb canvas{display:block;image-rendering:pixelated;object-fit:contain}.summary-sprite{float:left;margin:0 12px 8px 0}.event-summary-fields{clear:both}.sprite-option-label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .picker-options button.has-sprite{padding:6px 10px;min-height:52px}.picker-options .sprite-thumb{height:40px}.picker-options button.has-sprite:not(:has(>small))>strong,.search-select>button.has-sprite>.sprite-option-label{grid-row:1 / span 2;align-self:center}
 
-.picker-tabs{display:flex;gap:6px;margin:0 0 8px}.picker-tabs[hidden],.picker-context[hidden]{display:none}.picker-tabs button{flex:1;min-height:44px;font-size:11px;padding:7px;white-space:normal}.picker-tabs button[aria-pressed="true"]{background:var(--green);color:white}.picker-context{font-size:11px;line-height:1.6;margin:0 0 10px;color:var(--muted)}.picker-dialog[open]:has(.picker-tabs:not([hidden])){max-height:calc(100dvh - 24px);display:flex;flex-direction:column}.picker-dialog:not([open]){display:none}.picker-dialog[open]:has(.picker-tabs:not([hidden])) .picker-options{min-height:0;flex-shrink:1}.picker-tabs,.picker-head,.picker-search,.picker-context{flex-shrink:0}
+.picker-tabs{display:flex;gap:6px;margin:0 0 8px}.picker-tabs[hidden],.picker-context[hidden]{display:none}.picker-tabs button{flex:1;min-height:44px;font-size:11px;padding:7px;white-space:normal}.picker-tabs button[aria-pressed="true"]{background:var(--green);color:white}.picker-context{font-size:11px;line-height:1.6;margin:0 0 10px;color:var(--muted)}.picker-dialog[open]:has(.picker-tabs:not([hidden])){max-height:calc(var(--usable-height) - 24px);display:flex;flex-direction:column}.picker-dialog:not([open]){display:none}.picker-dialog[open]:has(.picker-tabs:not([hidden])) .picker-options{min-height:0;flex-shrink:1}.picker-tabs,.picker-head,.picker-search,.picker-context{flex-shrink:0}
 
 .deleted-draft-row{display:grid;grid-template-columns:minmax(0,1fr);padding:12px;gap:5px}.deleted-draft-row small{margin:0}.deleted-draft-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:5px}.deleted-draft-actions button{flex:1;min-height:44px;padding:8px;font-size:12px;white-space:normal}.draft-purge,.clear-deleted-drafts{color:#873b3d;min-height:44px;white-space:normal}#clearDeletedDrafts{margin:2px 0 4px;font-size:12px}.purge-draft-names{max-height:160px;overflow:auto;padding:6px 6px 6px 25px;font-size:13px;overflow-wrap:anywhere}.purge-draft-names li{margin:7px 0}#purgeDraftError{color:#873b3d;font-size:13px}
+
+:root{--safe-top:env(safe-area-inset-top,0px);--safe-right:env(safe-area-inset-right,0px);--safe-bottom:env(safe-area-inset-bottom,0px);--safe-left:env(safe-area-inset-left,0px);--usable-top:var(--safe-top);--usable-right:var(--safe-right);--usable-bottom:var(--safe-bottom);--usable-left:var(--safe-left);--usable-height:calc(100dvh - var(--safe-top) - var(--safe-bottom));--usable-width:calc(100vw - var(--safe-left) - var(--safe-right));--usable-center-x:calc((100vw + var(--safe-left) - var(--safe-right))/2)}
+/* Dialogs live in the top layer, outside the padded body. Inset them too. */
+dialog{inset:calc(var(--usable-top) + 12px) calc(var(--usable-right) + 12px) calc(var(--usable-bottom) + 12px) calc(var(--usable-left) + 12px);max-width:calc(var(--usable-width) - 24px);max-height:calc(var(--usable-height) - 24px)}
+.palette-dialog{height:min(720px,calc(var(--usable-height) - 24px));max-width:calc(var(--usable-width) - 24px)}
+.picker-dialog{max-height:calc(var(--usable-height) - 24px);max-width:calc(var(--usable-width) - 24px)}
+#toast{left:var(--usable-center-x);bottom:calc(var(--usable-bottom) + 16px);max-width:calc(var(--usable-width) - 24px);max-height:calc(var(--usable-height) - 24px);overflow:hidden}

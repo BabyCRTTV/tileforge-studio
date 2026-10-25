@@ -1,3 +1,4 @@
+import {usableViewport} from './viewport.mjs?v=0.16.0';
 // Keep the canvas usable as a foldable changes width, height or orientation.
 export function createLayout({S,$,fit}) {
  const compact=matchMedia('(max-width: 1366px)');
@@ -6,8 +7,15 @@ export function createLayout({S,$,fit}) {
  function reflow(){
   cancelAnimationFrame(frame);
   frame=requestAnimationFrame(()=>{
-   // Long area/event controls must scroll within the space below their header.
-   for(const panel of panels){const popover=panel.querySelector('.studio-popover');if(compact.matches&&panel.open&&!panel.classList.contains('controls-tucked'))popover.style.maxHeight=Math.max(80,Math.min(380,innerHeight-popover.getBoundingClientRect().top-12))+'px';else popover.style.removeProperty('max-height');}
+   // Short windows may have no room below the tool header. Float the panel
+   // inside the safe viewport instead of clipping its buttons under system UI.
+   for(const panel of panels){const popover=panel.querySelector('.studio-popover');
+    if(compact.matches&&panel.open&&!panel.classList.contains('controls-tucked')){
+     const v=usableViewport(),anchor=panel.querySelector('summary').getBoundingClientRect(),width=Math.max(1,Math.min(740,v.width-24));
+     Object.assign(popover.style,{position:'fixed',right:'auto',bottom:'auto',zIndex:'30',width:width+'px',maxHeight:Math.max(44,Math.min(380,v.height-24))+'px',left:Math.max(v.left+12,Math.min(anchor.left,v.right-width-12))+'px',top:(v.top+12)+'px'});
+     const height=popover.getBoundingClientRect().height;popover.style.top=Math.max(v.top+12,Math.min(anchor.bottom+5,v.bottom-height-12))+'px';
+    }else for(const key of ['position','right','bottom','z-index','width','max-height','left','top'])popover.style.removeProperty(key);
+   }
    if(S.autoFit&&!S.stroke)fit();
   });
  }
@@ -49,7 +57,7 @@ export function createLayout({S,$,fit}) {
   if(compact.matches)$('eventsPanel').classList.add('controls-tucked');
  });
  window.addEventListener('resize',reflow);
- window.visualViewport?.addEventListener('resize',reflow);
+ window.visualViewport?.addEventListener('resize',reflow);window.addEventListener('usableviewportchange',reflow);
  const observer=new ResizeObserver(reflow);observer.observe($('canvasWrap'));
  compact.addEventListener('change',sync);
  const narrow=matchMedia('(max-width: 1100px)'),inspector=document.querySelector('.inspector'),palette=$('paletteDialog');
@@ -57,15 +65,15 @@ export function createLayout({S,$,fit}) {
  let resizing=null;const sizes={};
  try{Object.assign(sizes,JSON.parse(localStorage.getItem('tileforge-palette-sizes')||'{}'));}catch{}
  const sizeKey=()=>`${orientation.matches?'portrait':'landscape'}-${narrow.matches?'drawer':'panel'}`;
- function limits(){return narrow.matches?{min:220,max:Math.min(480,innerWidth-16)}:{min:160,max:Math.max(160,Math.min(480,innerWidth-(compact.matches?300:600)))};}
- function positionHandle(){const r=(narrow.matches?palette:inspector).getBoundingClientRect();resize.hidden=narrow.matches?!palette.open:!r.height||workspace.hidden;resize.style.left=(r.left-12)+'px';resize.style.top=(r.top+8)+'px';resize.style.height=Math.max(44,r.height-16)+'px';}
+ function limits(){return narrow.matches?{min:220,max:Math.min(480,usableViewport().width-24)}:{min:160,max:Math.max(160,Math.min(480,innerWidth-(compact.matches?300:600)))};}
+ function positionHandle(){const r=(narrow.matches?palette:inspector).getBoundingClientRect();resize.hidden=narrow.matches?!palette.open:!r.height||workspace.hidden;const v=usableViewport();resize.style.left=Math.max(v.left,Math.min(v.right-24,r.left-12))+'px';resize.style.top=Math.max(v.top,r.top+8)+'px';resize.style.height=Math.max(0,Math.min(r.height-16,v.bottom-Math.max(v.top,r.top+8)))+'px';}
  function applyWidth(value,save=false){const l=limits(),fallback=narrow.matches?360:innerWidth<=800?168:innerWidth<=1366?200:260,width=Math.round(Math.max(l.min,Math.min(l.max,Number.isFinite(value)?value:fallback)));workspace.style.setProperty('--palette-width',width+'px');palette.style.setProperty('--palette-width',width+'px');resize.setAttribute('aria-valuemin',l.min);resize.setAttribute('aria-valuemax',l.max);resize.setAttribute('aria-valuenow',width);if(save){sizes[sizeKey()]=width;try{localStorage.setItem('tileforge-palette-sizes',JSON.stringify(sizes));}catch{}}positionHandle();reflow();}
  resize.addEventListener('pointerdown',e=>{if(e.button!==0)return;e.preventDefault();resizing={pointer:e.pointerId,x:e.clientX,width:Number(resize.getAttribute('aria-valuenow'))};resize.setPointerCapture(e.pointerId);});
  resize.addEventListener('pointermove',e=>{if(resizing?.pointer===e.pointerId)applyWidth(resizing.width+resizing.x-e.clientX,true);});
  for(const type of ['pointerup','pointercancel','lostpointercapture'])resize.addEventListener(type,()=>resizing=null);
  resize.addEventListener('keydown',e=>{let width=Number(resize.getAttribute('aria-valuenow'));if(e.key==='ArrowLeft')width+=16;else if(e.key==='ArrowRight')width-=16;else if(e.key==='Home'){delete sizes[sizeKey()];width=undefined;}else return;e.preventDefault();applyWidth(width,true);});
  const paletteObserver=new ResizeObserver(positionHandle);paletteObserver.observe(inspector);paletteObserver.observe(workspace);
- orientation.addEventListener('change',()=>applyWidth(sizes[sizeKey()]));window.addEventListener('resize',()=>applyWidth(sizes[sizeKey()]));
+ orientation.addEventListener('change',()=>applyWidth(sizes[sizeKey()]));window.addEventListener('resize',()=>applyWidth(sizes[sizeKey()]));window.addEventListener('usableviewportchange',()=>applyWidth(sizes[sizeKey()]));
  const anchor=document.createComment('tile palette position');inspector.before(anchor);
  function placePalette(){
   if(palette.open)palette.close();

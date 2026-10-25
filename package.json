@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,9 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Permanently delete individual entries from Deleted drafts, with confirmation.",
-    "Clear deleted drafts together after reviewing their names and count.",
-    "Active and restored drafts stay protected; only the deleted snapshots shown in the confirmation can be removed.",
-    "Restore, the ten active draft slots and your open workspace are preserved."
+    "Android now sizes the actual WebView inside a native safe-area container, outside system bars and camera cutouts.",
+    "Navigation buttons, gesture areas, keyboard and DeX caption insets are handled without double padding.",
+    "Dialogs, menus, tile drawers, resize grips and notifications fit the usable browser or PWA viewport.",
+    "Short landscape tool panels stay inside the safe area and scroll internally."
   ]
 }

@@ -1,17 +1,17 @@
 {
   "format": "tileforge-update",
-  "version": "0.15.0",
-  "versionCode": 20,
+  "version": "0.16.0",
+  "versionCode": 21,
   "notes": [
-    "Permanently delete individual entries from Deleted drafts, with confirmation.",
-    "Clear deleted drafts together after reviewing their names and count.",
-    "Active and restored drafts stay protected; only the deleted snapshots shown in the confirmation can be removed.",
-    "Restore, the ten active draft slots and your open workspace are preserved."
+    "Android now sizes the actual WebView inside a native safe-area container, outside system bars and camera cutouts.",
+    "Navigation buttons, gesture areas, keyboard and DeX caption insets are handled without double padding.",
+    "Dialogs, menus, tile drawers, resize grips and notifications fit the usable browser or PWA viewport.",
+    "Short landscape tool panels stay inside the safe area and scroll internally."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.15.0.apk",
-    "size": 224572,
-    "sha256": "749995664ed187ce06439e04282894c1d704b47ebc560c2ed1891c043457ca8f"
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.16.0.apk",
+    "size": 228737,
+    "sha256": "5a57639e5cb3880630d9c16b6ac0eed4420f48f18551c0e144053494b9bffab5"
   }
 }

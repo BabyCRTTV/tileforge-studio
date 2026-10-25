@@ -1,4 +1,4 @@
-import {decodeBlocks,encodeBlocks,paintBlock} from './core.mjs?v=0.15.0';
+import {decodeBlocks,encodeBlocks,paintBlock} from './core.mjs?v=0.16.0';
 export function decodeBorder(bytes,layout){
  const width=layout.border_width??2,height=layout.border_height??2;
  if(!Number.isInteger(width)||!Number.isInteger(height)||width<1||height<1||width>32||height>32)throw Error('Unsupported border dimensions');

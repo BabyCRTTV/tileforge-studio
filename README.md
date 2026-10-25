@@ -13,9 +13,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.15.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.16.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.15.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.16.0.apk)**
 
 ## What works
 
@@ -110,7 +110,7 @@ Release process: update package/core/Android versions and package release notes,
 
 New cell creates an interior/exterior with independent source files from a selected artwork template. Link warp chooses a destination entrance by coordinates, can append a paired return point, and can create a new interior first. Preview/Apply, stale-source guards and one-step Undo protect each operation. Direct Next guidance suggests painting, linking, reviewing and exporting. New files retain their missing-original baseline in portable projects.
 
-Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.15.0/TileForge-Studio-0.15.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
+Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.16.0/TileForge-Studio-0.16.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
 
 
 ### More Porymap-inspired tools (0.12.0)
@@ -135,3 +135,9 @@ NPC/event selectors, NPC appearance choices and summaries now show small static 
 Under **Load → Deleted drafts**, **Delete permanently** removes one deleted snapshot and **Clear deleted drafts** removes the reviewed deleted list. Both require confirmation and permanently remove its baseline/history from this device. Active/restored drafts and open work remain available. Restore and the ten active draft slots are unchanged.
 
 Browser storage/UI regression checks: set `TILEFORGE_PLAYWRIGHT` to your Playwright module and `TILEFORGE_CHROMIUM` to a Chromium executable, then run `node tests/drafts.browser.mjs`. The harness uses an isolated browser profile and real IndexedDB.
+
+### System safe areas (0.16.0)
+
+Android now places the WebView inside a native FrameLayout that handles status/navigation bars, display cutouts, mandatory gesture space, keyboard insets and desktop captions. It changes the actual web viewport rather than padding the WebView. Handled insets are forwarded as zeros to avoid duplicate or stale padding. Browser/PWA overlays share usable-viewport bounds, and short floating tool panels scroll inside those bounds. Install the matching APK to update its native shell. Physical Fold/DeX devices still require user-device verification.
+
+Run `tests/safe-area.browser.mjs` with the same Playwright/Chromium variables as the draft test. `tools/build_inset_tests.sh` builds a separate, same-signer Android instrumentation APK for API 30+ native bounds/zero-inset checks; it is not part of the release installer. See the script for its emulator command.

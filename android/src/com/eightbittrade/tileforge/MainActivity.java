@@ -13,6 +13,7 @@ import java.io.*;
 public class MainActivity extends Activity {
     private static final String ORIGIN = "https://appassets.androidplatform.net";
     private WebView web;
+    private SafeAreaLayout safeArea;
     private AppUpdater updater;
     private ValueCallback<Uri[]> chooser;
     private File pendingFile;
@@ -22,9 +23,12 @@ public class MainActivity extends Activity {
     private long savedBytes;
     @Override public void onCreate(Bundle state) {
         super.onCreate(state);
+        configureSystemBars();
+        safeArea = new SafeAreaLayout(this);
         web = new WebView(this);
-        setContentView(web);
-        web.setOnApplyWindowInsetsListener(new android.view.View.OnApplyWindowInsetsListener(){public android.view.WindowInsets onApplyWindowInsets(android.view.View v,android.view.WindowInsets insets){v.setPadding(insets.getSystemWindowInsetLeft(),insets.getSystemWindowInsetTop(),insets.getSystemWindowInsetRight(),insets.getSystemWindowInsetBottom());return insets;}});
+        safeArea.addView(web, new android.widget.FrameLayout.LayoutParams(-1, -1));
+        setContentView(safeArea);
+        safeArea.post(new Runnable() { public void run() { configureSystemBars(); safeArea.requestApplyInsets(); } });
         web.setBackgroundColor(0xfff5f5ee);
         WebSettings settings = web.getSettings();
         settings.setJavaScriptEnabled(true);
@@ -77,7 +81,39 @@ public class MainActivity extends Activity {
         @JavascriptInterface public void download(){runOnUiThread(new Runnable(){public void run(){if(updater.trusted())updater.download();}});}
         @JavascriptInterface public void install(){runOnUiThread(new Runnable(){public void run(){if(updater.trusted())updater.install();}});}
     }
-    @Override protected void onResume(){super.onResume();if(updater!=null)updater.onResume();}
+    private void configureSystemBars() {
+        android.view.Window window = getWindow();
+        android.view.View decor = window.getDecorView();
+        window.setStatusBarColor(android.graphics.Color.TRANSPARENT);
+        window.setNavigationBarColor(android.graphics.Color.TRANSPARENT);
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            window.setStatusBarContrastEnforced(false);
+            window.setNavigationBarContrastEnforced(false);
+        }
+        if (android.os.Build.VERSION.SDK_INT >= 30) {
+            window.setDecorFitsSystemWindows(false);
+            android.view.WindowInsetsController controller = decor.getWindowInsetsController();
+            if (controller != null) {
+                int light = android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
+                    | android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
+                controller.setSystemBarsAppearance(light, light);
+            }
+        } else {
+            decor.setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                | android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+        }
+        if (android.os.Build.VERSION.SDK_INT >= 28) {
+            android.view.WindowManager.LayoutParams params = window.getAttributes();
+            params.layoutInDisplayCutoutMode = android.view.WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+            window.setAttributes(params);
+        }
+    }
+    @Override public void onConfigurationChanged(android.content.res.Configuration configuration) {
+        super.onConfigurationChanged(configuration);
+        if (safeArea != null) safeArea.requestApplyInsets();
+    }
+    @Override protected void onResume(){super.onResume();if(safeArea!=null)safeArea.requestApplyInsets();if(updater!=null)updater.onResume();}
     private synchronized void clearPending() {try {if(output!=null)output.close();}catch(IOException ignored){}output=null;if(pendingFile!=null)pendingFile.delete();pendingFile=null;saving=false;}
     private class SaveBridge {
         @JavascriptInterface public synchronized void beginSave(String name,String mime) {
