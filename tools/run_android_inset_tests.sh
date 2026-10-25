@@ -10,7 +10,11 @@ capture_screen() {
  # fresh ordinary launch and wait for real WebView content, not a blank frame.
  adb shell am force-stop com.eightbittrade.tileforge
  adb shell am start -n com.eightbittrade.tileforge/.MainActivity
- for attempt in $(seq 1 8); do
+ for attempt in $(seq 1 16); do
+  # uiautomator may exit zero after a null-root error without writing a file.
+  # Never accept a previous launch/orientation dump as evidence of readiness.
+  adb shell rm -f /sdcard/tileforge-check.xml
+  rm -f "android/build/inset-results/$orientation-ui.xml"
   if adb shell uiautomator dump /sdcard/tileforge-check.xml && adb exec-out cat /sdcard/tileforge-check.xml > "android/build/inset-results/$orientation-ui.xml"; then
    if grep -Fq 'Load your project' "android/build/inset-results/$orientation-ui.xml"; then break; fi
   fi
