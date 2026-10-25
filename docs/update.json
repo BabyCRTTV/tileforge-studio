@@ -1,16 +1,16 @@
 {
   "format": "tileforge-update",
-  "version": "0.21.0",
-  "versionCode": 27,
+  "version": "0.21.1",
+  "versionCode": 28,
   "notes": [
-    "Search everyday and advanced tasks from one chooser.",
-    "Follow three-step painting, collision and event guides; Use brush & paint returns directly to the map.",
-    "Clear save choices explain device drafts, editable backups and game-change exports."
+    "Restored the previous task chooser, guidance and save/export flow at the owner’s request.",
+    "Kept the approved Walkable/Blocked elevation controls and individual ? explanations.",
+    "Practice island remains removed; fresh Legends imports start at Littleroot."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.0.apk",
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.1.apk",
     "size": 241165,
-    "sha256": "69a1d6f7535e636153268eb999db18b4cbe412bcff6f9a27b2decd0f35a00052"
+    "sha256": "2e60fe1681bf301c95b7c2a27947ec6bc51fecd3eea57cdc92e2b084e21462ea"
   }
 }

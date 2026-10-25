@@ -66,3 +66,6 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - User approved proceeding without routine previews on 25 October 2026. Show design previews only when explicitly asked; internal visual QA remains required.
 
 - The user removed the practice island on 25 October 2026. Do not restore a bundled demo, generator, Help launcher or island marketing image. Browser/Windows QA imports a test-only source ZIP through the normal file input; fixtures stay outside distributed assets. Preserve existing user drafts, including historical demo snapshots.
+
+- Owner correction in this continuation: when the user asks to see interface changes, implement and test locally, show the result, and wait for explicit approval before publishing. “Apply then show me” does not authorize publication. This supersedes earlier routine-publication assumptions for review requests.
+- Use actual Littleroot for user-facing startup/interface previews. Do not show the island-shaped QA fixture in user deliverables; the owner explicitly removed the practice island. Test-only fixture use is not a reason to present that island again. New Legends opens already use Littleroot; do not misstate saved-draft restoration as a fresh project opening.

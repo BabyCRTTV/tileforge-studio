@@ -1,5 +1,5 @@
 // Advisory source checks. No source is changed by running a review.
-import {equal,strFromU8,strToU8} from './core.mjs?v=0.21.0';
+import {equal,strFromU8,strToU8} from './core.mjs?v=0.21.1';
 export const FIELDS={npc:'object_events',sign:'bg_events',trigger:'coord_events',warp:'warp_events'};
 const number=v=>typeof v==='number'?v:/^(?:\d+|0x[\da-f]+)$/i.test(String(v))?Number(v):NaN;
 const scriptNull=v=>v==null||['0','0x0','NULL',''].includes(String(v));

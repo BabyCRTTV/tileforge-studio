@@ -1,4 +1,4 @@
-import {strFromU8,strToU8} from './core.mjs?v=0.21.0';
+import {strFromU8,strToU8} from './core.mjs?v=0.21.1';
 export const CATEGORIES=['Cliffs','Water','Signs','Buildings & doors','Stairs & bridges','Trees & plants','Ground & paths','Rocks & caves','Furniture & interiors','Fences & edges','Puzzles & switches','Warps & transitions','Other'];
 export const layoutFormat=l=>['frlg','firered'].includes(l?.layout_version)?'frlg':'emerald';
 export const friendly=s=>String(s).replace(/^gTileset_|^OBJ_EVENT_GFX_|^MOVEMENT_TYPE_|_Layout$/g,'').replace(/_/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2');

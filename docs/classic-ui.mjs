@@ -33,7 +33,7 @@ export function createClassicUI({S,$,movementMode,render}){
   $('brushDetails').hidden=map&&(isEvents||S.movement);$('borderPanel').hidden=!map||isEvents||S.movement;
   if(isEvents&&!eventOpened)inspector.scrollTop=0;
   if(isEvents&&!eventOpened&&matchMedia('(max-width:1100px)').matches&&!$('paletteDialog').open)$('brushToggle').click();eventOpened=isEvents;
-  const next=$('nextStepButton');if(next)next.hidden=false;
+  const next=$('nextStepButton');if(next)next.hidden=next.textContent==='Choose a task';
  }
  $('metatileMode').addEventListener('click',()=>{$('eventsPanel').open=false;sync();});$('movementMode').addEventListener('click',()=>{$('eventsPanel').open=false;sync();});
  events.onclick=()=>{movementMode(false);$('eventsPanel').classList.remove('controls-tucked');$('eventsPanel').open=true;eventOpened=false;sync();};$('eventsPanel').addEventListener('toggle',()=>{if(!$('eventsPanel').open)eventOpened=false;sync();});
