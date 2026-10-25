@@ -15,8 +15,9 @@ import android.webkit.WebView;
 /** Separate test APK: exercises the real Android view hierarchy, not CSS mocks. */
 public final class SafeAreaInstrumentation extends Instrumentation {
     private int checks;
+    private String expectedOrientation;
     private void check(boolean value,String message) { if(!value)throw new AssertionError(message);checks++; }
-    @Override public void onCreate(Bundle arguments) { super.onCreate(arguments); start(); }
+    @Override public void onCreate(Bundle arguments) { super.onCreate(arguments); expectedOrientation=arguments.getString("orientation","portrait"); start(); }
     @Override public void onStart() {
         Bundle result=new Bundle();
         try {
@@ -34,6 +35,7 @@ public final class SafeAreaInstrumentation extends Instrumentation {
         final FrameLayout host=(FrameLayout)content.getChildAt(0);final WebView web=(WebView)host.getChildAt(0);
         final WindowInsets original=host.getRootWindowInsets();check(original!=null,"Root insets available");
         int width=host.getWidth(),height=host.getHeight();check(width>0&&height>0,"Host laid out");
+        check("landscape".equals(expectedOrientation)?width>height:height>width,"Expected "+expectedOrientation+" host, got "+width+"x"+height);
         final WindowInsets[] received=new WindowInsets[1];
         web.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() { public WindowInsets onApplyWindowInsets(View view,WindowInsets insets) {received[0]=insets;return view.onApplyWindowInsets(insets);} });
         // top bar, nav right/bottom, cutout left/right, keyboard, caption, gesture
