@@ -1,4 +1,4 @@
-import * as C from './core.mjs?v=0.21.1';
+import * as C from './core.mjs?v=0.21.2';
 const json=b=>JSON.parse(C.strFromU8(b)),encode=d=>C.strToU8(JSON.stringify(d,null,2)+'\n');
 export function planCell(files,{name,kind,width,height,templatePath,tile=0,elevation=3}){
  if(!/^[A-Za-z][A-Za-z0-9_]{0,47}$/.test(name))throw Error('Use a name starting with a letter, followed by letters, digits or underscores (48 characters maximum).');

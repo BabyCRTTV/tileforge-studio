@@ -1,4 +1,4 @@
-import {equal,strFromU8,strToU8,resolveTileset} from './core.mjs?v=0.21.1';
+import {equal,strFromU8,strToU8,resolveTileset} from './core.mjs?v=0.21.2';
 
 function integer(n,min,max,label){if(!Number.isInteger(n)||n<min||n>max)throw Error('Invalid '+label);return n;}
 export function unpackPiece(word){integer(word,0,65535,'piece word');return {tile:word&1023,xflip:!!(word&1024),yflip:!!(word&2048),palette:word>>>12};}

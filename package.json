@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.21.1",
+  "version": "0.21.2",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Restored the previous task chooser, guidance and save/export flow at the owner\u2019s request.",
-    "Kept the approved Walkable/Blocked elevation controls and individual ? explanations.",
-    "Practice island remains removed; fresh Legends imports start at Littleroot."
+    "Restored the previous task chooser and save/export flow.",
+    "Freshly opened projects and drafts start at 84% zoom. Fit and manual zoom remain available.",
+    "Retained the approved collision/elevation controls and Littleroot default."
   ]
 }

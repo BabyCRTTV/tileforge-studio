@@ -1,16 +1,16 @@
 {
   "format": "tileforge-update",
-  "version": "0.21.1",
-  "versionCode": 28,
+  "version": "0.21.2",
+  "versionCode": 29,
   "notes": [
-    "Restored the previous task chooser, guidance and save/export flow at the owner’s request.",
-    "Kept the approved Walkable/Blocked elevation controls and individual ? explanations.",
-    "Practice island remains removed; fresh Legends imports start at Littleroot."
+    "Restored the previous task chooser and save/export flow.",
+    "Freshly opened projects and drafts start at 84% zoom. Fit and manual zoom remain available.",
+    "Retained the approved collision/elevation controls and Littleroot default."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.1.apk",
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.2.apk",
     "size": 241165,
-    "sha256": "2e60fe1681bf301c95b7c2a27947ec6bc51fecd3eea57cdc92e2b084e21462ea"
+    "sha256": "81d888f5c9c004bb6bcf95dbc131c99a6b5b3c81958f115eeef253f8ed817735"
   }
 }

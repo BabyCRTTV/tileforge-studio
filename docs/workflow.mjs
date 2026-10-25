@@ -1,5 +1,5 @@
-import {DRAFT_LIMIT} from './drafts.mjs?v=0.21.1';
-export function createWorkflow({S,$,task,openLegends,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.21.2';
+export function createWorkflow({S,$,task,openLegends,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit,startZoom=fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
  let homeTarget='home';
@@ -17,13 +17,13 @@ export function createWorkflow({S,$,task,openLegends,readDraft,saveDraft,deleteD
   $('returnStudio').hidden=!ready;$('openBtn').classList.add('current-step');
   $('exportBtn').classList.remove('current-step');readDraft().then(()=>{if(homeTarget==='drafts'&&!$('loadScreen').hidden)$('draftList').scrollIntoView({block:'start'});}).catch(()=>{$('draftList').textContent='Draft storage is unavailable. You can still open and export files.';});
  }
- function enter(){
+ function enter(startup=false){
   ready=true;$('loadScreen').hidden=true;workspace.hidden=false;tabs.hidden=false;
   document.body.dataset.stage='studio';$('stageLabel').textContent='2 · Studio';
   document.querySelector('.project-pill').hidden=false;
   $('exportBtn').disabled=false;$('saveDraftBtn').disabled=false;$('saveDraftBtn').hidden=false;
   $('openBtn').classList.remove('current-step');$('exportBtn').classList.remove('current-step');
-  requestAnimationFrame(fit);
+  requestAnimationFrame(startup===true?startZoom:fit);
  }
  async function run(action,message){
   $('loadStatus').textContent=message;document.querySelectorAll('[data-load-action]').forEach(b=>b.disabled=true);
