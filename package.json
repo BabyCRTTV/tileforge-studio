@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,9 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Android now sizes the actual WebView inside a native safe-area container, outside system bars and camera cutouts.",
-    "Navigation buttons, gesture areas, keyboard and DeX caption insets are handled without double padding.",
-    "Dialogs, menus, tile drawers, resize grips and notifications fit the usable browser or PWA viewport.",
-    "Short landscape tool panels stay inside the safe area and scroll internally."
+    "Visible top-right close buttons on Collision & display, Map tilesets, Areas & stamps and NPCs & events.",
+    "Tool menu headers stay visible while scrolling on compact screens.",
+    "Close buttons and Escape ask for confirmation, with Keep menu open selected first. Confirming NPCs & events also exits event mode."
   ]
 }

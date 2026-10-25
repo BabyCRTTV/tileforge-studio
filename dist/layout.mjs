@@ -1,4 +1,4 @@
-import {usableViewport} from './viewport.mjs?v=0.16.0';
+import {usableViewport} from './viewport.mjs?v=0.17.0';
 // Keep the canvas usable as a foldable changes width, height or orientation.
 export function createLayout({S,$,fit}) {
  const compact=matchMedia('(max-width: 1366px)');
@@ -27,6 +27,7 @@ export function createLayout({S,$,fit}) {
   reflow();
  }
  for(const panel of panels){
+  panel.querySelector('.panel-close').onclick=()=>requestClose(panel);
   panel.querySelector('summary').addEventListener('click',e=>{
    if(compact.matches&&panel.open&&panel.classList.contains('controls-tucked')){
     e.preventDefault();for(const other of panels)if(other!==panel&&other.open)other.open=false;panel.classList.remove('controls-tucked');
@@ -49,6 +50,32 @@ export function createLayout({S,$,fit}) {
    panel.querySelector('summary').focus();
   };
  }
+ function closePanel(panel){
+  panel.open=false;panel.classList.remove('controls-tucked');
+  panel.querySelector('summary').focus();
+ }
+ const closeDialog=$('closeMenuDialog');let pendingClose=null;
+ function requestClose(panel){
+  if(closeDialog.open)return;pendingClose=panel;
+  $('closeMenuName').textContent=panel.querySelector('.panel-head h3').textContent;
+  closeDialog.showModal();$('cancelCloseMenu').focus();
+ }
+ function cancelClose(){
+  const panel=pendingClose;pendingClose=null;closeDialog.close();
+  if(panel?.open)panel.querySelector('.panel-close').focus();
+ }
+ $('cancelCloseMenu').onclick=$('cancelCloseMenuX').onclick=cancelClose;
+ closeDialog.addEventListener('cancel',e=>{e.preventDefault();cancelClose();});
+ closeDialog.addEventListener('close',()=>{if(!closeDialog.open&&pendingClose)cancelClose();});
+ $('confirmCloseMenu').onclick=()=>{
+  const panel=pendingClose;pendingClose=null;closeDialog.close();
+  if(panel)closePanel(panel);
+ };
+ document.addEventListener('keydown',e=>{
+  if(e.key!=='Escape'||e.defaultPrevented||document.querySelector('dialog[open]'))return;
+  const panel=panels.find(p=>p.open&&!p.classList.contains('controls-tucked')&&getComputedStyle(p.querySelector('.panel-close')).display!=='none');
+  if(panel){e.preventDefault();requestClose(panel);}
+ });
  // Placement needs an unobstructed canvas; tucking keeps NPC/event mode on.
  document.querySelectorAll('[data-add-event]').forEach(button=>button.addEventListener('click',()=>{
   if(compact.matches)$('eventsPanel').classList.add('controls-tucked');
