@@ -2,9 +2,11 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p android/build/inset-results
+trap 'adb logcat -d -t 1000 > android/build/inset-results/logcat.txt; adb shell dumpsys webviewupdate > android/build/inset-results/webview-provider.txt' EXIT
 version=$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")
 adb install -r "dist/downloads/TileForge-Studio-$version.apk"
 adb install -r android/build/inset-tests/TileForge-Inset-Tests.apk
+adb shell dumpsys webviewupdate > android/build/inset-results/webview-provider.txt
 adb shell am instrument -w -r com.eightbittrade.tileforge.test/.SafeAreaInstrumentation | tee android/build/inset-results/native-checks.txt
 grep -F 'native inset checks passed' android/build/inset-results/native-checks.txt
 adb shell am start -n com.eightbittrade.tileforge/.MainActivity
