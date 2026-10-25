@@ -6,7 +6,7 @@ version=$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8'))
 adb install -r "dist/downloads/TileForge-Studio-$version.apk"
 adb install -r android/build/inset-tests/TileForge-Inset-Tests.apk
 adb shell am instrument -w -r com.eightbittrade.tileforge.test/.SafeAreaInstrumentation | tee android/build/inset-results/native-checks.txt
-rg 'native inset checks passed' android/build/inset-results/native-checks.txt
+grep -F 'native inset checks passed' android/build/inset-results/native-checks.txt
 adb shell am start -n com.eightbittrade.tileforge/.MainActivity
 sleep 3
 adb shell dumpsys window windows > android/build/inset-results/portrait-window.txt
@@ -15,7 +15,7 @@ adb shell settings put system accelerometer_rotation 0
 adb shell settings put system user_rotation 1
 sleep 3
 adb shell am instrument -w -r com.eightbittrade.tileforge.test/.SafeAreaInstrumentation | tee android/build/inset-results/landscape-checks.txt
-rg 'native inset checks passed' android/build/inset-results/landscape-checks.txt
+grep -F 'native inset checks passed' android/build/inset-results/landscape-checks.txt
 adb shell am start -n com.eightbittrade.tileforge/.MainActivity
 sleep 3
 adb shell dumpsys window windows > android/build/inset-results/landscape-window.txt

@@ -20,7 +20,7 @@ public final class SafeAreaInstrumentation extends Instrumentation {
     @Override public void onStart() {
         Bundle result=new Bundle();
         try {
-            final Activity activity=startActivitySync(new Intent().setClassName("com.eightbittrade.tileforge","com.eightbittrade.tileforge.MainActivity"));
+            final Activity activity=startActivitySync(new Intent().setClassName("com.eightbittrade.tileforge","com.eightbittrade.tileforge.MainActivity").addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             waitForIdleSync();SystemClock.sleep(500);
             final Throwable[] failure=new Throwable[1];
             runOnMainSync(new Runnable() { public void run() { try { verify(activity); } catch(Throwable error) { failure[0]=error; } } });
