@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
     }
     private void configureSystemBars() {
         android.view.Window window = getWindow();
+        android.view.View decor = window.getDecorView();
         window.setStatusBarColor(android.graphics.Color.TRANSPARENT);
         window.setNavigationBarColor(android.graphics.Color.TRANSPARENT);
         if (android.os.Build.VERSION.SDK_INT >= 29) {
@@ -91,14 +92,14 @@ public class MainActivity extends Activity {
         }
         if (android.os.Build.VERSION.SDK_INT >= 30) {
             window.setDecorFitsSystemWindows(false);
-            android.view.WindowInsetsController controller = window.getInsetsController();
+            android.view.WindowInsetsController controller = decor.getWindowInsetsController();
             if (controller != null) {
                 int light = android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                     | android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
                 controller.setSystemBarsAppearance(light, light);
             }
         } else {
-            window.getDecorView().setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            decor.setSystemUiVisibility(android.view.View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 | android.view.View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | android.view.View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | android.view.View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR | android.view.View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
         }
