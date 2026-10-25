@@ -1,4 +1,4 @@
-import {DRAFT_LIMIT} from './drafts.mjs?v=0.20.0';
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.21.0';
 export function createWorkflow({S,$,task,openLegends,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');

@@ -1,8 +1,10 @@
 # TileForge Studio
 
-The practice island has been removed in 0.20.0. Start with Legends, your own files, or a saved draft; existing drafts remain available.
+**Guided tasks:** Search everyday and advanced tools in one chooser. Paint, Collision and Events have three-step guides with Back, Change task and Hide. Use brush & paint closes the drawer and returns to the map. Save options distinguishes device drafts, editable project backups and game-change exports. Guidance never applies source edits automatically.
 
-Version 0.20.0 applies the approved Classic studio layout: **Tiles / Collision / Events**, a larger canvas and a steady right-hand painter. **Show all tilesets** starts checked, with searchable, grouped compatible project pairs and one-tap Interior/Exterior filters. Thumbnails render as you scroll. Picking a tile from another pair previews the whole map before explicit Apply; Undo restores the pair. This browses available source pairs rather than adding unlimited tilesets to one map.
+The practice island has been removed in 0.21.0. Start with Legends, your own files, or a saved draft; existing drafts remain available.
+
+Version 0.21.0 applies the approved Classic studio layout: **Tiles / Collision / Events**, a larger canvas and a steady right-hand painter. **Show all tilesets** starts checked, with searchable, grouped compatible project pairs and one-tap Interior/Exterior filters. Thumbnails render as you scroll. Picking a tile from another pair previews the whole map before explicit Apply; Undo restores the pair. This browses available source pairs rather than adding unlimited tilesets to one map.
 
 **Collision** starts with **Walkable / Blocked**, with a matching elevation list beneath each choice. **Keep existing** preserves each cell’s height; levels **0–15** set it explicitly, each with a **?** explanation. Artwork is preserved. **Advanced movement** contains raw field controls. Overlay elevation numbers are optional. Occasional map tools are in **Tools & tasks**; Pixel studio, ROM workspace and Resume draft remain in Menu.
 
@@ -19,9 +21,9 @@ The 0.4.2 category audit covers all 171 Legends tileset symbols and reviews the 
 
 **[Start-to-finish field guide](https://babycrttv.github.io/tileforge-studio/guide.html)** · **[Download the PDF](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Field-Guide.pdf)** · [Category audit](CATEGORY-AUDIT.md)
 
-A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.20.0 alpha**.
+A tablet-first map and GBA graphics editor by **8BitTrade**. Version **0.21.0 alpha**.
 
-**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.20.0.apk)**
+**[Website and downloads](https://babycrttv.github.io/tileforge-studio/)** · **[Open the web app](https://babycrttv.github.io/tileforge-studio/editor.html)** · **[Download Android APK](https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.0.apk)**
 
 ## What works
 
@@ -116,7 +118,7 @@ Release process: update package/core/Android versions and package release notes,
 
 New cell creates an interior/exterior with independent source files from a selected artwork template. Link warp chooses a destination entrance by coordinates, can append a paired return point, and can create a new interior first. Preview/Apply, stale-source guards and one-step Undo protect each operation. Direct Next guidance suggests painting, linking, reviewing and exporting. New files retain their missing-original baseline in portable projects.
 
-Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.20.0/TileForge-Studio-0.20.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
+Windows x64: [Download installer](https://github.com/BabyCRTTV/tileforge-studio/releases/download/windows-v0.21.0/TileForge-Studio-0.21.0-Setup.exe). Windows uses the same bundled editor assets as APK and web; CI verifies hashes and launches the packaged application before release. Unsigned alpha installer. Source creation requires map_groups.json and data/event_scripts.s, included by the updated pack tool.
 
 
 ### More Porymap-inspired tools (0.12.0)
@@ -142,17 +144,17 @@ Under **Load → Deleted drafts**, **Delete permanently** removes one deleted sn
 
 Browser storage/UI regression checks: set `TILEFORGE_PLAYWRIGHT` to your Playwright module and `TILEFORGE_CHROMIUM` to a Chromium executable, then run `node tests/drafts.browser.mjs`. The harness uses an isolated browser profile and real IndexedDB.
 
-### System safe areas (0.20.0)
+### System safe areas (0.21.0)
 
 Android now places the WebView inside a native FrameLayout that handles status/navigation bars, display cutouts, mandatory gesture space, keyboard insets and desktop captions. It changes the actual web viewport rather than padding the WebView. Handled insets are forwarded as zeros to avoid duplicate or stale padding. Browser/PWA overlays share usable-viewport bounds, and short floating tool panels scroll inside those bounds. Install the matching APK to update its native shell. Physical Fold/DeX devices still require user-device verification.
 
 Run `tests/safe-area.browser.mjs` with the same Playwright/Chromium variables as the draft test. `tools/build_inset_tests.sh` builds a separate, same-signer Android instrumentation APK for API 30+ native bounds/zero-inset checks; it is not part of the release installer. See the script for its emulator command.
 
-### Visible menu close buttons (0.20.0)
+### Visible menu close buttons (0.21.0)
 
 Floating tool menus have a top-right × that stays visible while scrolling. Tap × or press Escape to review **Close this menu?**, then choose **Keep menu open** or **Close menu**. Closing NPCs & events exits event mode; Done tucks its controls away for continued placement. APK, Windows and web share these controls.
 
-### Map-first navigation (0.20.0)
+### Map-first navigation (0.21.0)
 
 Map studio remains visible. The hamburger Menu contains Pixel studio, ROM workspace and Resume draft. Returning home from an open workspace requires confirmation, with Keep editing selected first; Back to studio preserves your current project.
 

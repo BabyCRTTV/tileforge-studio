@@ -1,5 +1,5 @@
-import {reviewInputs,dependencies,reviewEvents,applyReviewFix,aiPrompt} from './event-review.mjs?v=0.20.0';
-import {equal} from './core.mjs?v=0.20.0';
+import {reviewInputs,dependencies,reviewEvents,applyReviewFix,aiPrompt} from './event-review.mjs?v=0.21.0';
+import {equal} from './core.mjs?v=0.21.0';
 export function createReview({S,$,task,getFile,recordBatch,refresh,studio,toast}){
  let report=null,snapshot=null,worker=null,aiReady=false,aiBusy=false,aiTarget=null;
  const dialog=$('reviewDialog'),list=$('reviewFindings');
@@ -50,7 +50,7 @@ export function createReview({S,$,task,getFile,recordBatch,refresh,studio,toast}
  function start(){
   if(worker)return;
   aiBusy=true;$('localAIStatus').textContent='Preparing download…';syncAI();
-  worker=new Worker(new URL('./local-ai-worker.mjs?v=0.20.0',import.meta.url),{type:'module'});
+  worker=new Worker(new URL('./local-ai-worker.mjs?v=0.21.0',import.meta.url),{type:'module'});
   worker.onerror=()=>{stop();$('localAIStatus').textContent='Local AI could not start on this device. Source checks still work. Try a current browser or free memory.';};
   worker.onmessage=({data})=>{
    if(data.type==='progress')$('localAIStatus').textContent=data.text;

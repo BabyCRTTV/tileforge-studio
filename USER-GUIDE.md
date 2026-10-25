@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.20.0 alpha · 25 October 2026 · By 8BitTrade
+TileForge 0.21.0 alpha · 25 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -353,7 +353,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.20.0; the current tools are described above:
+These are proposals beyond 0.21.0; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -365,7 +365,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.20.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.21.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
@@ -405,9 +405,9 @@ Open **More map tools** under the main map controls. Each tool previews its affe
 
 ## Beginner-friendly tasks and ten draft slots
 
-Choose **Tools & tasks** to start with a goal: paint the map, change where the player can walk, add an event, create an area, link a doorway, or save/share work. TileForge opens the appropriate controls. **More map tools** inside that chooser contains map settings, connections, replacement and shifting. All existing tools remain available.
+Choose **Tools & tasks** to start with a goal: paint the map, change where the player can walk, add an event, create an area, link a doorway, or save/share work. Search by a task or keyword, such as weather or doorway. Matching advanced tools appear automatically; clearing search restores the full chooser. TileForge opens the appropriate controls. **More map tools** inside that chooser contains map settings, connections, replacement and shifting. All existing tools remain available.
 
-The guidance under the map controls has an action button. It can show tiles, choose Paint, explain a tool, or open event review. It responds to tool and brush choices. Selecting a task or following guidance changes the interface; it does not paint cells or apply source edits for you. On short screens the editor scrolls so that the map and lower controls remain reachable.
+Painting, collision and event tasks show a three-step guide beside the map controls. Use Back to revisit a step, Change task to choose another goal, or × to hide guidance. Use brush & paint closes the brush drawer and selects Paint. Advancing a step is your acknowledgement, not proof that the map edit or an in-game test has been completed. Save options offers a device draft, an editable project backup, or the existing review/export flow. Other tools retain their action hints. Selecting a task or following guidance changes the interface; it does not paint cells or apply source edits for you. On short screens the editor scrolls so that the map and lower controls remain reachable.
 
 Map settings use readable option names while retaining the exact source constants underneath. Doorway controls explain columns/rows and arrival points. New-area names can include spaces or hyphens, which become underscores in the source folder and ID. The source still requires a name beginning with a letter and using letters, digits or underscores after that conversion.
 

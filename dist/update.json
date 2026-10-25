@@ -1,16 +1,16 @@
 {
   "format": "tileforge-update",
-  "version": "0.20.0",
-  "versionCode": 26,
+  "version": "0.21.0",
+  "versionCode": 27,
   "notes": [
-    "Choose Keep existing or elevation 0–15 beneath Walkable and Blocked.",
-    "Each elevation has its own ? explanation; opening help never changes the brush.",
-    "Collision painting preserves tile artwork; Keep existing also preserves elevation."
+    "Search everyday and advanced tasks from one chooser.",
+    "Follow three-step painting, collision and event guides; Use brush & paint returns directly to the map.",
+    "Clear save choices explain device drafts, editable backups and game-change exports."
   ],
   "android": {
     "packageId": "com.eightbittrade.tileforge",
-    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.20.0.apk",
+    "url": "https://babycrttv.github.io/tileforge-studio/downloads/TileForge-Studio-0.21.0.apk",
     "size": 241165,
-    "sha256": "eefb3148c1a6643fbc423679754474b00110f21ff7597d353e6f803cf115cdc6"
+    "sha256": "69a1d6f7535e636153268eb999db18b4cbe412bcff6f9a27b2decd0f35a00052"
   }
 }

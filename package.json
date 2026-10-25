@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Choose Keep existing or elevation 0\u201315 beneath Walkable and Blocked.",
-    "Each elevation has its own ? explanation; opening help never changes the brush.",
-    "Collision painting preserves tile artwork; Keep existing also preserves elevation."
+    "Search everyday and advanced tasks from one chooser.",
+    "Follow three-step painting, collision and event guides; Use brush & paint returns directly to the map.",
+    "Clear save choices explain device drafts, editable backups and game-change exports."
   ]
 }

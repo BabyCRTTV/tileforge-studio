@@ -1,4 +1,4 @@
-import * as C from './core.mjs?v=0.20.0';
+import * as C from './core.mjs?v=0.21.0';
 const read=(f,p)=>JSON.parse(C.strFromU8(f.get(p))),encode=o=>C.strToU8(JSON.stringify(o,null,2)+'\n');
 export const PROPERTY_FIELDS={music:'MUS_',weather:'WEATHER_',map_type:'MAP_TYPE_',region_map_section:'MAPSEC_',battle_scene:'MAP_BATTLE_SCENE_'};
 export const PROPERTY_FLAGS=['requires_flash','allow_running','allow_cycling','allow_escaping','show_map_name'];
