@@ -1,4 +1,4 @@
-import * as P from './project.mjs?v=0.19.0';
+import * as P from './project.mjs?v=0.19.1';
 
 // A tile ID belongs to a map's primary/secondary pair, never to a global pool.
 export function libraryGroups(layouts,active,files){

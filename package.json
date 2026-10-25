@@ -1,6 +1,6 @@
 {
   "name": "tileforge-studio",
-  "version": "0.19.0",
+  "version": "0.19.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -8,11 +8,8 @@
     "build": "node tools/build.mjs"
   },
   "tileforgeReleaseNotes": [
-    "Classic studio puts Tiles, Collision and Events in one clear navigation row, with more room for the map.",
-    "Show all tilesets starts enabled. Browse every compatible project pair in the right-hand palette, or tap Interior/Exterior to narrow the list.",
-    "Tile thumbnails load as you scroll. Search includes tile names, IDs, source tilesets and locations.",
-    "Selecting artwork from another pair previews the whole map before Apply. The change has Undo and keeps collision and elevation.",
-    "Collision uses Walkable/Blocked brushes by default; raw fields and combined height presets are in Advanced movement.",
-    "Green/red movement overlays keep elevation numbers optional. Occasional map tools stay under Tools & tasks."
+    "Removed the bundled practice island, its Help launcher and its download-page artwork.",
+    "Start with Emerald: Legends, your own project files or a saved draft.",
+    "Existing drafts and exported projects remain available."
   ]
 }

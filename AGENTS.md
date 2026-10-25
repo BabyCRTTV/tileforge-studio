@@ -11,13 +11,13 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 - Run focused binary/round-trip and conflict checks after parser/export changes. Use the connected GitHub tools for repository writes. Publish the generated docs/ mirror for Pages, and verify the live app and APK before reporting them complete.
 - Update the handoff at each milestone with verification and outstanding limitations. No game ROMs or proprietary tool code may be committed.
 
-- Preserve the Load → Studio → Export entry flow: never open an editing map before the user chooses a project or draft. Keep the practice island an explicit choice.
+- Preserve the Load → Studio → Export entry flow: never open an editing map before the user chooses a project or draft.
 - Check compact layouts in both orientations and at handheld-PC scaling. Keep the map canvas within the usable viewport, tool panels reachable, thumbnails larger than source pixels, and Undo labelled.
 - Drafts must retain original baselines, independent project identities, and binary undo/redo entries. Cancel a pending autosave before replacing its workspace. Border editing must write only the declared border file and preserve unrelated block bits.
 
 - The owner explicitly approved enabling GitHub Actions for this repository on 2026-10-22. Pages uses the prepared Actions workflow; routine future publications do not need that same permission requested again. Keep landing-page aesthetic changes scoped to the landing page unless the user also asks to restyle the editor.
 
-- New Legends/source imports prefer Littleroot when present; saved project/draft selections take priority. The optional offline practice island lives in Help. Never skip the project Load stage.
+- New Legends/source imports prefer Littleroot when present; saved project/draft selections take priority. Never skip the project Load stage.
 - Category inference must use descriptive labels, behaviors or conservative map-event evidence. Strip tileset namespaces before classifying; keep uncertain tiles in Other. Preserve legacy pair-scoped category keys while writing new tags/pins by format, source symbol and local metatile ID. Show actual primary/secondary provenance and location usage without implying a borrowed set was copied from one unique map.
 - Keep the release query on editor module/CSS URLs, relative module imports, and service-worker precache URLs consistent when releasing, so existing browser caches cannot silently retain old code. Android asset URLs use their path; query versions must remain compatible with bundled assets.
 
@@ -64,3 +64,5 @@ Read DEVELOPMENT-HANDOFF.md before changes. This is a companion editor in its ow
 
 - Approved Classic UI direction: Tiles / Collision / Events in the main map navigation; one right-hand inspector (drawer up to 1100px). Keep advanced/raw movement and occasional map tools tucked away. All-project tile browsing starts checked and never paints foreign pair IDs directly. Browse compatible referenced source pairs, virtualize thumbnails, show load errors/retry, and preview explicit pair changes with stale guards and Undo. Preserve real draft-save access and source bit fields.
 - User approved proceeding without routine previews on 25 October 2026. Show design previews only when explicitly asked; internal visual QA remains required.
+
+- The user removed the practice island on 25 October 2026. Do not restore a bundled demo, generator, Help launcher or island marketing image. Browser/Windows QA imports a test-only source ZIP through the normal file input; fixtures stay outside distributed assets. Preserve existing user drafts, including historical demo snapshots.

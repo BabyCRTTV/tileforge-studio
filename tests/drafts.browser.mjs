@@ -1,3 +1,4 @@
+import {loadSourceFixture} from './source-fixture.mjs';
 // Real IndexedDB + UI regression checks in an isolated browser profile.
 // TILEFORGE_PLAYWRIGHT=/path/to/playwright-core/index.mjs
 // TILEFORGE_CHROMIUM=/path/to/chrome-headless-shell node tests/drafts.browser.mjs
@@ -35,7 +36,7 @@ try{
   await new Promise((resolve,reject)=>{const r=indexedDB.deleteDatabase('tileforge-studio');r.onsuccess=resolve;r.onerror=reject;});return out;
  });assert(checks.every(Boolean),JSON.stringify(checks));
  // Start a real workspace, then delete its saved copy before purging it.
- await page.click('#helpBtn');await page.click('#startPractice');await page.waitForFunction(()=>document.querySelector('#draftLabel').textContent==='Draft saved');await page.click('#openBtn');await page.click('#confirmHome');await page.locator('.draft-delete').first().click();await page.click('#confirmDeleteDraft');await page.waitForFunction(()=>document.querySelectorAll('.draft-purge').length===1);
+ await loadSourceFixture(page);await page.waitForFunction(()=>document.querySelector('#draftLabel').textContent==='Draft saved');await page.click('#openBtn');await page.click('#confirmHome');await page.locator('.draft-delete').first().click();await page.click('#confirmDeleteDraft');await page.waitForFunction(()=>document.querySelectorAll('.draft-purge').length===1);
  await page.locator('#deletedDraftPanel summary').click();await page.locator('.draft-purge').click();assert(await page.locator('#purgeDraftWarning').textContent().then(s=>s.includes('cannot be restored')));await page.locator('#purgeDraftDialog [data-close]').last().click();assert.equal(await page.locator('.draft-purge').count(),1);
  await page.locator('.draft-purge').click();await page.click('#confirmPurgeDrafts');await page.waitForFunction(()=>document.querySelector('#deletedDraftPanel').hidden);await page.click('#returnStudio');await page.click('#saveDraftBtn');await page.waitForFunction(()=>document.querySelector('#draftLabel').textContent==='Draft saved');
  assert.equal(await page.locator('#changeCount').textContent(),'0');await page.click('#openBtn');await page.click('#confirmHome');assert.equal(await page.locator('.draft-delete').count(),1);

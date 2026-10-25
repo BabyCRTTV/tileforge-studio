@@ -1,3 +1,4 @@
+import {loadSourceFixture} from './source-fixture.mjs';
 // Isolated browser checks for CSS/PWA insets and keyboard-sized visual viewports.
 // TILEFORGE_PLAYWRIGHT=/path/to/playwright-core/index.mjs
 // TILEFORGE_CHROMIUM=/path/to/chrome-headless-shell node tests/safe-area.browser.mjs
@@ -8,7 +9,7 @@ try{
  browser=await chromium.launch({executablePath:process.env.TILEFORGE_CHROMIUM,args:['--no-sandbox']});const page=await browser.newPage(),errors=[];page.setDefaultTimeout(12000);page.on('pageerror',e=>{console.error(e.stack);errors.push(e.message);});await page.goto('http://127.0.0.1:'+server.address().port+'/editor.html');
  const settle=()=>page.evaluate(()=>new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r))));
  async function inside(selector,safe,margin=0){const box=await page.locator(selector).boundingBox();assert(box,selector);assert(box.x>=safe.left+margin-1&&box.y>=safe.top+margin-1&&box.x+box.width<=safe.right-margin+1&&box.y+box.height<=safe.bottom-margin+1,JSON.stringify({selector,box,safe,margin}));}
- await page.click('#helpBtn');await page.click('#startPractice');await page.waitForFunction(()=>document.body.dataset.stage==='studio');assert.equal(await page.locator('#borderToggle').isChecked(),true);
+ await loadSourceFixture(page);await page.waitForFunction(()=>document.body.dataset.stage==='studio');assert.equal(await page.locator('#borderToggle').isChecked(),true);await page.waitForFunction(()=>!document.querySelector('#toast').classList.contains('show'));
  const cases=[[370,585,28,0,48,0],[580,768,30,0,48,0],[768,580,24,0,50,32],[844,390,24,48,32,0],[740,300,24,0,48,32],[1440,900,32,0,48,0],[1920,1080,0,0,0,0],[370,509,0,0,0,0]];
  for(const[w,h,top,right,bottom,left]of cases){
   await page.setViewportSize({width:w,height:h});await page.evaluate(a=>{for(const[k,v]of Object.entries(a))document.documentElement.style.setProperty('--safe-'+k,v+'px');window.dispatchEvent(new Event('resize'));},{top,right,bottom,left});await settle();const safe={left,top,right:w-right,bottom:h-bottom};

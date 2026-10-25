@@ -1,5 +1,5 @@
-import {DRAFT_LIMIT} from './drafts.mjs?v=0.19.0';
-export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
+import {DRAFT_LIMIT} from './drafts.mjs?v=0.19.1';
+export function createWorkflow({S,$,task,openLegends,readDraft,saveDraft,deleteDraft,restoreDraft,permanentlyDeleteDraft,clearDeletedDrafts,fit}){
  let ready=false;
  const workspace=document.querySelector('.workspace'),tabs=document.querySelector('.tabs');
  let homeTarget='home';
@@ -31,7 +31,6 @@ export function createWorkflow({S,$,task,openLegends,demo,readDraft,saveDraft,de
  }
  $('startLegends').onclick=()=>run(openLegends,'Loading the Legends source and map assets…');
  $('startFile').onclick=()=>$('fileInput').click();
- $('startPractice').onclick=()=>{$('helpDialog').close();run(demo,'Preparing the optional offline practice map…');};
  $('returnStudio').onclick=enter;$('openBtn').onclick=load;
  $('resumeBtn').onclick=()=>{$('workspaceMenu').close();load('drafts');};
  $('keepEditing').onclick=()=>$('homeConfirmDialog').close();

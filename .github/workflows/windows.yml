@@ -34,6 +34,8 @@ jobs:
             $target = Join-Path 'desktop/release/win-unpacked/resources/www' $relative
             if ((Get-FileHash $file.FullName).Hash -ne (Get-FileHash $target).Hash) { throw "Asset mismatch: $relative" }
           }
+          $env:TILEFORGE_SMOKE_PROJECT = Join-Path $env:RUNNER_TEMP 'tileforge-source-fixture.zip'
+          node tests/source-fixture.mjs $env:TILEFORGE_SMOKE_PROJECT
           $env:TILEFORGE_SMOKE_RESULT = Join-Path $env:RUNNER_TEMP 'tileforge-smoke.json'
           $process = Start-Process 'desktop/release/win-unpacked/TileForge Studio.exe' -ArgumentList '--smoke-test' -PassThru -Wait
           if (Test-Path $env:TILEFORGE_SMOKE_RESULT) { Get-Content $env:TILEFORGE_SMOKE_RESULT }

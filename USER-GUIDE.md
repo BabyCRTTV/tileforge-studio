@@ -1,7 +1,7 @@
 # TileForge Studio field guide
 
 **From your first map edit to a new game build**  
-TileForge 0.19.0 alpha · 25 October 2026 · By 8BitTrade
+TileForge 0.19.1 alpha · 25 October 2026 · By 8BitTrade
 
 [Open TileForge](https://babycrttv.github.io/tileforge-studio/) · [Open the editor](https://babycrttv.github.io/tileforge-studio/editor.html) · [Read this guide online](https://babycrttv.github.io/tileforge-studio/guide.html)
 
@@ -26,7 +26,7 @@ For Emerald: Legends maps, use **source mode**. TileForge edits the project's ma
 
 The [TileForge home page](https://babycrttv.github.io/tileforge-studio/) offers **Open Web App** and **Download APK**. In a browser, open the web app. On Android, download the APK, open it through your file manager and follow Android's installer prompts. If Android requests it, allow that particular browser/file manager to install this app. Future updates should install over the same app rather than requiring you to clear its data.
 
-The web app and installed APK have separate draft storage. Moving between them requires an exported editable project. For a first try, Help contains an optional **Offline practice island**. Your real source files are only changed after exported edits are integrated into the game project.
+The web app and installed APK have separate draft storage. Moving between them requires an exported editable project. Your real source files are only changed after exported edits are integrated into the game project.
 
 ### Check for app updates
 
@@ -353,7 +353,7 @@ Test the built result: inspect the whole edited area, walk from each approach, t
 
 ### Ideas worth prioritizing
 
-These are proposals beyond 0.19.0; the current tools are described above:
+These are proposals beyond 0.19.1; the current tools are described above:
 
 1. **Before/after export preview and affected-map list.** Show changed cells and which maps share an edited graphics/border/layout file before integration. This would make shared asset edits easier to review.
 2. **Sparse stamps and smart edges.** Extend the shipped rectangular stamps with transparent cells and optional path/shore edge joining. Porymap's prefabs and smart paths are useful references.
@@ -365,7 +365,7 @@ The highest-value next feature is the before/after export preview: it helps you 
 
 ### Sources and scope
 
-This guide follows the TileForge 0.19.0 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
+This guide follows the TileForge 0.19.1 source and its actual UI labels. Feature comparison: [REFERENCE-FEATURE-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/REFERENCE-FEATURE-AUDIT.md). Category audit: [CATEGORY-AUDIT.md](https://github.com/BabyCRTTV/tileforge-studio/blob/main/CATEGORY-AUDIT.md). The editor is an independent alpha inspired by [Porymap](https://huderlem.github.io/porymap/) and [Hex Maniac Advance](https://github.com/haven1433/HexManiacAdvance).
 
 Reference reading: Porymap's [map tiles and borders](https://huderlem.github.io/porymap/manual/editing-map-tiles.html), [collision model](https://huderlem.github.io/porymap/manual/editing-map-collisions.html), and [tileset label/behavior documentation](https://huderlem.github.io/porymap/manual/tileset-editor.html). Build commands: [Legends README](https://github.com/BabyCRTTV/pokeemerald-emerald-legends#building). Porymap's documented capabilities are references, not claims that TileForge implements all of them.
 
